@@ -1,0 +1,13 @@
+:root {
+    --primary-color: hsl(0, 0%, 100%);
+    --secondary-color: hsl(0, 0%, 0%);
+    --tertiary-color: hsl(0, 0%, 85%);
+    --accent-color: hsl(80, 96%, 41%);
+
+    --primary-font: Arial, sans-serif;
+    --undefined-font: monospace, monospace;
+}
+
+
+
+
