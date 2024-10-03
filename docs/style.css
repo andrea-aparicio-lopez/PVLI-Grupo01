@@ -1,0 +1,159 @@
+:root {
+    --primary-color: hsl(0, 0%, 100%);
+    --secondary-color: hsl(0, 0%, 0%);
+    --tertiary-color: hsl(0, 0%, 85%);
+    --accent-color: hsl(80, 96%, 41%);
+
+    --primary-font: 'Work sans';
+    --secondary-font: 'Rubik Mono One';
+    --undefined-font: monospace, monospace;
+
+    --h1-font-size: 3rem;
+    --h2-font-size: 2.25rem;
+    --p-font-size: 1.25rem;
+
+    --section-gap: 6rem;
+    --info-gap: 2rem;
+
+    --header-padding: 0.5rem 3rem;
+    --info-padding: 2rem;
+
+    --round-edges: 10px;
+}
+
+/* GLOBAL STYLES */
+body {
+    color: var(--secondary-color);
+    background-color: var(--secondary-color);
+    font-family: var(--primary-font);
+    padding: 0; margin:0;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: var(--h1-font-size);
+    text-align: center;
+}
+h2 {
+    color: var(--primary-color);
+    font-size: var(--h2-font-size);
+    margin-left: var(--info-padding);
+}
+
+p {
+    margin: 0;
+    font-size: var(--p-font-size);
+}
+
+.studio {
+    font-family: var(--undefined-font);
+}
+
+button {
+    padding: var(--header-padding);
+    background-color: transparent;
+    font-family: var(--primary-font);
+    border: solid var(--primary-color);
+    border-radius: var(--round-edges);
+    transition: 0.25s;
+}
+button:hover {
+    cursor: pointer;
+    background-color: hsl(80, 96%, 85%);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* HEADER */
+header {
+    background-color: var(--accent-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--header-padding);
+}
+
+.logo p {
+    font-size: 2rem;
+}
+
+.enlaces {
+    display: flex;
+    gap: 2rem;
+}
+.enlaces button {
+    font-size: large;
+    font-weight: bold;
+}
+
+
+/* MAIN */
+main {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-section, .game-section {
+    margin-top: var(--section-gap);
+}
+
+.section-info {
+    background-color: var(--tertiary-color);
+    padding: var(--info-padding);
+    border-radius: var(--round-edges);
+}
+
+.section-info.plus {
+    margin-top: var(--info-gap);
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+}
+
+.icons .icon {
+    margin: 0 2rem;
+    transition: 0.25s;
+}
+.icons .icon:hover {
+    scale: 1.25;
+    cursor: pointer;
+}
+
+.icons svg {
+    height: var(--h2-font-size);
+    width: auto;
+    fill: var(--secondary-color);
+}
+
+
+/* FOOTER */
+footer {
+    margin-top: var(--section-gap);
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+
+/* TEMPORAL */
+.placeholder {
+    min-height: 70vh;
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+}
