@@ -5,37 +5,80 @@
     <title>HTML</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="web/style.css"> 
+    <link href='https://fonts.googleapis.com/css?family=Rubik Mono One' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="web/script.js"></script>
 </head>
 <body>
     <header>
-        <div class="logo"></div>
+        <div class="logo studio">
+            <p >undefined</p>
+        </div>
         <div class="enlaces">
-            <a href=""><div class="enlace"></div></a>
-            <a href=""><div class="enlace"></div></a>
-            <a href=""><div class="enlace"></div></a>
+            <a href="#descripcion"><button class="enlace">Descripción</button></a>
+            <a href="#controles"><button class="enlace">Controles</button></a>
+            <a href="#créditos"><button class="enlace">Créditos</button></a>
         </div>
     </header>
 
     <main>
-        <div class="game-section"></div>
+        <div class="game-section">
+            <h1>TOROJUEGO</h1>
+            <div class="placeholder"></div>
+        </div>
 
         <div class="info-section descripcion">
-            <div class="section-title"></div>
-            <div class="section-info"></div>
+            <div class="section-title">
+                <h2>Sobre el juego</h2>
+            </div>
+            <div class="section-info">
+                <p>En <i>Torojuego</i> (nombre provisional), tomas el control de un grupo de toros que busca librarse del temido final que les espera.
+                    Múltiples enemigos se cruzarán en tu camino, intentando reconducirte a la plaza de toros. !Deberás valerte de tus mejores estrategias
+                    para aprovechar al máximo las habilidades taurinas y lograr así derrotar a los enemigos!
+                </p>
+            </div>
         </div>
 
         <div class="info-section controles">
-            <div class="section-title"></div>
-            <div class="section-info"></div>
+            <div class="section-title">
+                <h2>Controles</h2>
+            </div>
+            <div class="section-info">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60%" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:none;stroke:#38454F;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" d="M29,27.528v-12.5 c0-2.475,2.025-4.5,4.5-4.5h0c2.475,0,4.5,2.025,4.5,4.5v3.5c0,2.2,1.8,4,4,4h0c2.2,0,4-1.8,4-4v-16"></path> <path style="fill:#CBD4D8;" d="M45.241,55.471c-1.303,0.022-5.452-0.268-9.314-1.331c-4.514-1.242-10.121-1.237-14.637,0 c-3.892,1.066-7.521,1.354-9.314,1.331C5.142,55.383,0,48.52,0,41.499v0c0-7.684,6.287-13.972,13.972-13.972h29.274 C50.93,27.528,57,33.815,57,41.499v0C57,48.52,52.075,55.355,45.241,55.471z"></path> <line style="fill:none;stroke:#AFB6BB;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" x1="27" y1="31.528" x2="31.632" y2="31.528"></line> <circle style="fill:#43B05C;" cx="36" cy="41.528" r="3"></circle> <circle style="fill:#DD352E;" cx="50" cy="41.528" r="3"></circle> <circle style="fill:#EBBA16;" cx="43" cy="48.528" r="3"></circle> <circle style="fill:#366DB6;" cx="43" cy="34.528" r="3"></circle> <polygon style="fill:#38454F;" points="22,38.528 18,38.528 18,34.528 12,34.528 12,38.528 8,38.528 8,44.528 12,44.528 12,48.528 18,48.528 18,44.528 22,44.528 "></polygon> </g></svg>
+                <!-- <div class="placeholder"></div> -->
+            </div>
         </div>
 
         <div class="info-section creditos">
-            <div class="section-title"></div>
-            <div class="section-info"></div>
-            <div class="section-info"></div>
+            <div class="section-title">
+                <h2>Autores y créditos</h2>
+            </div>
+            <div class="section-info">
+                <p><i>Torojuego</i> (nombre provisional) está siendo desarrollado por <span class="studio">undefined</span>, 
+                    equipo de desarrollo compuesto por Andrea Aparicio, Marco González, Hugo de Brito y Guillermo Sánchez.
+                </p>
+            </div>
+            <div class="section-info plus">
+                <div class="icons">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/undefined_pvli" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" class="bi bi-instagram" viewBox="0 0 16 16">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                    </svg></a>
+                    <!-- Twitter -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                      </svg>
+                    <!-- Pinterest -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0"/>
+                      </svg>
+                </div>
+            </div>
         </div>
     </main>
 
+    <footer>
+        <p><span class="studio">undefined</span> © 2024-25 · PVLI ·  Facultad de Informática, UCM</p>
+    </footer>
 </body>
 </html>
