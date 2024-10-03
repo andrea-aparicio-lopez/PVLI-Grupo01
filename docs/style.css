@@ -17,6 +17,8 @@
 
     --header-padding: 0.5rem 3rem;
     --info-padding: 2rem;
+
+    --round-edges: 10px;
 }
 
 /* GLOBAL STYLES */
@@ -48,16 +50,49 @@ p {
     font-family: var(--undefined-font);
 }
 
+button {
+    padding: var(--header-padding);
+    background-color: transparent;
+    font-family: var(--primary-font);
+    border: solid var(--primary-color);
+    border-radius: var(--round-edges);
+    transition: 0.25s;
+}
+button:hover {
+    cursor: pointer;
+    background-color: hsl(80, 96%, 85%);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+a:hover {
+    text-decoration: underline;
+}
+
 /* HEADER */
 header {
     background-color: var(--accent-color);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: var(--header-padding);
 }
 
-.logo {
-    font-size: larger;
+.logo p {
+    font-size: 2rem;
+}
+
+.enlaces {
+    display: flex;
+    gap: 2rem;
+}
+.enlaces button {
+    font-size: large;
+    font-weight: bold;
 }
 
 
@@ -75,7 +110,7 @@ main {
 .section-info {
     background-color: var(--tertiary-color);
     padding: var(--info-padding);
-    border-radius: 10px;
+    border-radius: var(--round-edges);
 }
 
 .section-info.plus {
@@ -85,21 +120,40 @@ main {
 .icons {
     display: flex;
     justify-content: center;
-    gap: 5rem;
+}
+
+.icons .icon {
+    margin: 0 2rem;
+    transition: 0.25s;
+}
+.icons .icon:hover {
+    scale: 1.25;
+    cursor: pointer;
 }
 
 .icons svg {
-    max-width: 3rem;
+    height: var(--h2-font-size);
+    width: auto;
     fill: var(--secondary-color);
 }
 
-/* FOOTER */
 
+/* FOOTER */
+footer {
+    margin-top: var(--section-gap);
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+footer p {
+    font-size: 1rem;
+}
 
 
 /* TEMPORAL */
 .placeholder {
-    min-height: 20rem;
+    min-height: 70vh;
     background-color: var(--tertiary-color);
     border-radius: 10px;
 }
