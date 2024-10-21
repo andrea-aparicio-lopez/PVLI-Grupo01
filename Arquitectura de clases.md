@@ -1,6 +1,6 @@
 # Arquitectura de clases
 
-## Sistemas principales
+## SISTEMAS PRINCIPALES
 
 	Game
 Contiene los metodos necesarios para empezar y acabar el turno, ademas de la lista de las entidades.
@@ -8,7 +8,7 @@ Contiene los metodos necesarios para empezar y acabar el turno, ademas de la lis
 	Board
 La clase que contiene el tablero, con la matriz de __entidades__ y la de __obstaculos atravesables__
 
-## Cartas
+## CARTAS
 	Card
 Cartas que se van a usar en el juego.
 Cuentan con toda la informacion de esa carta (nombre, delay y tipo de carta) ademas de su `Action`. 
@@ -42,7 +42,7 @@ Una forma, representada en una matriz de bool.
 
 `AnchorPoint`: En que parte de la matriz de se encuentra el origen. Esto se usa para "instanciar" la forma en el tablero.
 
-## Objetos
+## OBJETOS
 Todos los `Object` cuentan con una posicion _x_ e _y_.
 
 	Entity extends Object
@@ -55,3 +55,10 @@ Extienden de Entity los `PJ` y los `Enemy`.
 
 
 	Obstacle extends Object
+Falta
+
+	PJ extends Entity
+Falta
+
+	Enemy extents Entity
+Falta
