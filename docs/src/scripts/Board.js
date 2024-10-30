@@ -1,6 +1,7 @@
 export default class Board {
-    //cargar el JSON de Tiled.
-    constructor(width, height, entities, walkableObstacles){
+    //cargar el JSON de Tiled. Los atributos son placeholders, no se carga nada de momento
+    constructor(info) {
+        //Toda la info esta en el json
         this.width = width;
         this.height = height;
         this.entities = entities;
