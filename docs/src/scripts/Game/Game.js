@@ -1,3 +1,4 @@
+import ScenePrueba from '/src/scripts/scenes/ScenePrueba.js'
 class Example extends Phaser.Scene {
     preload() {
         this.load.setBaseURL('https://labs.phaser.io');
@@ -26,7 +27,7 @@ class Example extends Phaser.Scene {
     }
 }
 
-var config = {
+let config = {
     type: Phaser.AUTO,
     parent: "juego",
     scale: {
@@ -36,7 +37,7 @@ var config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
 
     },
-    scene: Example,
+    scene: [ScenePrueba],
     physics: {
         default: 'arcade', // elegir motor
 
