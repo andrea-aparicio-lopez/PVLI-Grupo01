@@ -1,4 +1,4 @@
-import Board from '../Board.js'
+import Board from '../board/Board.js'
 import Game from '../Game.js'
 export default class Example extends Phaser.Scene {
     preload() {

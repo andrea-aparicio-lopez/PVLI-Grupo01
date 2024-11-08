@@ -1,4 +1,4 @@
-import Board from './Board.js'
+import Board from './board/Board.js'
 export default class Game extends Phaser.GameObjects.GameObject {
     //yo aqui le pasaria el tablero y que cree los turnos en base al tablero
     constructor(board) {
