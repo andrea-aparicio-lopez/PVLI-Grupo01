@@ -22,6 +22,9 @@
 }
 
 /* GLOBAL STYLES */
+html {
+    scroll-behavior: smooth;
+}
 body {
     color: var(--secondary-color);
     background-color: var(--secondary-color);
@@ -80,6 +83,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: var(--header-padding);
+    position: sticky;
+    top: 0;
 }
 
 .logo p {
