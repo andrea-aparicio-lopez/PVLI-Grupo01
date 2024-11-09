@@ -3,13 +3,14 @@ import Entity from './objects/entity.js'
 import Enemy from './objects/enemies/enemy.js'
 import Ally from './objects/allies/ally.js'
 
-export default class Game extends Phaser.GameObjects.GameObject {
+export default class Game extends Phaser.GameObjects.GameObject{
     //yo aqui le pasaria el tablero y que cree los turnos en base al tablero
-    constructor(board) {
+    constructor(scene) {
+        super(scene, "Game");
+        
         this.entityList = [];
-
-        entityList[0] = new Ally(0,0,0,0,0,10,10);
-        entityList[1] = new Enemy(0, 0, 0, 0, 0, 10, 10);
+        this.entityList.push(new Ally(scene, 0, 0, 0, 0, 10, 10));
+        this.entityList.push(new Enemy(scene, 0, 0, 0, 0, 10, 10));
     }
 
     //reordena entityList usando el coste de la habilidad usada
@@ -36,24 +37,24 @@ export default class Game extends Phaser.GameObjects.GameObject {
     gameHasEnded() {
         var alliesAlive = false;
         //checkeo de los aliados vivos
-        for (i = 0; i < this.entityList.length; i++) {
+        for (let i = 0; i < this.entityList.length; i++) {
             if (alliesAlive == false && this.entityList[i].AI == undefined) {
                 console.log("Aliado");
                 alliesAlive = this.entityList.health > 0;
             }
         }
         
-        if (alliesAlive == false) return true;
+        if (alliesAlive == true) return true;
 
         //checkeo de enemigos vivos
         var enemiesAlive = false;
-        for (i = 0; i < this.entityList.length; i++) {
+        for (let i = 0; i < this.entityList.length; i++) {
             if (enemiesAlive == false && this.entityList[i].AI != undefined) {
                 console.log("Enemigo");
                 enemiesAlive = this.entityList.health > 0;
             }
         }
-        if (enemiesAlive == false) return true;
+        if (enemiesAlive == true) return true;
 
         return false;
     }
