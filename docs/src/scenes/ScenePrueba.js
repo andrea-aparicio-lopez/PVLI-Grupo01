@@ -46,7 +46,8 @@ export default class Example extends Phaser.Scene {
         // create the Tilemap
         const map = this.make.tilemap({ key: 'tilemap' });
         const tileset = map.addTilesetImage('standard_tileset', 'tile');
-        map.createLayer('Capa de patrones 1', tileset);
+        const layer = map.createLayer('Capa de patrones 1', tileset);
+        layer.setScale(3, 3);
         //map.setBaseTileSize(32, 32);
     }
 
