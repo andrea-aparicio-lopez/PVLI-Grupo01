@@ -1,9 +1,10 @@
+const SCALE = 3;
 
 export default class Entity extends Phaser.GameObjects.Sprite {
-
     constructor(scene, x, y, texture, frame, maxHealth) {
-        super(scene, x, y, texture, frame);
-
+        super(scene, x * 16 * SCALE, y * 16 * SCALE, texture, frame);
+        this.setScale(SCALE);
+        this.setOrigin(0,0);
         this.worldPos = {
             x: x,
             y: y

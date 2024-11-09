@@ -24,7 +24,7 @@ export default class Example extends Phaser.Scene {
         this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
         this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
 
-        this.load.image('player_sprite', '../../assets/textures/toroPrueba.png');
+        this.load.image('player_sprite', '../../assets/textures/toro1.png');
     }
 
     
