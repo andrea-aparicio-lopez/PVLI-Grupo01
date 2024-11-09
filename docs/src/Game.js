@@ -8,14 +8,10 @@ export default class Game extends Phaser.GameObjects.GameObject{
     constructor(scene) {
         super(scene, "Game");
         
-        this.entityList = [];
-        this.entityList.push(new Ally(scene, 0, 0, 0, 0, 10, 10));
-        this.entityList.push(new Enemy(scene, 0, 0, 0, 0, 10, 10));
-    }
-
-    //reordena entityList usando el coste de la habilidad usada
-    calculateTurnOrder(cost) {
-
+        this.player = {};
+;
+        this.allies = [];
+        this.enemies = [];
     }
 
     startTurn() {
@@ -29,7 +25,7 @@ export default class Game extends Phaser.GameObjects.GameObject{
     endTurn() {
         if (!this.gameHasEnded()) {
             console.log("Ended Turn");
-            this.calculateTurnOrder();
+
             this.startTurn(this.entityList[0]);
         }
     }
@@ -39,7 +35,6 @@ export default class Game extends Phaser.GameObjects.GameObject{
         //checkeo de los aliados vivos
         for (let i = 0; i < this.entityList.length; i++) {
             if (alliesAlive == false && this.entityList[i].AI == undefined) {
-                console.log("Aliado");
                 alliesAlive = this.entityList.health > 0;
             }
         }
@@ -50,7 +45,6 @@ export default class Game extends Phaser.GameObjects.GameObject{
         var enemiesAlive = false;
         for (let i = 0; i < this.entityList.length; i++) {
             if (enemiesAlive == false && this.entityList[i].AI != undefined) {
-                console.log("Enemigo");
                 enemiesAlive = this.entityList.health > 0;
             }
         }
