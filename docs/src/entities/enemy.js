@@ -1,8 +1,8 @@
 import Entity from "./entity.js";
 
 export default class Enemy extends Entity {
-    constructor(scene, x, y, texture, frame, health, maxHealth, AIdata) {
-        super(scene, x, y, texture, frame, health, maxHealth);
+    constructor(scene, x, y, texture, frame, maxHealth, AIdata) {
+        super(scene, x, y, texture, frame, maxHealth);
 
         // Por definir
         this.AI = AIdata;

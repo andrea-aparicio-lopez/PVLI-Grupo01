@@ -2,6 +2,7 @@ import Board from '../board/Board.js'
 import Game from '../Game.js'
 import Ally from '../entities/ally.js';
 import Deck from "../objects/deck.js";
+import Player from '../player/player.js'
 
 export default class Example extends Phaser.Scene {
     constructor() {
@@ -23,6 +24,7 @@ export default class Example extends Phaser.Scene {
         this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
         this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
 
+        this.load.image('player_sprite', '../../assets/textures/toroPrueba.png');
     }
 
     
@@ -47,14 +49,24 @@ export default class Example extends Phaser.Scene {
         const map = this.make.tilemap({ key: 'tilemap' });
         const tileset = map.addTilesetImage('standard_tileset', 'tile');
         map.createLayer('Capa de patrones 1', tileset);
+<<<<<<< Updated upstream
         //map.setBaseTileSize(32, 32);
+=======
+
+        let bull = new Ally(this, 0, 0, 'player_sprite', 0, 50);
+        let allyArray = [new Ally(this, 1, 1, 'player_sprite', 0, 20), new Ally(this, 2, 5, 'player_sprite', 0, 20)];
+        this.player = new Player(cardsData, bull, allyArray);
+
+   
+>>>>>>> Stashed changes
     }
 
-    update() {
+    update(t, dt) {
         if (!this.wait) {
             if (this.playerTurn) {
-                console.log("playersTurn");
                 this.waitForSeconds(1000);
+                if(!this.player.isTurn) this.player.setTurn(true);
+                this.playerTurn = this.player.turn();
             }
             else {
                 console.log("enemyTurn");

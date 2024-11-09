@@ -1,19 +1,18 @@
-// import Deck from '../cards/Deck.js'
+import Deck from "../objects/deck.js";
 
 export default class Player {
     static MAX_CARD_NUM = 6;
-    static MAX_PREPARED_CARDS = 2;
 
-    constructor(deck, player, allyArray) {
-        this.deck = new Deck(deck);
+    constructor(deckData, player, allyArray) {
+        this.deck = new Deck(deckData);
 
-        for(let i=0; i < MAX_CARD_NUM; i++) {
+        for(let i=0; i < this.MAX_CARD_NUM; i++) {
             this.hand[i] = this.deck.drawCard();
         }
         // this.selectedCard = null;
 
         this.player = player;
-
+        this.allies = [];
         allyArray.forEach(ally => {
             this.allies.push(ally);
         });
@@ -24,7 +23,7 @@ export default class Player {
     }
 
     drawCard() {
-        if(this.hand.length < MAX_CARD_NUM){
+        if(this.hand.length < this.MAX_CARD_NUM){
             this.hand.push(this.deck.drawCard());
         }
     }
@@ -40,7 +39,10 @@ export default class Player {
     //     this.selectedCard = null;
     // }
 
-    setTurn(value) {this.isTurn = value;}
+    setTurn(value) {
+        this.isTurn = value;
+        this.isBullTurn = value;
+    }
     setBullTurn(value) {this.isBullTurn = value;}
     setAlliesTurn(value) {this.isAlliesTurn = value;}
 
@@ -49,15 +51,16 @@ export default class Player {
     turn() {
         if(this.isBullTurn) { // Turno del jugador principal
             this.bullTurn();
-
+            this.setAlliesTurn(true)
             // Una vez ha actuado el player
-            this.time.delayedCall(2000, () => this.setAlliesTurn(true));  // delay in ms
+            // this.time.delayedCall(2000, () => this.setAlliesTurn(true));  // delay in ms
         }
-        else { // Turno de los aliados
+        else if(this.isAlliesTurn){ // Turno de los aliados
             this.alliesTurn();
 
             this.endTurn();
         }
+        return this.isTurn;
     }
 
     bullTurn() {
