@@ -1,5 +1,8 @@
 import Board from '../board/Board.js'
 import Game from '../Game.js'
+import Ally from '../entities/ally.js';
+import Deck from "../objects/deck.js";
+
 export default class Example extends Phaser.Scene {
     constructor() {
         super('ScenePrueba');
@@ -10,11 +13,25 @@ export default class Example extends Phaser.Scene {
 
     preload() {
         //carga de todo lo que se necesite en la escena (por ejemplo la info de Tiled)
+
+        this.load.json('cardsData', './assets/cards.json');
     }
 
     
     create() {
-        
+        const cardsData = this.cache.json.get('cardsData');
+        let deck = new Deck(cardsData);
+        // let card = deck.drawCard();
+        // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
+        // card.play();
+
+        // console.log(ally.incrPosX());
+        // console.log(ally.incrPosX());
+        // console.log(ally.incrPosX());
+        // console.log(ally.incrPosX());
+
+        // console.log(ally.getPosition());
+
     }
 
     update() {

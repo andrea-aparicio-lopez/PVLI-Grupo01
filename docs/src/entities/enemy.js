@@ -1,4 +1,4 @@
-import Entity from "../entity.js";
+import Entity from "./entity.js";
 
 export default class Enemy extends Entity {
     constructor(scene, x, y, texture, frame, health, maxHealth, AIdata) {

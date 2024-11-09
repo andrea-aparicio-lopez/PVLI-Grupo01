@@ -1,5 +1,5 @@
 import Board from './board/Board.js'
-import Entity from './objects/entity.js'
+import Entity from './entities/entity.js'
 import Enemy from './entities/enemy.js'
 import Ally from './entities/ally.js'
 

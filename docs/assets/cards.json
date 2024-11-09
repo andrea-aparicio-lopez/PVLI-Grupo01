@@ -1,0 +1,12 @@
+[
+  {
+    "id": 0,
+    "name": "CardName",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": false,
+    "range": 1,
+    "stun": true
+  }
+]
