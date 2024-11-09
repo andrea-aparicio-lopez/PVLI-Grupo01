@@ -22,7 +22,6 @@ export default class Example extends Phaser.Scene {
             if (this.playerTurn) {
                 console.log("playersTurn");
                 this.waitForSeconds(1000);
-                this.playerTurn = false;
             }
             else {
                 console.log("enemyTurn");
@@ -32,6 +31,11 @@ export default class Example extends Phaser.Scene {
             }
         }
         
+    }
+
+    //finalizar el turno del jugador
+    endPlayerTurn() {
+        this.playerTurn = false;
     }
 
     //se llama para parar el flujo del juego por un tiempo
