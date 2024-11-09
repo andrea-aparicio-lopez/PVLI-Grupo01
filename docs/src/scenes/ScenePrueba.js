@@ -9,6 +9,8 @@ export default class Example extends Phaser.Scene {
 
         this.playerTurn = true;
         this.wait = false;
+
+
     }
 
     preload() {
@@ -45,6 +47,7 @@ export default class Example extends Phaser.Scene {
         const map = this.make.tilemap({ key: 'tilemap' });
         const tileset = map.addTilesetImage('standard_tileset', 'tile');
         map.createLayer('Capa de patrones 1', tileset);
+        //map.setBaseTileSize(32, 32);
     }
 
     update() {
