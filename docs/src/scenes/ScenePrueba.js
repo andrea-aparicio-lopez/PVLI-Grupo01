@@ -6,6 +6,7 @@ export default class Example extends Phaser.Scene {
     }
 
     create() {
+        console.log("hola");
         var game = new Game();
         game.startTurn();
     }

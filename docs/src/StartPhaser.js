@@ -1,4 +1,4 @@
-import ScenePrueba from '/src/scripts/scenes/ScenePrueba.js'
+import ScenePrueba from './scenes/ScenePrueba.js'
 class Example extends Phaser.Scene {
     preload() {
         this.load.setBaseURL('https://labs.phaser.io');
