@@ -48,17 +48,14 @@ export default class Example extends Phaser.Scene {
         // create the Tilemap
         const map = this.make.tilemap({ key: 'tilemap' });
         const tileset = map.addTilesetImage('standard_tileset', 'tile');
-        map.createLayer('Capa de patrones 1', tileset);
-<<<<<<< Updated upstream
+        const layer = map.createLayer('Capa de patrones 1', tileset);
+        layer.setScale(3, 3);
         //map.setBaseTileSize(32, 32);
-=======
 
         let bull = new Ally(this, 0, 0, 'player_sprite', 0, 50);
         let allyArray = [new Ally(this, 1, 1, 'player_sprite', 0, 20), new Ally(this, 2, 5, 'player_sprite', 0, 20)];
         this.player = new Player(cardsData, bull, allyArray);
 
-   
->>>>>>> Stashed changes
     }
 
     update(t, dt) {
