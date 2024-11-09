@@ -14,11 +14,19 @@ export default class Example extends Phaser.Scene {
     preload() {
         //carga de todo lo que se necesite en la escena (por ejemplo la info de Tiled)
 
+
         this.load.json('cardsData', './assets/cards.json');
+
+        //carga de tilemap
+        this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
+        this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
+
     }
 
     
     create() {
+        
+        
         const cardsData = this.cache.json.get('cardsData');
         let deck = new Deck(cardsData);
         // let card = deck.drawCard();
@@ -32,6 +40,11 @@ export default class Example extends Phaser.Scene {
 
         // console.log(ally.getPosition());
 
+        
+        // create the Tilemap
+        const map = this.make.tilemap({ key: 'tilemap' });
+        const tileset = map.addTilesetImage('standard_tileset', 'tile');
+        map.createLayer('Capa de patrones 1', tileset);
     }
 
     update() {
