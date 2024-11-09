@@ -38,7 +38,7 @@ export default class Game extends Phaser.GameObjects.GameObject{
         var alliesAlive = false;
         //checkeo de los aliados vivos
         for (let i = 0; i < this.entityList.length; i++) {
-            if (alliesAlive == false & this.entityList[i].AI == undefined) {
+            if (alliesAlive == false && this.entityList[i].AI == undefined) {
                 console.log("Aliado");
                 alliesAlive = this.entityList.health > 0;
             }
