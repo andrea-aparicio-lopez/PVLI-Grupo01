@@ -37,10 +37,12 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_BOTH,
 
     },
+    pixelArt: true,
     scene: [ScenePrueba],
     physics: {
         default: 'arcade', // elegir motor
 
     }
+    
 }
 const game = new Phaser.Game(config);
