@@ -31,8 +31,17 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":1,
          "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/..\/tileSet.tsx"
+         "image":"tilePrueba.png",
+         "imageheight":16,
+         "imagewidth":16,
+         "margin":0,
+         "name":"standard_tileset",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
