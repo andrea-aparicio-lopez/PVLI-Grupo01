@@ -1,7 +1,7 @@
 import Board from './board/Board.js'
 import Entity from './objects/entity.js'
-import Enemy from './objects/enemies/enemy.js'
-import Ally from './objects/allies/ally.js'
+import Enemy from './entities/enemy.js'
+import Ally from './entities/ally.js'
 
 export default class Game extends Phaser.GameObjects.GameObject{
     //yo aqui le pasaria el tablero y que cree los turnos en base al tablero
