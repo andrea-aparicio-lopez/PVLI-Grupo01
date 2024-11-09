@@ -2,9 +2,9 @@ import Card from "./card.js"
 
 export default class Deck 
 {
-    constructor(cardsData) 
+    constructor(cardsData, scene) 
     {
-        this.deckTemplate = cardsData.map(cardData => new Card(cardData));
+        this.deckTemplate = cardsData.map(cardData => new Card(cardData, scene));
         this.currentDeck = [];
         this.deckBurns = 0;
 

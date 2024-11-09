@@ -11,6 +11,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         this.health = health;
         this.maxHealth = maxHealth;
+        this.isStunned = false;
 
         // this.screenPos = setScreenPos();
 
@@ -43,6 +44,11 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     /** @summary Cantidad de daño recibida */
     hurt(points) {
         this.health -= points;
+    }
+
+    /** @summary Cambia estado de aturdimiento */
+    stun(state){
+        this.isStunned = state;
     }
     
     /** @summary Cura vida */

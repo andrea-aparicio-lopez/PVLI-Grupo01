@@ -6,7 +6,7 @@
     "move":  5,
     "damage": 5,
     "areaOfEffect": false,
-    "range": 1,
+    "range": 2,
     "stun": true
   }
 ]

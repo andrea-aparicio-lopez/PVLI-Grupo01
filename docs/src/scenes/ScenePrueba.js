@@ -19,11 +19,11 @@ export default class Example extends Phaser.Scene {
 
     
     create() {
-        const cardsData = this.cache.json.get('cardsData');
-        let deck = new Deck(cardsData);
+        // const cardsData = this.cache.json.get('cardsData');
+        // let deck = new Deck(cardsData, this);
         // let card = deck.drawCard();
         // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
-        // card.play();
+        // card.play(ally);
 
         // console.log(ally.incrPosX());
         // console.log(ally.incrPosX());
