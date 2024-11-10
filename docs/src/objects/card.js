@@ -28,6 +28,8 @@ export default class Card
 
         this.scene = scene;
 		// this.entity = entity;
+
+        //if (this.damage != 0 && this.move != 0) this.range = this.move;
     }
 
 	play(entity)
@@ -38,7 +40,8 @@ export default class Card
         // Movement
         if(this.move != 0){
             // console.log("Current position:", currPosition);
-            let newPosX = {x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y}
+            let newPos = {x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y};
+            entity.setWorldPos(newPos);
             // console.log("New position after move:", newPosX);
         }
 

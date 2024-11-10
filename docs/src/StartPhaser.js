@@ -32,15 +32,17 @@ let config = {
     parent: "juego",
     scale: {
         mode: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        width: 480,
+        height: 480,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
 
     },
+    pixelArt: true,
     scene: [ScenePrueba],
     physics: {
         default: 'arcade', // elegir motor
 
     }
+    
 }
 const game = new Phaser.Game(config);

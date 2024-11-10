@@ -1,7 +1,7 @@
 
 export default class Entity extends Phaser.GameObjects.Sprite {
 
-    constructor(scene, x, y, texture, frame, health, maxHealth) {
+    constructor(scene, x, y, texture, frame, maxHealth) {
         super(scene, x, y, texture, frame);
 
         this.worldPos = {
@@ -9,8 +9,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             y: y
         }
 
-        this.health = health;
         this.maxHealth = maxHealth;
+        this.health = this.maxHealth;
         this.isStunned = false;
 
         // this.screenPos = setScreenPos();
