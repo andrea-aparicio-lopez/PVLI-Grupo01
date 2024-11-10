@@ -17,22 +17,22 @@ export default class Example extends Phaser.Scene {
 
     this.load.json("cardsData", "./assets/cards.json");
 
-    //carga de tilemap
-    this.load.image("tile", "../../assets/tiles/tilemap1/tilePrueba.png");
-    this.load.tilemapTiledJSON(
-      "tilemap",
-      "../../assets/tiles/tilemap1/tilemap.json"
-    );
+        //carga de tilemap
+        this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
+        this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
 
-    this.load.image("player_sprite", "../../assets/textures/toroPrueba.png");
-  }
+        this.load.image('player_sprite', '../../assets/textures/toro1.png');
+    }
 
-  create() {
-    const cardsData = this.cache.json.get("cardsData");
-    let deck = new Deck(cardsData);
-    // let card = deck.drawCard();
-    // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
-    // card.play(ally);
+    
+    create() {
+        
+        
+        const cardsData = this.cache.json.get('cardsData');
+        let deck = new Deck(cardsData);
+        // let card = deck.drawCard();
+        // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
+        // card.play();
 
     // console.log(ally.incrPosX());
     // console.log(ally.incrPosX());
