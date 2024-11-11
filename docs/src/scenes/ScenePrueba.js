@@ -21,7 +21,8 @@ export default class Example extends Phaser.Scene {
         this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
         this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
 
-        this.load.image('player_sprite', '../../assets/textures/toni.png');
+      this.load.image('player_sprite', '../../assets/textures/toni.png');
+      this.load.image('ally_sprite', '../../assets/textures/allyBull.png');
     }
 
     
@@ -50,8 +51,8 @@ export default class Example extends Phaser.Scene {
 
     let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
     let allyArray = [
-      new Ally(this, 1, 1, "player_sprite", 0, 20),
-      new Ally(this, 2, 5, "player_sprite", 0, 20),
+      new Ally(this, 1, 1, "ally_sprite", 0, 20),
+      new Ally(this, 2, 5, "ally_sprite", 0, 20),
     ];
         this.player = new Player(cardsData, bull, allyArray);
 
