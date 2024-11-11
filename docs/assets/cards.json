@@ -1,12 +1,82 @@
 [
   {
     "id": 0,
-    "name": "CardName",
+    "name": "CardName1",
     "text": "Description",
     "move":  5,
     "damage": 5,
-    "areaOfEffect": false,
-    "range": 2,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName2",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName3",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName4",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName5",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName6",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName7",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
+    "stun": true
+  },
+  {
+    "id": 0,
+    "name": "CardName8",
+    "text": "Description",
+    "move":  5,
+    "damage": 5,
+    "areaOfEffect": true,
+    "range": 5,
     "stun": true
   }
 ]

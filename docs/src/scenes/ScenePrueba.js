@@ -3,6 +3,8 @@ import Game from "../Game.js";
 import Ally from "../entities/ally.js";
 import Deck from "../objects/deck.js";
 import Player from "../player/player.js";
+import DamageRect from "../objects/damageRect.js";
+import Enemy from "../entities/enemy.js";
 
 export default class Example extends Phaser.Scene {
   constructor() {
@@ -10,6 +12,8 @@ export default class Example extends Phaser.Scene {
 
     this.playerTurn = true;
     this.wait = false;
+
+    this.damageRectsGroup;
   }
 
   preload() {
@@ -17,29 +21,18 @@ export default class Example extends Phaser.Scene {
 
     this.load.json("cardsData", "./assets/cards.json");
 
-        //carga de tilemap
-        this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
-        this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
+    //carga de tilemap
+    this.load.image("tile", "../../assets/tiles/tilemap1/tilePrueba.png");
+    this.load.tilemapTiledJSON(
+      "tilemap",
+      "../../assets/tiles/tilemap1/tilemap.json"
+    );
 
-        this.load.image('player_sprite', '../../assets/textures/toro1.png');
-    }
+    this.load.image("player_sprite", "../../assets/textures/toro1.png");
+  }
 
-    
-    create() {
-        
-        
-        const cardsData = this.cache.json.get('cardsData');
-        let deck = new Deck(cardsData);
-        // let card = deck.drawCard();
-        // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
-        // card.play();
-
-    // console.log(ally.incrPosX());
-    // console.log(ally.incrPosX());
-    // console.log(ally.incrPosX());
-    // console.log(ally.incrPosX());
-
-    // console.log(ally.getPosition());
+  create() {
+    const cardsData = this.cache.json.get("cardsData");
 
     // create the Tilemap
     const map = this.make.tilemap({ key: "tilemap" });
@@ -53,7 +46,57 @@ export default class Example extends Phaser.Scene {
       new Ally(this, 1, 1, "player_sprite", 0, 20),
       new Ally(this, 2, 5, "player_sprite", 0, 20),
     ];
-    this.player = new Player(cardsData, bull, allyArray);
+    this.player = new Player(this, cardsData, bull, allyArray);
+
+    // Create rects for damage viz and calc
+    this.damageRectsGroup = this.physics.add.group();
+    let rectColor = 0xff0000;
+
+    layer.forEachTile((tile) => {
+      const x = tile.pixelX * layer.scaleX;
+      const y = tile.pixelY * layer.scaleY;
+      const width = tile.width * layer.scaleX;
+      const height = tile.height * layer.scaleY;
+
+      let rect = new DamageRect(this, x, y, width, height, rectColor, 0.5, 10);
+      this.damageRectsGroup.add(rect);
+    });
+
+    // Create enemy group
+    let enemiesGroup = this.physics.add.group();
+    let enemy = new Enemy(this, 2, 3, "player_sprite", 0, 20);
+    enemiesGroup.add(enemy);
+
+    // Create collision overlap for enemies
+    this.enemyOverlap = this.physics.add.overlap(
+      enemiesGroup,
+      this.damageRectsGroup,
+      (enemy, rect) => {
+        if (enemy.getCombatState()) {
+          enemy.hurt(rect.damage);
+          enemy.stun(rect.stun);
+          enemy.setCombatState(false);
+        }
+      }
+    );
+    this.enemyOverlap.active = false; // desactiva la deteccion
+
+    // // Create collision overlap for allies
+    // this.allyOverlap = this.physics.add.overlap(alliesGroup, this.damageRectsGroup, (ally, rect) => {
+    //   if(ally.getCombatState()) {
+    //      ally.hurt(rect.damage);
+    //      ally.stun(rect.stun);
+    //      ally.setCombatState(false);
+    //     }
+    // });
+    // this.allyOverlap.active = false; // desactiva la deteccion
+
+    // Player juega a una carta
+    this.player.playCard(0);
+    let hasDraw = this.player.drawCard();
+    // console.log("Deck:", this.player.deck.currentDeck);
+    // console.log("Hand:", this.player.hand);
+    // console.log("Graveyard", this.player.graveyard);
   }
 
   update(t, dt) {
