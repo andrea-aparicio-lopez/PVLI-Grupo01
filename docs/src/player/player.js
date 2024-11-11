@@ -3,13 +3,16 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(deckData, player, allyArray) {
-        this.deck = new Deck(deckData);
+    constructor(scene, deckData, player, allyArray) {
+        this.deck = new Deck(scene, deckData);
+        this.hand = [];
+        this.graveyard = [];
 
-        for(let i=0; i < this.MAX_CARD_NUM; i++) {
-            this.hand[i] = this.deck.drawCard();
+        for(let i=0; i < Player.MAX_CARD_NUM; i++) {
+            this.hand[i] = this.deck.draw();
         }
         // this.selectedCard = null;
+
 
         this.player = player;
         this.allies = [];
@@ -22,11 +25,30 @@ export default class Player {
         this.isAlliesTurn = false;
     }
 
+    // Draw a card: returns true if succeeds, else return false if no card was draw
     drawCard() {
-        if(this.hand.length < this.MAX_CARD_NUM){
-            this.hand.push(this.deck.drawCard());
+
+        if(this.hand.length < Player.MAX_CARD_NUM)
+        {
+            if(this.deck.empty()) {
+                this.deck.regenerate(this.graveyard); // Returns graveyard cards to deck and shuffles it
+            }
+            this.hand.push(this.deck.draw());
+
+            return true
         }
+        else return false
     }
+
+
+    playCard(cardPos){
+        let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
+        let card = cardArray[0];
+        //console.log("Card played:", card);
+        card.playedBy(this.player);
+        this.graveyard.push(card);
+        //console.log("Player hand:", this.deck.currentDeck);
+    }   
 
     // selectCard(card) {
     //     this.selectedCard = card;
@@ -80,4 +102,6 @@ export default class Player {
     endTurn() {
         this.setTurn(false);
     }
+
+
 }

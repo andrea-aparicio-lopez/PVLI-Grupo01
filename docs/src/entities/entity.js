@@ -25,6 +25,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.damageMultiplier = 1;
         this.defenseMultiplier = 1;
         this.scene.add.existing(this);
+
+        this.canCombat = true; // flag para daño de overlap
+        this.scene.physics.add.existing(this); // añade fisicas para collide overlap con rectangulos de daño        
     }
 
     preupdate(t, dt) {
@@ -45,6 +48,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     /** @summary Cantidad de daño recibida */
     hurt(points) {
         this.health -= points;
+        this.isHurt = true;
+        console.log(this.health);
     }
 
     /** @summary Cambia estado de aturdimiento */
@@ -57,6 +62,10 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.health += points;
         this.health = min(this.health, this.maxHealth); // clamp
     }
+
+    getCombatState() { return this.canCombat };
+    setCombatState(state) { this.canCombat = state};
+
 
     die() {};
 }
