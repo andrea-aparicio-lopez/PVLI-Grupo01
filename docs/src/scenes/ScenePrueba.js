@@ -18,8 +18,8 @@ export default class Example extends Phaser.Scene {
     this.load.json("cardsData", "./assets/cards.json");
 
         //carga de tilemap
-        this.load.image('tile', '../../assets/tiles/tilemap1/tilePrueba.png');
-        this.load.tilemapTiledJSON('tilemap', '../../assets/tiles/tilemap1/tilemap.json');
+        this.load.image('tile', '../../assets/tiles/tilemap2/barco spritesheet.png');
+        this.load.tilemapTiledJSON('tilemap' , '../../assets/tiles/tilemap2/boat_map.json');
 
       this.load.image('player_sprite', '../../assets/textures/toni.png');
       this.load.image('ally_sprite', '../../assets/textures/allyBull.png');
@@ -42,11 +42,14 @@ export default class Example extends Phaser.Scene {
 
     // console.log(ally.getPosition());
 
-    // create the Tilemap
+        // create the Tilemap
     const map = this.make.tilemap({ key: "tilemap" });
-    const tileset = map.addTilesetImage("standard_tileset", "tile");
-    const layer = map.createLayer("Capa de patrones 1", tileset);
-    layer.setScale(3, 3);
+    const tileset = map.addTilesetImage("boat_spritesheet", "tile");
+    const layer1 = map.createLayer("ground", tileset);
+        layer1.setScale(3, 3);
+
+        const layer2 = map.createLayer("water", tileset);
+        layer2.setScale(3, 3);
     //map.setBaseTileSize(32, 32);
 
     let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);

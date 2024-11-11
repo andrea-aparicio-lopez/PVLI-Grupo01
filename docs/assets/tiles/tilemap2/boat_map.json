@@ -52,8 +52,17 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":6,
          "firstgid":1,
-         "source":"boat_spritesheet.tsx"
+         "image":"barco spritesheet.png",
+         "imageheight":48,
+         "imagewidth":96,
+         "margin":0,
+         "name":"boat_spritesheet",
+         "spacing":0,
+         "tilecount":18,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
