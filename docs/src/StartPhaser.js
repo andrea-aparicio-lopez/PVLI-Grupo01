@@ -39,10 +39,19 @@ let config = {
     },
     pixelArt: true,
     scene: [ScenePrueba],
-    physics: {
-        default: 'arcade', // elegir motor
-
-    }
+    physics: {  
+        default: 'arcade', //Tenemos físicas simple, arcade
+        arcade: { 
+            gravity: { y: 0 }, //Tenemos gravedad, podemos modificarla para aumentar su fuera o disminuirla
+            debug: true // Aquí indicamos si queremos que Phaser pinte los cuerpos y fuerzas de los objetos con físicas
+        },
+        checkCollision: {
+            up: true,
+            down: true,
+            left: true,
+            right: true
+        }
+    },
     
 }
 const game = new Phaser.Game(config);
