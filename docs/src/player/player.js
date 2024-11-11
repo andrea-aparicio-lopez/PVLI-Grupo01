@@ -61,6 +61,11 @@ export default class Player {
         console.log(this.player.getWorldPos());
         this.player.worldPos.x += x;
         this.player.worldPos.y += y;
+
+        if (this.player.worldPos.x < 0) this.player.worldPos.x = 0;
+        if (this.player.worldPos.x > 9) this.player.worldPos.x = 9;
+        if (this.player.worldPos.y < 0) this.player.worldPos.y = 0;
+        if (this.player.worldPos.y > 9) this.player.worldPos.y = 9;
         console.log(this.player.getWorldPos());
     }
 
