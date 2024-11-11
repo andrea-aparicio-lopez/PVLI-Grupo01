@@ -58,5 +58,10 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.health = min(this.health, this.maxHealth); // clamp
     }
 
-    die() {};
+    die() { };
+
+    update() {
+        this.x = this.worldPos.x * 16 * SCALE;
+        this.y = this.worldPos.y * 16 * SCALE;
+    }
 }

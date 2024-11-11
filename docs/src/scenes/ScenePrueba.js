@@ -48,33 +48,52 @@ export default class Example extends Phaser.Scene {
     layer.setScale(3, 3);
     //map.setBaseTileSize(32, 32);
 
-    let bull = new Ally(this, 0, 0, "player_sprite", 0, 50);
+    let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
     let allyArray = [
       new Ally(this, 1, 1, "player_sprite", 0, 20),
       new Ally(this, 2, 5, "player_sprite", 0, 20),
     ];
-    this.player = new Player(cardsData, bull, allyArray);
-  }
+        this.player = new Player(cardsData, bull, allyArray);
 
-  update(t, dt) {
-    if (!this.wait) {
-      if (this.playerTurn) {
-        this.waitForSeconds(1000);
-        if (!this.player.isTurn) this.player.setTurn(true);
-        this.playerTurn = this.player.turn();
-      } else {
-        console.log("enemyTurn");
-        this.waitForSeconds(1000);
-        //for each enemy -> performAction
-        this.playerTurn = true;
-      }
+
+        this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
+        this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-D', this.inputToPlayer, this);
+
+        this.startPlayerTurn();
     }
-  }
 
-  //finalizar el turno del jugador
-  endPlayerTurn() {
-    this.playerTurn = false;
-  }
+    
+
+    startPlayerTurn() {
+        this.player.startTurn();
+    }
+
+    inputToPlayer(event) {
+        this.player.recieveEvent(event);
+    }
+
+    endPlayerTurn() {
+        
+        this.player.endTurn();
+        this.startEnemyTurn();
+    }
+
+    startEnemyTurn() {
+        //llama a la ia de los enemigos, o sus comportamientos
+        this.endEnemyTurn();
+    }
+
+    endEnemyTurn() {
+
+        this.playAllAnimations();
+    }
+
+    playAllAnimations() {
+        //se para un tiempo definido para las animaciones
+        this.startPlayerTurn();
+    }
 
   //se llama para parar el flujo del juego por un tiempo
   waitForSeconds(delay) {
@@ -85,5 +104,9 @@ export default class Example extends Phaser.Scene {
       null,
       this
     ); // delay in ms
-  }
+    }
+
+    update() {
+        this.player.player.update();
+    }
 }
