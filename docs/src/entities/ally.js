@@ -16,4 +16,8 @@ export default class Ally extends Entity {
     die() {
         super.die();
     }
+
+    update() {
+        super.update();
+    }
 }

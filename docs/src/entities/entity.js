@@ -67,5 +67,10 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setCombatState(state) { this.canCombat = state};
 
 
-    die() {};
+    die() { };
+
+    update() {
+        this.x = this.worldPos.x * 16 * SCALE;
+        this.y = this.worldPos.y * 16 * SCALE;
+    }
 }

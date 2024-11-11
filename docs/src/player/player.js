@@ -21,8 +21,6 @@ export default class Player {
         });
 
         this.isTurn = false;
-        this.isBullTurn = false;
-        this.isAlliesTurn = false;
     }
 
     // Draw a card: returns true if succeeds, else return false if no card was draw
@@ -50,57 +48,52 @@ export default class Player {
         //console.log("Player hand:", this.deck.currentDeck);
     }   
 
-    // selectCard(card) {
-    //     this.selectedCard = card;
-    // }
-
-    // playCard() {
-    //     if(this.selectedCard != null) {
-    //         this.selectedCard.playCard();
-    //     }
-    //     this.selectedCard = null;
-    // }
-
-    setTurn(value) {
-        this.isTurn = value;
-        this.isBullTurn = value;
+    startTurn() {
+        console.log("started turn");
+        
+        this.isTurn = true;
     }
-    setBullTurn(value) {this.isBullTurn = value;}
-    setAlliesTurn(value) {this.isAlliesTurn = value;}
 
-
-
-    turn() {
-        if(this.isBullTurn) { // Turno del jugador principal
-            this.bullTurn();
-            this.setAlliesTurn(true)
-            // Una vez ha actuado el player
-            // this.time.delayedCall(2000, () => this.setAlliesTurn(true));  // delay in ms
+    recieveEvent(event) {
+        console.log();
+        if (this.isTurn == true) {
+            
+            //recieved event
+            if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
+                this.move(0, -1);
+            }
+            else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
+                this.move(-1,0);
+            }
+            else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
+                this.move(0, 1);
+            }
+            else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
+                this.move(1,0);
+            }
+            this.updateAllies();
         }
-        else if(this.isAlliesTurn){ // Turno de los aliados
-            this.alliesTurn();
-
-            this.endTurn();
-        }
-        return this.isTurn;
     }
 
-    bullTurn() {
-        // Recoger el input del usuario
-        // Procesar el input
-        console.log("turno del torito Toni");
-
-        this.setBullTurn(false);  // Termina el turno del jugador
+    updateAllies() {
+        this.player.scene.endPlayerTurn();
     }
 
-    alliesTurn() {
-        console.log("turno de los aliados");
-        this.setAlliesTurn(false); // termina el turno de los aliados
+    move(x, y) {
+        console.log(this.player.getWorldPos());
+        this.player.worldPos.x += x;
+        this.player.worldPos.y += y;
+
+        if (this.player.worldPos.x < 0) this.player.worldPos.x = 0;
+        if (this.player.worldPos.x > 9) this.player.worldPos.x = 9;
+        if (this.player.worldPos.y < 0) this.player.worldPos.y = 0;
+        if (this.player.worldPos.y > 9) this.player.worldPos.y = 9;
+        console.log(this.player.getWorldPos());
     }
 
-    // Termina el turno global
     endTurn() {
-        this.setTurn(false);
+        console.log("ended turn");
+        this.isTurn = false;
     }
 
 

@@ -31,7 +31,6 @@ export default class Card
     // Visualize set to false by default
 	playedBy(entity, visualize = false) {
         //console.log("Card effect played");
-                
         let direction = entity.getDirection();
         let currPosition = entity.getWorldPos();
         
@@ -45,6 +44,7 @@ export default class Card
                     for (let j = - this.range; j <= this.range; j++){
                         if (i != 0 || j != 0) {
                             rectsPositions.push({x: currPosition.x + i, y: currPosition.y + j})
+                            // console.log({x: currPosition.x + i, y: currPosition.y + j});
                         }
                     }
                 }
@@ -77,18 +77,23 @@ export default class Card
 
     visualizePlay(entity) {
         //console.log("Visualizing play");
-
         this.playedBy(entity, true);
 	}
 
     changeRects(rects, visualize, color) {
-        
+
+        let rectsArray = this.scene.damageRectsGroup.children.entries;
+        let rectSize = this.scene.damageRectsGroup.children.entries[0].width;
+        let maxX = rectsArray[rectsArray.length -1].x / rectSize;
+        let maxY = rectsArray[rectsArray.length -1].y / rectSize;
+
         rects.forEach((rect) => {
             let j = rect.x;
             let i = rect.y;
 
-            if (i >= 0 && j >=0) {
+            if (i >= 0 && j >=0 && i <= maxY && j <= maxX) {
                 let rectObj = this.scene.damageRectsGroup.children.entries[i * 10 + j];
+                
                 rectObj.deactivate();
                 
                 if(visualize){
