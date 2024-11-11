@@ -31,8 +31,6 @@ export default class Example extends Phaser.Scene {
         
     create() {
         const cardsData = this.cache.json.get('cardsData');
-        // let deck = new Deck(cardsData);
-        // let card = deck.drawCard();
         // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
         // card.play();
 
@@ -105,7 +103,7 @@ export default class Example extends Phaser.Scene {
         // this.allyOverlap.active = false; // desactiva la deteccion
 
         // Player juega a una carta
-        // this.player.playCard(0);
+        this.player.playCard(0);
         // let hasDraw = this.player.drawCard();
         // console.log("Deck:", this.player.deck.currentDeck);
         // console.log("Hand:", this.player.hand);

@@ -69,7 +69,7 @@ export default class Card
             newPos.push({x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y});
 
             // If not in viasualization mode, update position
-            if (!visualize) entity.setWorldPos(newPos);
+            // if (!visualize) entity.setWorldPos(newPos);
             //console.log("New position after move:", newPos);
             this.changeRects(newPos, visualize, 0x04ffA0);
         }
