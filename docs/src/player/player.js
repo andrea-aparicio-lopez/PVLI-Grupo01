@@ -3,8 +3,8 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(scene, deckData, player, allyArray) {
-        this.deck = new Deck(scene, deckData);
+    constructor(scene, cardsData, deckData, player, allyArray) {
+        this.deck = new Deck(scene, cardsData, deckData);
         this.hand = [];
         this.graveyard = [];
 
@@ -52,6 +52,7 @@ export default class Player {
         console.log("started turn");
         
         this.isTurn = true;
+        this.drawCard();
     }
 
     recieveEvent(event) {
@@ -61,15 +62,31 @@ export default class Player {
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
                 this.move(0, -1);
+                this.player.setDirection({
+                    x: 0,
+                    y: -1
+                })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
                 this.move(-1,0);
+                this.player.setDirection({
+                    x: -1,
+                    y: 0
+                })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
                 this.move(0, 1);
+                this.player.setDirection({
+                    x: 0,
+                    y: 1
+                })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
                 this.move(1,0);
+                this.player.setDirection({
+                    x: 1,
+                    y: 0
+                })
             }
             this.updateAllies();
         }

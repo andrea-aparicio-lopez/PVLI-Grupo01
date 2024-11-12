@@ -4,6 +4,7 @@ import Ally from "../entities/ally.js";
 import Player from "../player/player.js";
 import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
+import UIManager from "../UI/uiManager.js";
 
 export default class Example extends Phaser.Scene {
     constructor() {
@@ -19,6 +20,7 @@ export default class Example extends Phaser.Scene {
         //carga de todo lo que se necesite en la escena (por ejemplo la info de Tiled)
 
         this.load.json("cardsData", "./assets/cards.json");
+        this.load.json("deckData", "./assets/deck.json");
 
         //carga de tilemap
         this.load.image('tile', '../../assets/tiles/tilemap2/barco spritesheet.png');
@@ -31,8 +33,8 @@ export default class Example extends Phaser.Scene {
         
     create() {
         const cardsData = this.cache.json.get('cardsData');
+        const deckData = this.cache.json.get('deckData');
         // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
-        // card.play();
 
         // console.log(ally.incrPosX());
         // console.log(ally.incrPosX());
@@ -50,6 +52,8 @@ export default class Example extends Phaser.Scene {
         const layer2 = map.createLayer("water", tileset);
         layer2.setScale(3, 3);
         //map.setBaseTileSize(32, 32);
+
+     
 
         // Create rects for damage viz and calc
         this.damageRectsGroup = this.physics.add.group();
@@ -70,7 +74,7 @@ export default class Example extends Phaser.Scene {
             new Ally(this, 1, 1, "ally_sprite", 0, 20),
             new Ally(this, 2, 5, "ally_sprite", 0, 20),
         ];
-        this.player = new Player(this, cardsData, bull, allyArray);
+        this.player = new Player(this, cardsData, deckData, bull, allyArray);
 
         
         // Create enemy group
@@ -87,7 +91,7 @@ export default class Example extends Phaser.Scene {
                     enemy.hurt(rect.damage);
                     enemy.stun(rect.stun);
                     enemy.setCombatState(false);
-            }
+                }
             }
         );
         this.enemyOverlap.active = false; // desactiva la deteccion
@@ -103,11 +107,14 @@ export default class Example extends Phaser.Scene {
         // this.allyOverlap.active = false; // desactiva la deteccion
 
         // Player juega a una carta
-        this.player.playCard(0);
+        // this.player.playCard(0);
         // let hasDraw = this.player.drawCard();
-        // console.log("Deck:", this.player.deck.currentDeck);
-        // console.log("Hand:", this.player.hand);
-        // console.log("Graveyard", this.player.graveyard);
+        console.log("Deck:", this.player.deck.currentDeck);
+        console.log("Hand:", this.player.hand);
+        console.log("Graveyard", this.player.graveyard);
+
+        // Create UI Manager
+        this.uiManager = new UIManager(this, this.player);
 
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
@@ -125,7 +132,10 @@ export default class Example extends Phaser.Scene {
         this.player.recieveEvent(event);
     }
 
-    endPlayerTurn() {            
+    endPlayerTurn() {
+        this.damageRectsGroup.children.entries.forEach((rect) => {
+            rect.makeInvisible();
+        });
         this.player.endTurn();
         this.startEnemyTurn();
     }
@@ -157,5 +167,8 @@ export default class Example extends Phaser.Scene {
 
     update() {
         this.player.player.update();
+        this.uiManager.update();
+
     }
+
 }

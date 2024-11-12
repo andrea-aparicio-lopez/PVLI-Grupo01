@@ -2,10 +2,16 @@ import Card from "./card.js"
 
 export default class Deck 
 {
-    constructor(scene, cardsData) 
+    constructor(scene, cardsData, deckData) 
     {
-        //this.deckTemplate = cardsData.map(cardData => new Card(cardData, scene));
-        this.currentDeck = cardsData.map(cardData => new Card(scene, cardData));
+        this.currentDeck = [];
+
+        cardsData.forEach(cardData => {
+            const count = deckData[cardData.id] || 0;
+            for (let i = 0; i < count; i++) {
+                this.currentDeck.push(new Card(scene, cardData));
+            }
+        });
 
         this.deckBurns = 0;
 

@@ -67,10 +67,12 @@ export default class Card
             //console.log("Current position:", currPosition);
             let newPos = [];
             newPos.push({x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y});
+            // console.log("dirx", currPosition.x + this.move * direction.x);
+            // console.log("diry", direction.y);
 
             // If not in viasualization mode, update position
-            // if (!visualize) entity.setWorldPos(newPos);
-            //console.log("New position after move:", newPos);
+            if (!visualize) entity.setWorldPos(newPos[0]);
+            // console.log("New position after move:", newPos[0]);
             this.changeRects(newPos, visualize, 0x04ffA0);
         }
 	}
@@ -79,6 +81,10 @@ export default class Card
         //console.log("Visualizing play");
         this.playedBy(entity, true);
 	}
+
+    endVisualizePlay() {
+        this.resetRects();
+    }
 
     changeRects(rects, visualize, color) {
 
@@ -113,5 +119,21 @@ export default class Card
     hit(entity){
         entity.hurt(this.damage);
         entity.stun(this.stun);
+    }
+    
+    getText(){
+        return this.text;
+    }
+
+    getID() {
+        return this.id;
+    }
+
+    resetRects() {
+        let rectsArray = this.scene.damageRectsGroup.children.entries;
+
+        rectsArray.forEach((rect) => {
+                rect.deactivate();
+        });
     }
 }
