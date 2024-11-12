@@ -14,7 +14,7 @@ export default class Player {
         // this.selectedCard = null;
 
 
-        this.player = player;
+        this.mainPlayer = player;
         this.allies = [];
         allyArray.forEach(ally => {
             this.allies.push(ally);
@@ -66,29 +66,29 @@ export default class Player {
             
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.player.move(0, -1);
-                this.player.setDirection({
+                this.mainPlayerlayer.move(0, -1);
+                this.mainPlayer.setDirection({
                     x: 0,
                     y: -1
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.player.move(-1,0);
-                this.player.setDirection({
+                this.mainPlayer.move(-1,0);
+                this.mainPlayer.setDirection({
                     x: -1,
                     y: 0
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.player.move(0, 1);
-                this.player.setDirection({
+                this.mainPlayer.move(0, 1);
+                this.mainPlayer.setDirection({
                     x: 0,
                     y: 1
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.player.move(1,0);
-                this.player.setDirection({
+                this.mainPlayer.move(1,0);
+                this.mainPlayer.setDirection({
                     x: 1,
                     y: 0
                 })
@@ -98,7 +98,7 @@ export default class Player {
     }
 
     updateAllies() {
-        this.player.scene.endPlayerTurn();
+        this.mainPlayer.scene.endPlayerTurn();
     }
 
     endTurn() {

@@ -6,7 +6,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         super(scene, x * 16 * SCALE, y * 16 * SCALE, texture, frame);
         this.setScale(SCALE);
         this.setOrigin(0,0);
-        this.worldPos = {
+        this.worldPos = {   // Coordenadas en tiles
             x: x,
             y: y
         }
@@ -55,7 +55,16 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     getWorldPos() {return this.worldPos;}
     setWorldPos(pos) {this.worldPos = pos;}
 
-    updateWorldPos() {this.worldPos += this.direction;}
+    // Mueve en la direccion. Devuelve true si ha tenido exito, false si no
+    moveInDirection() {
+        if (this.worldPos.x === 0 && this.direction.x < 0) return false;
+        else if (this.worldPos.x === this.scene.layer1.displayWidth - 1 && this.direction.x > 0) return false;
+        else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
+        else if (this.worldPos.y = this.scene.layer1.displayHeight - 1 && this.direction.y > 0) return false;
+
+        this.worldPos += this.direction;
+        return true;
+    }
 
     
     /** @summary Cantidad de daño recibida */
@@ -94,21 +103,21 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         
     }
 
-    move(x, y) {
-        this.velocity.x = x;
-        this.velocity.y = y;
+    // move(x, y) {
+    //     this.velocity.x = x;
+    //     this.velocity.y = y;
 
-        this.prevWorldPos.x = this.worldPos.x;
-        this.prevWorldPos.y = this.worldPos.y;
+    //     this.prevWorldPos.x = this.worldPos.x;
+    //     this.prevWorldPos.y = this.worldPos.y;
 
-        this.worldPos.x += x;
-        this.worldPos.y += y;
+    //     this.worldPos.x += x;
+    //     this.worldPos.y += y;
 
-        if (this.worldPos.x < 0) this.worldPos.x = 0;
-        if (this.worldPos.x > 9) this.worldPos.x = 9;
-        if (this.worldPos.y < 0) this.worldPos.y = 0;
-        if (this.worldPos.y > 9) this.worldPos.y = 9;
-    }
+    //     if (this.worldPos.x < 0) this.worldPos.x = 0;
+    //     if (this.worldPos.x > 9) this.worldPos.x = 9;
+    //     if (this.worldPos.y < 0) this.worldPos.y = 0;
+    //     if (this.worldPos.y > 9) this.worldPos.y = 9;
+    // }
 
     playMovingAnimation(TIME) {
         this.velocity.x *= (16 * SCALE) / (TIME / 1000);
