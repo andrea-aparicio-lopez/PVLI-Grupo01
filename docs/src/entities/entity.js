@@ -1,3 +1,4 @@
+
 const SCALE = 3;
 
 export default class Entity extends Phaser.GameObjects.Sprite {
@@ -10,9 +11,21 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             y: y
         }
 
+        this.prevWorldPos = {
+            x, y
+        }
+
         this.maxHealth = maxHealth;
         this.health = this.maxHealth;
         this.isStunned = false;
+
+        //ANIMACIONES
+        this.onMovingAnimation = false;
+        this.velocity = {
+            x: 0,
+            y:0
+        };
+        //////
 
         // this.screenPos = setScreenPos();
 
@@ -69,12 +82,25 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     die() { };
 
-    update() {
-        this.x = this.worldPos.x * 16 * SCALE;
-        this.y = this.worldPos.y * 16 * SCALE;
+    update(time, delta) {
+        if (!this.onMovingAnimation) {
+            this.x = this.worldPos.x * 16 * SCALE;
+            this.y = this.worldPos.y * 16 * SCALE;
+        }
+        else {
+            this.x += this.velocity.x * (delta/1000);
+            this.y += this.velocity.y * (delta/1000);
+        }
+        
     }
 
     move(x, y) {
+        this.velocity.x = x;
+        this.velocity.y = y;
+
+        this.prevWorldPos.x = this.worldPos.x;
+        this.prevWorldPos.y = this.worldPos.y;
+
         this.worldPos.x += x;
         this.worldPos.y += y;
 
@@ -84,7 +110,15 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         if (this.worldPos.y > 9) this.worldPos.y = 9;
     }
 
-    playMovingAnimation() {
+    playMovingAnimation(TIME) {
+        this.velocity.x *= (16 * SCALE) / (TIME / 1000);
+        this.velocity.y *= (16 * SCALE) / (TIME / 1000);
 
+        console.log(this.velocity);
+        this.onMovingAnimation = true;
+    }
+
+    finishMovingAnimation() {
+        this.onMovingAnimation = false;
     }
 }

@@ -152,26 +152,29 @@ export default class Example extends Phaser.Scene {
     }
 
     playAllAnimations() {
+        let TIME = 200;
+        this.player.player.playMovingAnimation(TIME)
+        this.enemy.playMovingAnimation(TIME);
         //se para un tiempo definido para las animaciones
-        this.startPlayerTurn();
-    }
-
-    //se llama para parar el flujo del juego por un tiempo
-    waitForSeconds(delay) {
-        this.wait = true;
         var timer = this.time.delayedCall(
-            delay,
-            () => (this.wait = false),
+            TIME,
+            this.stopAllAnimations,
             null,
             this
         ); // delay in ms
     }
 
-    update() {
-        this.player.player.update();
+    stopAllAnimations() {
+        this.player.player.onMovingAnimation = false;
+        this.enemy.onMovingAnimation = false;
+        this.startPlayerTurn();
+    }
+
+    update(time, delta) {
         this.uiManager.update();
 
-        this.enemy.update();
+        this.player.player.update(time, delta);
+        this.enemy.update(time, delta);
     }
 
 }
