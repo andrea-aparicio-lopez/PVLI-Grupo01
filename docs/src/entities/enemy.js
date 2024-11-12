@@ -45,8 +45,4 @@ export default class Enemy extends Entity {
     die() {
         super.die();
     }
-
-    update() {
-        super.update();
-    }
 }
