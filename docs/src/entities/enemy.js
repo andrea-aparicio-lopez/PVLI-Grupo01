@@ -18,30 +18,19 @@ export default class Enemy extends Entity {
     }
 
     moveToPlayer() {
-        let moveX, moveY;
-        if (this.worldPos.x > this.scene.player.player.worldPos.x) {
-            moveX = -1;
-        }
-        else if (this.worldPos.x < this.scene.player.player.worldPos.x) {
-            moveX = 1;
-        }
-        else moveX = 0;
+        // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
+        if (this.worldPos.x > this.scene.player.mainPlayer.worldPos.x)
+            this.setDirection(-1,0);
+        else if (this.worldPos.x < this.scene.player.mainPlayer.worldPos.x) 
+            this.setDirection(1,0);
+        else if (this.worldPos.y > this.scene.player.mainPlayer.worldPos.y) 
+            this.setDirection(0,-1);
+        else if (this.worldPos.y < this.scene.player.mainPlayer.worldPos.y) 
+            this.setDirection(1,0);
 
-        if (moveX == 0) {
-            if (this.worldPos.y > this.scene.player.player.worldPos.y) {
-                moveY = -1;
-            }
-            else if (this.worldPos.y < this.scene.player.player.worldPos.y) {
-                moveY = 1;
-            }
-            else moveY = 0;
-        }
-        else moveY = 0;
-
-        
-
-        this.move(moveX, moveY);
+        this.moveInDirection();
     }
+
     die() {
         super.die();
     }
