@@ -39,13 +39,18 @@ export default class Player {
     }
 
 
-    playCard(cardPos){
-        let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
-        let card = cardArray[0];
-        //console.log("Card played:", card);
-        card.playedBy(this.player);
-        this.graveyard.push(card);
-        //console.log("Player hand:", this.deck.currentDeck);
+    playCard(cardPos) {
+        if (this.isTurn) {
+            let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
+            let card = cardArray[0];
+            //console.log("Card played:", card);
+            card.playedBy(this.player);
+            this.graveyard.push(card);
+            //console.log("Player hand:", this.deck.currentDeck);
+
+            this.updateAllies();
+        }
+        
     }   
 
     startTurn() {
