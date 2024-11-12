@@ -12,6 +12,7 @@ export default class UIManager {
         this.hand = this.player.hand;
 
         this.cardsUI = [];
+        let cardColor = 0xFCA311;
 
         for (let i = 0; i < Player.MAX_CARD_NUM ; i++) {
             // Create buttons
@@ -20,7 +21,7 @@ export default class UIManager {
                 400,
                 40,
                 70,
-                0x111111,
+                cardColor,
                 1,
                 "empty1234",
                 i
@@ -47,7 +48,7 @@ export default class UIManager {
 
     listenToCardClick(index) {
         // console.log("Click:", index);
-        this.cardsUI[index].selectedLight();
+        // this.cardsUI[index].selectedLight();
         // this.clickedCard = this.hand[index];
         // console.log("Selected card:", this.clickedCard);
         this.hand[index].endVisualizePlay();
@@ -72,15 +73,15 @@ export default class UIManager {
     }
 
     updateHand() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) 
-            {
+        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
+
             if(i < this.hand.length){
                 this.cardsUI[i].enable();
                 this.cardsUI[i].update(this.hand[i].name);
             }
             else {
-                // this.cards[i].deactivate();
                 this.cardsUI[i].disable();
+                this.cardsUI[i].unhighlight();
             }
         }
     }

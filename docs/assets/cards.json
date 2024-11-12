@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "CardName1",
+    "name": "Stomp",
     "text": "Description1",
     "move":  1,
     "damage": 1,
@@ -11,7 +11,7 @@
   },
   {
     "id": 2,
-    "name": "CardName2",
+    "name": "Kick",
     "text": "Description2",
     "move":  0,
     "damage": 2,
@@ -21,7 +21,7 @@
   },
   {
     "id": 3,
-    "name": "CardName3",
+    "name": "Giga Impact",
     "text": "Description3",
     "move":  3,
     "damage": 2,
@@ -41,7 +41,7 @@
   },
   {
     "id": 5,
-    "name": "CardName5",
+    "name": "Trample",
     "text": "Description5",
     "move":  2,
     "damage": 4,
@@ -61,7 +61,7 @@
   },
   {
     "id": 7,
-    "name": "CardName7",
+    "name": "Tremor",
     "text": "Description7",
     "move":  0,
     "damage": 3,
@@ -71,12 +71,12 @@
   },
   {
     "id": 8,
-    "name": "CardName8",
+    "name": "Coz",
     "text": "Description8",
-    "move":  2,
-    "damage": 2,
+    "move":  0,
+    "damage": 5,
     "areaOfEffect": true,
-    "range": 0,
+    "range": 1,
     "stun": true
   }
 ]

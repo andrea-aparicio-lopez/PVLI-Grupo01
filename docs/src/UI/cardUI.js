@@ -21,14 +21,16 @@ export default class CardUI extends Button {
             x, 
             y, 
             this.text, 
-            { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-                fontSize: '10px'}
-        );
+            { fontFamily: '"Fantasy", Times, serif',
+                fontSize: '10px',
+                color: '0x8380B6'
+            }
+        ).setOrigin(0);
 
         this.index = index;
 
-        this.highlightColor = 0xf8976f;
-        this.selectedColor = 0x00c76f;
+        this.highlightColor = 0x6CD4FF;
+        this.selectedColor = 0xEE4266;
 
     }
     
