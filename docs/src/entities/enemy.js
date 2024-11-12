@@ -42,18 +42,6 @@ export default class Enemy extends Entity {
 
         this.move(moveX, moveY);
     }
-
-    move(x, y) {
-        console.log(this.getWorldPos());
-        this.worldPos.x += x;
-        this.worldPos.y += y;
-
-        if (this.worldPos.x < 0) this.worldPos.x = 0;
-        if (this.worldPos.x > 9) this.worldPos.x = 9;
-        if (this.worldPos.y < 0) this.worldPos.y = 0;
-        if (this.worldPos.y > 9) this.worldPos.y = 9;
-    }
-
     die() {
         super.die();
     }
