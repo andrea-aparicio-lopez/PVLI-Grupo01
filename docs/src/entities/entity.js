@@ -73,4 +73,18 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.x = this.worldPos.x * 16 * SCALE;
         this.y = this.worldPos.y * 16 * SCALE;
     }
+
+    move(x, y) {
+        this.worldPos.x += x;
+        this.worldPos.y += y;
+
+        if (this.worldPos.x < 0) this.worldPos.x = 0;
+        if (this.worldPos.x > 9) this.worldPos.x = 9;
+        if (this.worldPos.y < 0) this.worldPos.y = 0;
+        if (this.worldPos.y > 9) this.worldPos.y = 9;
+    }
+
+    playMovingAnimation() {
+
+    }
 }

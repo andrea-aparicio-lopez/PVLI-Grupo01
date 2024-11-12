@@ -14,9 +14,34 @@ export default class Enemy extends Entity {
 
     /** @summary Llama a la IA para jugar su turno */
     playTurn() {
-        super.playTurn();
+        this.moveToPlayer();
     }
 
+    moveToPlayer() {
+        let moveX, moveY;
+        if (this.worldPos.x > this.scene.player.player.worldPos.x) {
+            moveX = -1;
+        }
+        else if (this.worldPos.x < this.scene.player.player.worldPos.x) {
+            moveX = 1;
+        }
+        else moveX = 0;
+
+        if (moveX == 0) {
+            if (this.worldPos.y > this.scene.player.player.worldPos.y) {
+                moveY = -1;
+            }
+            else if (this.worldPos.y < this.scene.player.player.worldPos.y) {
+                moveY = 1;
+            }
+            else moveY = 0;
+        }
+        else moveY = 0;
+
+        
+
+        this.move(moveX, moveY);
+    }
     die() {
         super.die();
     }

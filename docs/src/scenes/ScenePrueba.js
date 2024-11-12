@@ -28,6 +28,7 @@ export default class Example extends Phaser.Scene {
 
         this.load.image('player_sprite', '../../assets/textures/toni.png');
         this.load.image('ally_sprite', '../../assets/textures/allyBull.png');
+        this.load.image('pirate_sprite', '../../assets/textures/pirata.png');
         }
 
         
@@ -78,19 +79,19 @@ export default class Example extends Phaser.Scene {
 
         
         // Create enemy group
-        let enemiesGroup = this.physics.add.group();
-        let enemy = new Enemy(this, 2, 3, "player_sprite", 0, 20);
-        enemiesGroup.add(enemy);
+        this.enemiesGroup = this.physics.add.group();
+        this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
+        this.enemiesGroup.add(this.enemy);
 
         // Create collision overlap for enemies
         this.enemyOverlap = this.physics.add.overlap(
-            enemiesGroup,
+            this.enemiesGroup,
             this.damageRectsGroup,
-            (enemy, rect) => {
-                if (enemy.getCombatState()) {
-                    enemy.hurt(rect.damage);
-                    enemy.stun(rect.stun);
-                    enemy.setCombatState(false);
+            (rect) => {
+                if (this.enemy.getCombatState()) {
+                    this.enemy.hurt(rect.damage);
+                    this.enemy.stun(rect.stun);
+                    this.enemy.setCombatState(false);
                 }
             }
         );
@@ -141,11 +142,12 @@ export default class Example extends Phaser.Scene {
     }
 
     startEnemyTurn() {
-        //llama a la ia de los enemigos, o sus comportamientos
+        this.enemy.playTurn();
         this.endEnemyTurn();
     }
 
     endEnemyTurn() {
+        
         this.playAllAnimations();
     }
 
@@ -169,6 +171,7 @@ export default class Example extends Phaser.Scene {
         this.player.player.update();
         this.uiManager.update();
 
+        this.enemy.update();
     }
 
 }

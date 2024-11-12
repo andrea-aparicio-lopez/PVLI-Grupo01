@@ -61,28 +61,28 @@ export default class Player {
             
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.move(0, -1);
+                this.player.move(0, -1);
                 this.player.setDirection({
                     x: 0,
                     y: -1
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.move(-1,0);
+                this.player.move(-1,0);
                 this.player.setDirection({
                     x: -1,
                     y: 0
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.move(0, 1);
+                this.player.move(0, 1);
                 this.player.setDirection({
                     x: 0,
                     y: 1
                 })
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.move(1,0);
+                this.player.move(1,0);
                 this.player.setDirection({
                     x: 1,
                     y: 0
@@ -94,18 +94,6 @@ export default class Player {
 
     updateAllies() {
         this.player.scene.endPlayerTurn();
-    }
-
-    move(x, y) {
-        console.log(this.player.getWorldPos());
-        this.player.worldPos.x += x;
-        this.player.worldPos.y += y;
-
-        if (this.player.worldPos.x < 0) this.player.worldPos.x = 0;
-        if (this.player.worldPos.x > 9) this.player.worldPos.x = 9;
-        if (this.player.worldPos.y < 0) this.player.worldPos.y = 0;
-        if (this.player.worldPos.y > 9) this.player.worldPos.y = 9;
-        console.log(this.player.getWorldPos());
     }
 
     endTurn() {
