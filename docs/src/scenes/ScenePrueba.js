@@ -154,6 +154,8 @@ export default class Example extends Phaser.Scene {
     playAllAnimations() {
         let TIME = 200;
         this.player.mainPlayer.playMovingAnimation(TIME)
+        for(let i = 0; i < this.player.allies.length; i++)
+            this.player.allies[i].playMovingAnimation(TIME);
         this.enemy.playMovingAnimation(TIME);
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
@@ -166,6 +168,8 @@ export default class Example extends Phaser.Scene {
 
     stopAllAnimations() {
         this.player.mainPlayer.onMovingAnimation = false;
+        for(let i = 0; i < this.player.allies.length; i++)
+            this.player.allies[i].onMovingAnimation = false;
         this.enemy.onMovingAnimation = false;
         this.startPlayerTurn();
     }
@@ -174,6 +178,8 @@ export default class Example extends Phaser.Scene {
         this.uiManager.update();
 
         this.player.mainPlayer.update(time, delta);
+        for(let i = 0; i < this.player.allies.length; i++)
+            this.player.allies[i].update();
         this.enemy.update(time, delta);
     }
 

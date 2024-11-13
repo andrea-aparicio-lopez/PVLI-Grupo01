@@ -53,7 +53,7 @@ export default class Player {
     }   
 
     startTurn() {
-        console.log("started turn");
+        // console.log("started player turn");
         
         this.isTurn = true;
         this.drawCard();
@@ -87,14 +87,16 @@ export default class Player {
     }
 
     updateAllies() {
-        for(let i = 0; i < this.allies.length; i++)
+        for(let i = 0; i < this.allies.length; i++) {
             this.allies[i].moveToPlayer();
+            console.log("moviendo aliado " + i + " en posicion " + this.allies[i].worldPos.x + " " + this.allies[i].worldPos.y);
+        }
 
         this.mainPlayer.scene.endPlayerTurn();
     }
 
     endTurn() {
-        console.log("ended turn");
+        // console.log("ended player turn");
         this.isTurn = false;
     }
 
