@@ -22,6 +22,9 @@
 }
 
 /* GLOBAL STYLES */
+html {
+    scroll-behavior: smooth;
+}
 body {
     color: var(--secondary-color);
     background-color: var(--secondary-color);
@@ -80,6 +83,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: var(--header-padding);
+    position: sticky;
+    top: 0;
 }
 
 .logo p {
@@ -107,6 +112,14 @@ main {
     margin-top: var(--section-gap);
 }
 
+#juego {
+    width: 100%;
+}
+
+canvas {
+    margin-left: auto;
+}
+
 .section-info {
     background-color: var(--tertiary-color);
     padding: var(--info-padding);
@@ -116,6 +129,25 @@ main {
 .section-info.plus {
     margin-top: var(--info-gap);
 }
+
+#controles .section-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--info-gap)
+}
+
+#controles .control {
+    display: flex;
+    gap: 1rem;
+}
+
+#controles .control .key {
+    width: 15%;
+}
+#controles .control .description {
+    flex: 1;
+}
+
 
 .icons {
     display: flex;
