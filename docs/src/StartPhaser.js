@@ -1,3 +1,4 @@
+import ScenePrueba from './scenes/ScenePrueba.js'
 class Example extends Phaser.Scene {
     preload() {
         this.load.setBaseURL('https://labs.phaser.io');
@@ -26,20 +27,31 @@ class Example extends Phaser.Scene {
     }
 }
 
-var config = {
+let config = {
     type: Phaser.AUTO,
     parent: "juego",
     scale: {
         mode: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        width: 480,
+        height: 480,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
 
     },
-    scene: Example,
-    physics: {
-        default: 'arcade', // elegir motor
-
-    }
+    pixelArt: true,
+    scene: [ScenePrueba],
+    physics: {  
+        default: 'arcade', //Tenemos físicas simple, arcade
+        arcade: { 
+            gravity: { y: 0 }, //Tenemos gravedad, podemos modificarla para aumentar su fuera o disminuirla
+            debug: false // Aquí indicamos si queremos que Phaser pinte los cuerpos y fuerzas de los objetos con físicas
+        },
+        checkCollision: {
+            up: true,
+            down: true,
+            left: true,
+            right: true
+        }
+    },
+    
 }
 const game = new Phaser.Game(config);
