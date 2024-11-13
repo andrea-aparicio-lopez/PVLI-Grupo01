@@ -26,7 +26,7 @@ export default class Enemy extends Entity {
         else if (this.worldPos.y > this.scene.player.mainPlayer.worldPos.y) 
             this.setDirection(0,-1);
         else if (this.worldPos.y < this.scene.player.mainPlayer.worldPos.y) 
-            this.setDirection(1,0);
+            this.setDirection(0,1);
 
         this.moveInDirection();
     }

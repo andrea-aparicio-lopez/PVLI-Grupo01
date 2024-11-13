@@ -116,10 +116,10 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     }
 
     playMovingAnimation(TIME) {
+        console.log("animation");
         this.velocity.x *= (16 * SCALE) / (TIME / 1000);
         this.velocity.y *= (16 * SCALE) / (TIME / 1000);
 
-        console.log(this.velocity);
         this.onMovingAnimation = true;
     }
 
