@@ -130,7 +130,7 @@ export default class Example extends Phaser.Scene {
     }
 
     inputToPlayer(event) {
-        this.player.recieveEvent(event);
+        this.player.receiveEvent(event);
     }
 
     endPlayerTurn() {
@@ -153,7 +153,7 @@ export default class Example extends Phaser.Scene {
 
     playAllAnimations() {
         let TIME = 200;
-        this.player.player.playMovingAnimation(TIME)
+        this.player.mainPlayer.playMovingAnimation(TIME)
         this.enemy.playMovingAnimation(TIME);
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
@@ -165,7 +165,7 @@ export default class Example extends Phaser.Scene {
     }
 
     stopAllAnimations() {
-        this.player.player.onMovingAnimation = false;
+        this.player.mainPlayer.onMovingAnimation = false;
         this.enemy.onMovingAnimation = false;
         this.startPlayerTurn();
     }
@@ -173,7 +173,7 @@ export default class Example extends Phaser.Scene {
     update(time, delta) {
         this.uiManager.update();
 
-        this.player.player.update(time, delta);
+        this.player.mainPlayer.update(time, delta);
         this.enemy.update(time, delta);
     }
 

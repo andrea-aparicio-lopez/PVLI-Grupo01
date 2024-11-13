@@ -60,44 +60,50 @@ export default class Player {
         this.drawCard();
     }
 
-    recieveEvent(event) {
+    receiveEvent(event) {
         console.log();
         if (this.isTurn == true) {
-            
+            let hasMoved;
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.mainPlayerlayer.move(0, -1);
                 this.mainPlayer.setDirection({
                     x: 0,
                     y: -1
                 })
+                hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.mainPlayer.move(-1,0);
                 this.mainPlayer.setDirection({
                     x: -1,
                     y: 0
                 })
+                hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.mainPlayer.move(0, 1);
                 this.mainPlayer.setDirection({
                     x: 0,
                     y: 1
                 })
+                hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.mainPlayer.move(1,0);
                 this.mainPlayer.setDirection({
                     x: 1,
                     y: 0
                 })
+                hasMoved = this.mainPlayer.moveInDirection();
             }
-            this.updateAllies();
+            if(hasMoved) {
+                console.log("me he movido a la posición " + this.mainPlayer.worldPos.x + " " + this.mainPlayer.getWorldPos().y);
+                this.updateAllies();
+            }
         }
     }
 
     updateAllies() {
+        for(let i = 0; i < this.allies.length; i++)
+            this.allies[i].moveToPlayer();
+
         this.mainPlayer.scene.endPlayerTurn();
     }
 
