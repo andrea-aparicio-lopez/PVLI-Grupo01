@@ -122,6 +122,25 @@ main {
     margin-top: var(--info-gap);
 }
 
+#controles .section-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--info-gap)
+}
+
+#controles .control {
+    display: flex;
+    gap: 1rem;
+}
+
+#controles .control .key {
+    width: 15%;
+}
+#controles .control .description {
+    flex: 1;
+}
+
+
 .icons {
     display: flex;
     justify-content: center;
