@@ -112,6 +112,14 @@ main {
     margin-top: var(--section-gap);
 }
 
+#juego {
+    width: 100%;
+}
+
+canvas {
+    margin-left: auto;
+}
+
 .section-info {
     background-color: var(--tertiary-color);
     padding: var(--info-padding);
