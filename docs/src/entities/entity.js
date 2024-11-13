@@ -73,6 +73,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
         else if (this.worldPos.y === 9 && this.direction.y > 0) return false;
 
+        this.prevWorldPos.x = this.worldPos.x;
+        this.prevWorldPos.y = this.worldPos.y;
+
         this.worldPos.x += this.direction.x;
         this.worldPos.y += this.direction.y;
         return true;
@@ -117,8 +120,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     playMovingAnimation(TIME) {
         console.log("animation");
-        this.velocity.x *= (16 * SCALE) / (TIME / 1000);
-        this.velocity.y *= (16 * SCALE) / (TIME / 1000);
+        this.velocity.x = this.direction.x * (16 * SCALE) / (TIME / 1000);
+        this.velocity.y = this.direction.y * (16 * SCALE) / (TIME / 1000);
 
         this.onMovingAnimation = true;
     }
