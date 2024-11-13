@@ -23,12 +23,12 @@ export default class Example extends Phaser.Scene {
         this.load.json("deckData", "./assets/deck.json");
 
         //carga de tilemap
-        this.load.image('tile', '../../assets/tiles/tilemap2/barco spritesheet.png');
-        this.load.tilemapTiledJSON('tilemap' , '../../assets/tiles/tilemap2/boat_map.json');
+        this.load.image('tile', './assets/tiles/tilemap2/barco spritesheet.png');
+        this.load.tilemapTiledJSON('tilemap' , './assets/tiles/tilemap2/boat_map.json');
 
-        this.load.image('player_sprite', '../../assets/textures/toni.png');
-        this.load.image('ally_sprite', '../../assets/textures/allyBull.png');
-        this.load.image('pirate_sprite', '../../assets/textures/pirata.png');
+        this.load.image('player_sprite', './assets/textures/toni.png');
+        this.load.image('ally_sprite', './assets/textures/allyBull.png');
+        this.load.image('pirate_sprite', './assets/textures/pirata.png');
         }
 
         
