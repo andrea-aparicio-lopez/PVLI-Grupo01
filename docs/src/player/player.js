@@ -43,7 +43,6 @@ export default class Player {
         if (this.isTurn) {
             let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
             let card = cardArray[0];
-            console.log("Card played BY:", this.mainPlayer);
             card.playedBy(this.mainPlayer);
             this.graveyard.push(card);
             //console.log("Player hand:", this.deck.currentDeck);
@@ -66,31 +65,19 @@ export default class Player {
             let hasMoved;
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.mainPlayer.setDirection({
-                    x: 0,
-                    y: -1
-                })
+                this.mainPlayer.setDirection(0, -1);
                 hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.mainPlayer.setDirection({
-                    x: -1,
-                    y: 0
-                })
+                this.mainPlayer.setDirection(-1, 0);
                 hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.mainPlayer.setDirection({
-                    x: 0,
-                    y: 1
-                })
+                this.mainPlayer.setDirection(0, 1);
                 hasMoved = this.mainPlayer.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.mainPlayer.setDirection({
-                    x: 1,
-                    y: 0
-                })
+                this.mainPlayer.setDirection(1, 0);
                 hasMoved = this.mainPlayer.moveInDirection();
             }
             if(hasMoved) {
