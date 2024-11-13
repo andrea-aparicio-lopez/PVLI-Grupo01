@@ -43,8 +43,8 @@ export default class Player {
         if (this.isTurn) {
             let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
             let card = cardArray[0];
-            //console.log("Card played:", card);
-            card.playedBy(this.player);
+            console.log("Card played BY:", this.mainPlayer);
+            card.playedBy(this.mainPlayer);
             this.graveyard.push(card);
             //console.log("Player hand:", this.deck.currentDeck);
 

@@ -59,7 +59,7 @@ export default class UIManager {
     listenToCardHover(index) {
         // console.log("Hovering:", index);
         this.cardsUI[index].highlight();
-        this.hand[index].visualizePlay(this.player.player);
+        this.hand[index].visualizePlay(this.player.mainPlayer);
     }
 
     listenToCardOut(index) {
