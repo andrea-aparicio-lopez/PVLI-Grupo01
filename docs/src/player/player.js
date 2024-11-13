@@ -81,7 +81,6 @@ export default class Player {
                 hasMoved = this.mainPlayer.moveInDirection();
             }
             if(hasMoved) {
-                console.log("me he movido a la posición " + this.mainPlayer.worldPos.x + " " + this.mainPlayer.getWorldPos().y);
                 this.updateAllies();
             }
         }
