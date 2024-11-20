@@ -68,10 +68,13 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         // else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
         // else if (this.worldPos.y = this.scene.layer1.displayHeight - 1 && this.direction.y > 0) return false;
 
-        if (this.worldPos.x === 0 && this.direction.x < 0) return false;
-        else if (this.worldPos.x === this.scene.map.width-1 && this.direction.x > 0) return false;
-        else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
-        else if (this.worldPos.y === this.scene.map.height-1 && this.direction.y > 0) return false;
+        if (this.direction.x < 0 && ((this.worldPos.x === 0) || (this.scene.obstacles[this.worldPos.x-1][this.worldPos.y] == true))) return false;
+
+        else if (this.direction.x > 0 && ((this.worldPos.x === this.scene.map.width - 1 ) || (this.scene.obstacles[this.worldPos.x+1] [this.worldPos.y] == true))) return false;
+
+        else if (this.direction.y < 0 && ((this.worldPos.y === 0 ) || (this.scene.obstacles[this.worldPos.x][this.worldPos.y-1] == true))) return false;
+
+        else if (this.direction.y > 0 && ((this.worldPos.y === this.scene.map.height - 1) || (this.scene.obstacles[this.worldPos.x][this.worldPos.y + 1] == true))) return false;
 
         this.prevWorldPos.x = this.worldPos.x;
         this.prevWorldPos.y = this.worldPos.y;
