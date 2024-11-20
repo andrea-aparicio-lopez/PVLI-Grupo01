@@ -13,7 +13,12 @@ export default class Example extends Phaser.Scene {
         this.playerTurn = true;
         this.wait = false;
 
+        //mapa
+        this.map;
+
         this.damageRectsGroup;
+
+        this.obstacles;
     }
 
     preload() {
@@ -24,6 +29,7 @@ export default class Example extends Phaser.Scene {
 
         //carga de tilemap
         this.load.image('tile', './assets/tiles/tilemap2/barco spritesheet.png');
+        this.load.json('tilemapJSON', './assets/tiles/tilemap2/boat_map.json');
         this.load.tilemapTiledJSON('tilemap' , './assets/tiles/tilemap2/boat_map.json');
 
         this.load.image('player_sprite', './assets/textures/toni.png');
@@ -45,16 +51,22 @@ export default class Example extends Phaser.Scene {
         // console.log(ally.getPosition());
 
                 // create the Tilemap
-        const map = this.make.tilemap({ key: "tilemap" });
-        const tileset = map.addTilesetImage("boat_spritesheet", "tile");
-        const layer1 = map.createLayer("ground", tileset);
+        this.map = this.make.tilemap({ key: "tilemap" });
+        const tileset = this.map.addTilesetImage("boat_spritesheet", "tile");
+        const layer1 = this.map.createLayer("ground", tileset);
         layer1.setScale(3, 3);
 
-        const layer2 = map.createLayer("water", tileset);
+        const layer2 = this.map.createLayer("water", tileset);
         layer2.setScale(3, 3);
         //map.setBaseTileSize(32, 32);
 
-     
+        this.obstacle = Array(this.map.width).fill().map(() => Array(this.map.height).fill());
+
+        for (let i = 0; i < layer2.culledTiles.length; i++) {
+            
+            this.obstacle[layer2.culledTiles[i].x, layer2.culledTiles[i].y] = true;
+        }
+        console.log(this.obstacle);
 
         // Create rects for damage viz and calc
         this.damageRectsGroup = this.physics.add.group();

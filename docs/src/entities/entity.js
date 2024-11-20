@@ -69,9 +69,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         // else if (this.worldPos.y = this.scene.layer1.displayHeight - 1 && this.direction.y > 0) return false;
 
         if (this.worldPos.x === 0 && this.direction.x < 0) return false;
-        else if (this.worldPos.x === 9 && this.direction.x > 0) return false;
+        else if (this.worldPos.x === this.scene.map.width-1 && this.direction.x > 0) return false;
         else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
-        else if (this.worldPos.y === 9 && this.direction.y > 0) return false;
+        else if (this.worldPos.y === this.scene.map.height-1 && this.direction.y > 0) return false;
 
         this.prevWorldPos.x = this.worldPos.x;
         this.prevWorldPos.y = this.worldPos.y;
