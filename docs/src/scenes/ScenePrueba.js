@@ -18,7 +18,7 @@ export default class Example extends Phaser.Scene {
 
         this.damageRectsGroup;
 
-        this.obstacles;
+        this.obstacles = [];
     }
 
     preload() {
@@ -60,13 +60,21 @@ export default class Example extends Phaser.Scene {
         layer2.setScale(3, 3);
         //map.setBaseTileSize(32, 32);
 
-        this.obstacle = Array(this.map.width).fill().map(() => Array(this.map.height).fill());
-
-        for (let i = 0; i < layer2.culledTiles.length; i++) {
-            
-            this.obstacle[layer2.culledTiles[i].x, layer2.culledTiles[i].y] = true;
+        for (var i = 0; i < this.map.width; i++) {
+            this.obstacles[i] = [];
+            for (var j = 0; j < this.map.height; j++) {
+                this.obstacles[i][j] = false;
+            }
         }
-        console.log(this.obstacle);
+
+        for (let i = 0; i < this.map.width; i++) {
+            
+            for (let j = 0; j < this.map.height; j++) {
+
+                if (layer2.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
+            }
+        }
+        console.log(this.obstacles)
 
         // Create rects for damage viz and calc
         this.damageRectsGroup = this.physics.add.group();
