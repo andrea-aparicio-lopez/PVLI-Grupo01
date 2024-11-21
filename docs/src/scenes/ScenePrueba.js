@@ -75,6 +75,7 @@ export default class Example extends Phaser.Scene {
                 if (layer2.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
             }
         }
+        console.log(this.obstacles);
         ////////////////////////////////////////////////////////////
 
         // Create rects for damage viz and calc
