@@ -32,7 +32,7 @@ let config = {
     parent: "juego",
     scale: {
         mode: Phaser.AUTO,
-        width: 480,
+        width: 720,
         height: 480,
         autoCenter: Phaser.Scale.CENTER_BOTH,
 
@@ -42,7 +42,7 @@ let config = {
     physics: {  
         default: 'arcade', //Tenemos físicas simple, arcade
         arcade: { 
-            gravity: { y: 0 }, //Tenemos gravedad, podemos modificarla para aumentar su fuera o disminuirla
+            gravity: { y: 0 }, //Tenemos gravedad, podemos modificarla para aumentar su fuerza o disminuirla
             debug: false // Aquí indicamos si queremos que Phaser pinte los cuerpos y fuerzas de los objetos con físicas
         },
         checkCollision: {
