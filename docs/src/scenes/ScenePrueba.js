@@ -91,7 +91,7 @@ export default class Example extends Phaser.Scene {
         this.player = new Player(this, cardsData, deckData, bull, allyArray);
 
         
-        // Create enemy group
+        // ENEMIES
         this.enemiesGroup = this.physics.add.group();
         this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
         this.enemiesGroup.add(this.enemy);
