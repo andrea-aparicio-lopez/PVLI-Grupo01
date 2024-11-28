@@ -42,14 +42,7 @@ export default class Example extends Phaser.Scene {
         const deckData = this.cache.json.get('deckData');
         // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
 
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
-
-        // console.log(ally.getPosition());
-
-        // create Tilemap
+        // TILEMAP
         this.map = this.make.tilemap({ key: "boat" });
         const tileset = this.map.addTilesetImage("Barco", "tiles");
         const waterLayer = this.map.createLayer("water", tileset).setScale(3);

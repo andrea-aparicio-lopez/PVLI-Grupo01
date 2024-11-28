@@ -1,3 +1,4 @@
+import MainMenu from './scenes/MainMenu.js';
 import ScenePrueba from './scenes/ScenePrueba.js'
 class Example extends Phaser.Scene {
     preload() {
@@ -38,7 +39,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [ScenePrueba],
+    scene: [MainMenu, ScenePrueba],
     physics: {  
         default: 'arcade', //Tenemos físicas simple, arcade
         arcade: { 
