@@ -54,6 +54,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setDirection(x,y) {
         this.direction.x = x;
         this.direction.y = y;
+        console.log(this.direction);
     }
 
     getWorldPos() {return this.worldPos;}
@@ -68,16 +69,23 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         // else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
         // else if (this.worldPos.y = this.scene.layer1.displayHeight - 1 && this.direction.y > 0) return false;
 
-        if (this.worldPos.x === 0 && this.direction.x < 0) return false;
-        else if (this.worldPos.x === 9 && this.direction.x > 0) return false;
-        else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
-        else if (this.worldPos.y === 9 && this.direction.y > 0) return false;
+        if (this.direction.x < 0 && this.worldPos.x === 0) return false;
+
+        else if (this.direction.x > 0 && this.worldPos.x === this.scene.map.width - 1 ) return false;
+
+        else if (this.direction.y < 0 && this.worldPos.y === 0 ) return false;
+
+        else if (this.direction.y > 0 && this.worldPos.y === this.scene.map.height - 1) return false;
+
+        if (this.scene.obstacles[this.worldPos.y + this.direction.y][this.worldPos.x + this.direction.x] == true) return false;
 
         this.prevWorldPos.x = this.worldPos.x;
         this.prevWorldPos.y = this.worldPos.y;
 
-        this.worldPos.x += this.direction.x;
-        this.worldPos.y += this.direction.y;
+        this.worldPos.x = this.worldPos.x + this.direction.x;
+        this.worldPos.y = this.worldPos.y + this.direction.y;
+
+        console.log(this.worldPos);
         return true;
     }
 
@@ -119,7 +127,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     }
 
     playMovingAnimation(TIME) {
-        console.log("animation");
+        //console.log("animation");
         this.velocity.x = this.direction.x * (16 * SCALE) / (TIME / 1000);
         this.velocity.y = this.direction.y * (16 * SCALE) / (TIME / 1000);
 

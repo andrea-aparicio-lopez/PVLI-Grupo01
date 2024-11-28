@@ -13,7 +13,12 @@ export default class Example extends Phaser.Scene {
         this.playerTurn = true;
         this.wait = false;
 
+        //mapa
+        this.map;
+
         this.damageRectsGroup;
+
+        this.obstacles = [];
     }
 
     preload() {
@@ -23,8 +28,8 @@ export default class Example extends Phaser.Scene {
         this.load.json("deckData", "./assets/deck.json");
 
         //carga de tilemap
-        this.load.image('tile', './assets/tiles/tilemap2/barco spritesheet.png');
-        this.load.tilemapTiledJSON('tilemap' , './assets/tiles/tilemap2/boat_map.json');
+        this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
+        this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
 
         this.load.image('player_sprite', './assets/textures/toni.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
@@ -37,34 +42,42 @@ export default class Example extends Phaser.Scene {
         const deckData = this.cache.json.get('deckData');
         // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
 
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
-        // console.log(ally.incrPosX());
+        // TILEMAP
+        this.map = this.make.tilemap({ key: "boat" });
+        const tileset = this.map.addTilesetImage("Barco", "tiles");
+        const waterLayer = this.map.createLayer("water", tileset).setScale(3);
+        const groundLayer = this.map.createLayer("ground", tileset).setScale(3);
+        const obstacleLayer = this.map.createLayer("obstacles", tileset).setScale(3);
+        obstacleLayer.setCollisionByProperty({ collides : true });
 
-        // console.log(ally.getPosition());
 
-                // create the Tilemap
-        const map = this.make.tilemap({ key: "tilemap" });
-        const tileset = map.addTilesetImage("boat_spritesheet", "tile");
-        const layer1 = map.createLayer("ground", tileset);
-        layer1.setScale(3, 3);
 
-        const layer2 = map.createLayer("water", tileset);
-        layer2.setScale(3, 3);
-        //map.setBaseTileSize(32, 32);
+        //OBSTACULOS//////////////////////////////////////////////////
+        for (var i = 0; i < this.map.width; i++) {
+            this.obstacles[i] = [];
+            for (var j = 0; j < this.map.height; j++) {
+                this.obstacles[i][j] = false;
+            }
+        }
 
-     
+        for (let i = 0; i < this.map.height; i++) {
+            
+            for (let j = 0; j < this.map.width; j++) {
+                if (obstacleLayer.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
 
         // Create rects for damage viz and calc
         this.damageRectsGroup = this.physics.add.group();
         let rectColor = 0xff0000;
 
-        layer1.forEachTile((tile) => {
-            const x = tile.pixelX * layer1.scaleX;
-            const y = tile.pixelY * layer1.scaleY;
-            const width = tile.width * layer1.scaleX;
-            const height = tile.height * layer1.scaleY;
+        groundLayer.forEachTile((tile) => {
+            const x = tile.pixelX * groundLayer.scaleX;
+            const y = tile.pixelY * groundLayer.scaleY;
+            const width = tile.width * groundLayer.scaleX;
+            const height = tile.height * groundLayer.scaleY;
 
             let rect = new DamageRect(this, x, y, width, height, rectColor, 0.5, 10);
             this.damageRectsGroup.add(rect);
@@ -78,7 +91,7 @@ export default class Example extends Phaser.Scene {
         this.player = new Player(this, cardsData, deckData, bull, allyArray);
 
         
-        // Create enemy group
+        // ENEMIES
         this.enemiesGroup = this.physics.add.group();
         this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
         this.enemiesGroup.add(this.enemy);
