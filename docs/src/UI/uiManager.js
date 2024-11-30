@@ -18,29 +18,7 @@ export default class UIManager {
         this.player = player;
         this.hand = this.player.hand;
 
-        this.cardsUI = [];
-        let cardColor = 0xFCA311;
-
-
-        this.table = table;
-        console.log(this.table.cardSlots[0].x);
-        
-
-        for (let i = 0; i < Player.MAX_CARD_NUM ; i++) {
-            // Create buttons
-            let card = new CardUI(this.scene,
-                this.table.cardSlots[i].x,
-                this.table.cardSlots[i].y,
-                GI.cardSpecs.width,
-                GI.cardSpecs.height,
-                cardColor,
-                1,
-                "empty1234",
-                i
-            );
-            this.cardsUI.push(card);
-        }
-
+        this.cardsUI = table.cardSlots;
         
         this.indexSelectedCard;
         this.clickedCard;
@@ -70,13 +48,13 @@ export default class UIManager {
 
     listenToCardHover(index) {
         // console.log("Hovering:", index);
-        this.cardsUI[index].highlight();
+        this.cardsUI[index].card.highlight();
         this.hand[index].visualizePlay(this.player.mainPlayer);
     }
 
     listenToCardOut(index) {
         // console.log("Out:", index);
-        this.cardsUI[index].unhighlight();
+        this.cardsUI[index].card.unhighlight();
         this.hand[index].endVisualizePlay();
     }
 
@@ -88,25 +66,25 @@ export default class UIManager {
         for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
 
             if(i < this.hand.length){
-                this.cardsUI[i].enable();
-                this.cardsUI[i].update(this.hand[i].name);
+                this.cardsUI[i].card.enable();
+                this.cardsUI[i].card.update(this.hand[i].name);
             }
             else {
-                this.cardsUI[i].disable();
-                this.cardsUI[i].unhighlight();
+                this.cardsUI[i].card.disable();
+                this.cardsUI[i].card.unhighlight();
             }
         }
     }
 
     setInteractiveCards() {
         for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
-            this.cardsUI[i].setButtonInteractive();
+            this.cardsUI[i].card.setButtonInteractive();
         }
     }
 
     disableInteractiveCards() {
         for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
-            this.cardsUI[i].unsetButtonInteractive();
+            this.cardsUI[i].card.unsetButtonInteractive();
         }
     }
 }

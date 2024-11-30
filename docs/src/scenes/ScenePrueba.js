@@ -37,7 +37,11 @@ export default class Example extends Phaser.Scene {
         this.load.image('player_sprite', './assets/textures/toni.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
-        }
+
+        // table
+        this.load.image('table_background', './assets/textures/table_background.png');
+        this.load.image('table_text_box', './assets/textures/table_text_box.png');
+    }
 
         
     create() {
@@ -129,9 +133,7 @@ export default class Example extends Phaser.Scene {
         console.log("Graveyard", this.player.graveyard);
 
         // Create table:
-        this.table = new Table(this, 
-            GI.table.x, 
-            GI.table.y)
+        this.table = new Table(this, GI.table.x, GI.table.y);
         // Create UI Manager
         this.uiManager = new UIManager(this, this.player, this.table);
 

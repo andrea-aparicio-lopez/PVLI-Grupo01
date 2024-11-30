@@ -31,7 +31,29 @@ const card_4_y = card_3_y + offset_y;
 const card_5_y = card_4_y + offset_y;
 const card_6_y = card_5_y + offset_y;
 
+const card_width = centralPanel_x/2;
+const cardSpecs = {
+    width: card_width,
+    height: 70,
+    color: 0xFCA311,
+    fontSize: '15px',
+    fontFamily: 'bold   Arial',
+}
+
+const text_box_margin = 5;
+const text_box_x = text_box_margin;
+const text_box_y = card_6_y + + cardSpecs.height + text_box_margin;
+const text_box_width = centralPanel_x - 2*text_box_margin;
+const text_box_height = gameConst.gameWindowHeight - (text_box_y + text_box_margin);
+
+const text_margin = 10;
+const text_x = text_box_margin + text_margin;
+const text_y = text_box_y + text_margin;
+const text_width = centralPanel_x - 2*text_margin;
+const text_height = text_y + text_box_margin;
+
 const tableConst = {
+    backColor: '#fffaaa',
     width: centralPanel_x,
     height: gameConst.gameWindowHeight,
     hand: {
@@ -43,14 +65,22 @@ const tableConst = {
         card_4_y: card_4_y,
         card_5_y: card_5_y,
         card_6_y: card_6_y,
+    },
+    text: {
+        x: text_x,
+        y: text_y,
+        width: text_width,
+        height: text_height
+    },
+    textBox: {
+        x: text_box_x,
+        y: text_box_y,
+        width: text_box_width,
+        height: text_box_height
     }
 }
 
-const card_width = centralPanel_x/2;
-const cardSpecs = {
-    width: card_width,
-    height: 70
-}
+
 
 
 export const GI = {

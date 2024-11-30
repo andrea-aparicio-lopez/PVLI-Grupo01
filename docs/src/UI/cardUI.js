@@ -1,3 +1,4 @@
+import { GI } from '../graphics/graphicsInterface.js'
 import Button from "./button.js";
 
 export default class CardUI extends Button {
@@ -17,15 +18,18 @@ export default class CardUI extends Button {
     constructor(scene, x, y, width, height, color, alpha, text, index) {
         super(scene, x, y, width, height, color, alpha);
 
-        this.textDisplay = this.scene.add.text(
-            x, 
-            y, 
-            this.text, 
-            { fontFamily: '"Fantasy", Times, serif',
-                fontSize: '10px',
-                color: '0x8380B6'
-            }
-        ).setOrigin(0);
+        this.scene = scene;
+        this.text = this.scene.make.text({
+            x: x,
+            y: y,
+            text: this.text,
+            style: {
+                fontFamily: GI.cardSpecs.fontFamily,
+                fontSize: GI.cardSpecs.fontSize,
+                fill: '#8380B6',
+                wordWrap: { width: GI.cardSpecs.width }
+            },
+        })
 
         this.index = index;
 
@@ -47,19 +51,19 @@ export default class CardUI extends Button {
     enable() {
         this.makeVisible();
         this.setButtonInteractive();
-        this.textDisplay.alpha = 1;
+        this.text.alpha = 1;
     }
 
     disable() {
         this.makeInvisible();
         this.unsetButtonInteractive();
-        this.textDisplay.alpha = 0;
+        this.text.alpha = 0;
     }
 
     // unhighlight() {} 
 
     update(text) {
-        this.textDisplay.setText(text);
+        this.text.setText(text);
     }
 
 }
