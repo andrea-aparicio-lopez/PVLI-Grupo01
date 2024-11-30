@@ -6,8 +6,13 @@ import { GI } from '../graphics/graphicsInterface.js'
 
 
 export default class UIManager {
-
-    constructor(scene, player){
+    /**
+     * Constructor
+     * @param {Scene} scene
+     * @param {Player} player
+     * @param {Table} table
+     */
+    constructor(scene, player, table){
 
         this.scene = scene;
         this.player = player;
@@ -16,13 +21,18 @@ export default class UIManager {
         this.cardsUI = [];
         let cardColor = 0xFCA311;
 
+
+        this.table = table;
+        console.log(this.table.cardSlots[0].x);
+        
+
         for (let i = 0; i < Player.MAX_CARD_NUM ; i++) {
             // Create buttons
             let card = new CardUI(this.scene,
-                60 * i + 20,
-                400,
-                40,
-                70,
+                this.table.cardSlots[i].x,
+                this.table.cardSlots[i].y,
+                GI.cardSpecs.width,
+                GI.cardSpecs.height,
                 cardColor,
                 1,
                 "empty1234",

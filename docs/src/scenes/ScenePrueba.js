@@ -5,6 +5,7 @@ import Player from "../player/player.js";
 import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
 import UIManager from "../UI/uiManager.js";
+import Table from '../graphics/table.js'
 
 import { GI } from '../graphics/graphicsInterface.js'
 
@@ -127,8 +128,12 @@ export default class Example extends Phaser.Scene {
         console.log("Hand:", this.player.hand);
         console.log("Graveyard", this.player.graveyard);
 
+        // Create table:
+        this.table = new Table(this, 
+            GI.table.x, 
+            GI.table.y)
         // Create UI Manager
-        this.uiManager = new UIManager(this, this.player);
+        this.uiManager = new UIManager(this, this.player, this.table);
 
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
