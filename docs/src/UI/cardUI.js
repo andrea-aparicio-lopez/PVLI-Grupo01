@@ -15,18 +15,23 @@ export default class CardUI extends Button {
      * @param {number} index - posición [0, 5]
      * 
      */
-    constructor(scene, x, y, width, height, color, alpha, text, index) {
-        super(scene, x, y, width, height, color, alpha);
+    constructor(scene, x, y, width, height, color, index) {
+        super(scene, x, y, width, height, color, 1);
 
         this.scene = scene;
-        this.text = this.scene.make.text({
+        this.sprite = this.scene.add.sprite(x, y, 'card').setOrigin(0);
+        this.sprite.angle = 2;
+
+        this.description = "";
+
+        this.name = this.scene.make.text({
             x: x,
             y: y,
-            text: this.text,
+            text: "none",
             style: {
                 fontFamily: GI.cardSpecs.fontFamily,
                 fontSize: GI.cardSpecs.fontSize,
-                fill: '#8380B6',
+                fill: '#ffffff',
                 wordWrap: { width: GI.cardSpecs.width }
             },
         })
@@ -40,9 +45,15 @@ export default class CardUI extends Button {
     
     onClick() { this.scene.uiManager.listenToCardClick(this.index); }
 
-    onHover() { this.scene.uiManager.listenToCardHover(this.index); }
+    onHover() { 
+        this.scene.uiManager.listenToCardHover(this.index);
+        this.scene.events.emit('hoveringCard', this);
+    }
 
-    onOut() { this.scene.uiManager.listenToCardOut(this.index); }
+    onOut() { 
+        this.scene.uiManager.listenToCardOut(this.index); 
+        this.scene.events.emit('outCard');
+    }
 
     highlight() { this.setFillStyle(this.highlightColor, this.alpha); }
 
@@ -51,19 +62,20 @@ export default class CardUI extends Button {
     enable() {
         this.makeVisible();
         this.setButtonInteractive();
-        this.text.alpha = 1;
+        this.name.alpha = 1;
     }
 
     disable() {
         this.makeInvisible();
         this.unsetButtonInteractive();
-        this.text.alpha = 0;
+        this.name.alpha = 0;
     }
 
     // unhighlight() {} 
 
-    update(text) {
-        this.text.setText(text);
+    update(card) {
+        this.name.setText(card.name);
+        this.description = card.text;
     }
 
 }

@@ -53,7 +53,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setDirection(x,y) {
         this.direction.x = x;
         this.direction.y = y;
-        console.log(this.direction);
+        // console.log(this.direction);
     }
 
     getWorldPos() {return this.worldPos;}
@@ -84,7 +84,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.worldPos.x = this.worldPos.x + this.direction.x;
         this.worldPos.y = this.worldPos.y + this.direction.y;
 
-        console.log(this.worldPos);
+        // console.log(this.worldPos);
         return true;
     }
 

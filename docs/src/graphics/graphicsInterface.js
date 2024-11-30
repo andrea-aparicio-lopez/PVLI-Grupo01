@@ -21,8 +21,11 @@ const layerWidth_px = tileMapConst.width * tileMapConst.scaledSize;
 // x position absolute of central panel
 const centralPanel_x = (gameConst.gameWindowWidth - layerWidth_px) / 2; 
 
-const cards_x = centralPanel_x/4;
-const cards_y = gameConst.gameWindowHeight/4;
+
+const card_width = centralPanel_x/2;
+const cards_x = centralPanel_x/6;
+const cards_y = gameConst.gameWindowHeight/5;
+
 const offset_y = 30;
 const card_1_y = cards_y;
 const card_2_y = card_1_y + offset_y;
@@ -31,18 +34,26 @@ const card_4_y = card_3_y + offset_y;
 const card_5_y = card_4_y + offset_y;
 const card_6_y = card_5_y + offset_y;
 
-const card_width = centralPanel_x/2;
+const offset_x = (((2*centralPanel_x)/3) - card_width) /6;
+const card_1_x = centralPanel_x/6;
+const card_2_x = card_1_x + offset_x;
+const card_3_x = card_2_x + offset_x;
+const card_4_x = card_3_x + offset_x;
+const card_5_x = card_4_x + offset_x;
+const card_6_x = card_5_x + offset_x;
+
 const cardSpecs = {
     width: card_width,
-    height: 70,
+    height: 100,
     color: 0xFCA311,
     fontSize: '15px',
     fontFamily: 'bold   Arial',
 }
 
+
 const text_box_margin = 5;
 const text_box_x = text_box_margin;
-const text_box_y = card_6_y + + cardSpecs.height + text_box_margin;
+const text_box_y = card_6_y + cardSpecs.height + text_box_margin;
 const text_box_width = centralPanel_x - 2*text_box_margin;
 const text_box_height = gameConst.gameWindowHeight - (text_box_y + text_box_margin);
 
@@ -52,12 +63,20 @@ const text_y = text_box_y + text_margin;
 const text_width = centralPanel_x - 2*text_margin;
 const text_height = text_y + text_box_margin;
 
+console.log(text_box_width)
+
 const tableConst = {
     backColor: '#fffaaa',
     width: centralPanel_x,
     height: gameConst.gameWindowHeight,
     hand: {
         x: cards_x,
+        card_1_x: card_1_x,
+        card_2_x: card_2_x,
+        card_3_x: card_3_x,
+        card_4_x: card_4_x,
+        card_5_x: card_5_x,
+        card_6_x: card_6_x,
         y: cards_y,
         card_1_y: card_1_y,
         card_2_y: card_2_y,
@@ -80,8 +99,19 @@ const tableConst = {
     }
 }
 
+const info_x = centralPanel_x + layerWidth_px;
+const info_width = gameConst.gameWindowWidth - info_x;
 
 
+const infoConst = {
+    x: info_x,
+    y: 0,
+    width: info_width,
+    height: gameConst.gameWindowHeight
+}
+
+
+// EXPORTS
 
 export const GI = {
     gameWindowWidth: gameConst.gameWindowWidth,
@@ -89,6 +119,8 @@ export const GI = {
 
     table: tableConst,
     cardSpecs: cardSpecs,
+    
+    infoPanel: infoConst,
 
     layerWidth_px,
     layerHeiht_px: gameConst.gameWindowHeight,

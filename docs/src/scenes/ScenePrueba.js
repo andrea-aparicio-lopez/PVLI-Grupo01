@@ -8,6 +8,7 @@ import UIManager from "../UI/uiManager.js";
 import Table from '../graphics/table.js'
 
 import { GI } from '../graphics/graphicsInterface.js'
+import InfoPanel from "../graphics/infoPanel.js";
 
 export default class Example extends Phaser.Scene {
     constructor() {
@@ -41,6 +42,11 @@ export default class Example extends Phaser.Scene {
         // table
         this.load.image('table_background', './assets/textures/table_background.png');
         this.load.image('table_text_box', './assets/textures/table_text_box.png');
+        this.load.image('card', './assets/textures/card.png');
+
+        // info panel
+        this.load.image('info_background', './assets/textures/info_background.png');
+
     }
 
         
@@ -128,12 +134,14 @@ export default class Example extends Phaser.Scene {
         // Player juega a una carta
         // this.player.playCard(0);
         // let hasDraw = this.player.drawCard();
-        console.log("Deck:", this.player.deck.currentDeck);
-        console.log("Hand:", this.player.hand);
-        console.log("Graveyard", this.player.graveyard);
+        // console.log("Deck:", this.player.deck.currentDeck);
+        // console.log("Hand:", this.player.hand);
+        // console.log("Graveyard", this.player.graveyard);
 
         // Create table:
         this.table = new Table(this, GI.table.x, GI.table.y);
+        // Create info panel:
+        this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
         // Create UI Manager
         this.uiManager = new UIManager(this, this.player, this.table);
 

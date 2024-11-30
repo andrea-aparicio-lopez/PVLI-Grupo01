@@ -5,7 +5,7 @@ const initialNumSlots = 6;
 
 export default class Table {
     constructor(scene, x, y) {
-
+        this.scene = scene;
 
         this.numSlots = initialNumSlots;
 
@@ -15,32 +15,32 @@ export default class Table {
         this.cardSlots = [
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_1_x,
                 y: GI.table.hand.card_1_y
             },
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_2_x,
                 y: GI.table.hand.card_2_y
             },
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_3_x,
                 y: GI.table.hand.card_3_y
             },
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_4_x,
                 y: GI.table.hand.card_4_y
             },
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_5_x,
                 y: GI.table.hand.card_5_y
             },
             {
                 card: null,
-                x: GI.table.hand.x,
+                x: GI.table.hand.card_6_x,
                 y: GI.table.hand.card_6_y
             },
         ]
@@ -53,8 +53,6 @@ export default class Table {
                 GI.cardSpecs.width,
                 GI.cardSpecs.height,
                 GI.cardSpecs.color,
-                1,
-                "empty1234",
                 i
             );
         }
@@ -68,7 +66,7 @@ export default class Table {
         ).setOrigin(0);
         scene.add.existing(this.textBackground);
 
-        this.text = "Hover a card to see description here...";
+        this.default_text = "Hover a card to see description here...";
         this.textDisplay = scene.make.text({
             x: GI.table.text.x, 
             y: GI.table.text.y, 
@@ -80,6 +78,13 @@ export default class Table {
             },
         })
 
-        
+
+        this.scene.events.on('hoveringCard', (cardUI) =>{
+             this.textDisplay.setText(cardUI.description);
+            });
+
+        this.scene.events.on('outCard', (cardUI) =>{
+            this.textDisplay.setText(this.default_text);
+            });
     }
 }

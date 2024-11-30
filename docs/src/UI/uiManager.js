@@ -67,7 +67,7 @@ export default class UIManager {
 
             if(i < this.hand.length){
                 this.cardsUI[i].card.enable();
-                this.cardsUI[i].card.update(this.hand[i].name);
+                this.cardsUI[i].card.update(this.hand[i]);
             }
             else {
                 this.cardsUI[i].card.disable();

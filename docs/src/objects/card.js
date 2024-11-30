@@ -46,7 +46,7 @@ export default class Card
                     for (let j = - this.range; j <= this.range; j++){
                         if (i != 0 || j != 0) {
                             rectsPositions.push({x: currPosition.x + i, y: currPosition.y + j})
-                            console.log({x: currPosition.x + i, y: currPosition.y + j});
+                            // console.log({x: currPosition.x + i, y: currPosition.y + j});
                         }
                     }
                 }
