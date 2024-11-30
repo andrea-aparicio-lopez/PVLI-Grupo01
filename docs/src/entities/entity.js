@@ -1,10 +1,9 @@
-
-const SCALE = 3;
+import { GI, tileToScreenX, tileToScreenY } from '../graphics/graphicsInterface.js'
 
 export default class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, maxHealth) {
-        super(scene, x * 16 * SCALE, y * 16 * SCALE, texture, frame);
-        this.setScale(SCALE);
+        super(scene, tileToScreenX(x), tileToScreenY(y), texture, frame);
+        this.setScale(GI.tileMapConst.scale);
         this.setOrigin(0,0);
         this.worldPos = {   // Coordenadas en tiles
             x: x,
@@ -116,8 +115,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     update(time, delta) {
         if (!this.onMovingAnimation) {
-            this.x = this.worldPos.x * 16 * SCALE;
-            this.y = this.worldPos.y * 16 * SCALE;
+            this.x = tileToScreenX(this.worldPos.x);
+            this.y = tileToScreenY(this.worldPos.y);
         }
         else {
             this.x += this.velocity.x * (delta/1000);
@@ -128,8 +127,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     playMovingAnimation(TIME) {
         //console.log("animation");
-        this.velocity.x = this.direction.x * (16 * SCALE) / (TIME / 1000);
-        this.velocity.y = this.direction.y * (16 * SCALE) / (TIME / 1000);
+        this.velocity.x = this.direction.x * (GI.tileMapConst.scaledSize) / (TIME / 1000);
+        this.velocity.y = this.direction.y * (GI.tileMapConst.scaledSize) / (TIME / 1000);
 
         this.onMovingAnimation = true;
     }

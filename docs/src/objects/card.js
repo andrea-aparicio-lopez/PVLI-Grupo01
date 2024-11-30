@@ -1,3 +1,5 @@
+import { GI } from '../graphics/graphicsInterface.js'
+
 
 export default class Card 
 {
@@ -44,7 +46,7 @@ export default class Card
                     for (let j = - this.range; j <= this.range; j++){
                         if (i != 0 || j != 0) {
                             rectsPositions.push({x: currPosition.x + i, y: currPosition.y + j})
-                            // console.log({x: currPosition.x + i, y: currPosition.y + j});
+                            console.log({x: currPosition.x + i, y: currPosition.y + j});
                         }
                     }
                 }
@@ -98,7 +100,9 @@ export default class Card
             let i = rect.y;
 
             if (i >= 0 && j >=0 && i <= maxY && j <= maxX) {
-                let rectObj = this.scene.damageRectsGroup.children.entries[i * 10 + j];
+                let rectObj = this.scene.damageRectsGroup.children.entries[
+                    i * GI.tileMapConst.width + 
+                    j];
                 
                 rectObj.deactivate();
                 

@@ -13,6 +13,9 @@ export default class DamageRect extends Phaser.GameObjects.Rectangle {
     constructor(scene, x, y, width, height, color, alpha, value) {
         super(scene, x, y, width, height, color, alpha, value);
 
+        // console.log("posx: ", x);
+        // console.log("posy: ", y);
+
         this.scene.add.existing(this).setOrigin(0);
 
         this.scene.physics.add.existing(this);

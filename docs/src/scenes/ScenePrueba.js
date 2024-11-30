@@ -6,6 +6,8 @@ import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
 import UIManager from "../UI/uiManager.js";
 
+import { GI } from '../graphics/graphicsInterface.js'
+
 export default class Example extends Phaser.Scene {
     constructor() {
         super("ScenePrueba");
@@ -40,16 +42,14 @@ export default class Example extends Phaser.Scene {
     create() {
         const cardsData = this.cache.json.get('cardsData');
         const deckData = this.cache.json.get('deckData');
-        // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
 
         // TILEMAP
         this.map = this.make.tilemap({ key: "boat" });
         const tileset = this.map.addTilesetImage("Barco", "tiles");
-        const waterLayer = this.map.createLayer("water", tileset).setScale(3);
-        const groundLayer = this.map.createLayer("ground", tileset).setScale(3);
-        const obstacleLayer = this.map.createLayer("obstacles", tileset).setScale(3);
+        const waterLayer = this.map.createLayer("water", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
+        const groundLayer = this.map.createLayer("ground", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
+        const obstacleLayer = this.map.createLayer("obstacles", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
         obstacleLayer.setCollisionByProperty({ collides : true });
-
 
 
         //OBSTACULOS//////////////////////////////////////////////////
@@ -74,8 +74,8 @@ export default class Example extends Phaser.Scene {
         let rectColor = 0xff0000;
 
         groundLayer.forEachTile((tile) => {
-            const x = tile.pixelX * groundLayer.scaleX;
-            const y = tile.pixelY * groundLayer.scaleY;
+            const x = GI.centralPanel.x + tile.pixelX * groundLayer.scaleX;
+            const y = GI.centralPanel.y + tile.pixelY * groundLayer.scaleY;
             const width = tile.width * groundLayer.scaleX;
             const height = tile.height * groundLayer.scaleY;
 

@@ -2,6 +2,8 @@ import Player from "../player/player.js";
 // import Button from "./button.js";
 import CardUI from "./cardUI.js";
 
+import { GI } from '../graphics/graphicsInterface.js'
+
 
 export default class UIManager {
 
