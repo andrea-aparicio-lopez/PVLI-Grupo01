@@ -15,15 +15,16 @@ export default class Player {
 
 
         this.mainPlayer = player;
-        this.allies = [];
+        this.trappedAllies = [];
         allyArray.forEach(ally => {
-            this.allies.push(ally);
+            this.trappedAllies.push(ally);
         });
+        this.freedAllies = [];
 
         this.isTurn = false;
     }
 
-    // Draw a card: returns true if succeeds, else return false if no card was draw
+    // Draw a card: returns true if succeeds, else return false if no card was drawn
     drawCard() {
 
         if(this.hand.length < Player.MAX_CARD_NUM)
@@ -88,9 +89,11 @@ export default class Player {
     }
 
     updateAllies() {
-        for(let i = 0; i < this.allies.length; i++) {
-            this.allies[i].moveToPlayer();
-            //console.log("moviendo aliado " + i + " en posicion " + this.allies[i].worldPos.x + " " + this.allies[i].worldPos.y);
+        if(this.freedAllies.length != 0){
+            this.freedAllies[0].setWorldPos(this.mainPlayer.getWorldPos());
+            for(let i = 1; i < this.freedAllies.length; i++) {
+                this.freedAllies[i].setWorldPos(this.freedAllies[i-1].getWorldPos());
+            }
         }
 
         this.mainPlayer.scene.endPlayerTurn();
@@ -101,5 +104,8 @@ export default class Player {
         this.isTurn = false;
     }
 
+    // Comprueba aliados en casillas adyacentes
+    checkNearbyTrappedAllies() {
 
+    }
 }

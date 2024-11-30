@@ -35,7 +35,7 @@ export default class Example extends Phaser.Scene {
         this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
         this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
 
-        this.load.image('player_sprite', './assets/textures/toni.png');
+        this.load.image('player_sprite', './assets/textures/Toro_1.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
 
@@ -56,11 +56,11 @@ export default class Example extends Phaser.Scene {
 
         // TILEMAP
         this.map = this.make.tilemap({ key: "boat" });
-        const tileset = this.map.addTilesetImage("Barco", "tiles");
+        const tileset = this.map.addTilesetImage("barco", "tiles");
         const waterLayer = this.map.createLayer("water", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
         const groundLayer = this.map.createLayer("ground", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
         const obstacleLayer = this.map.createLayer("obstacles", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
-        obstacleLayer.setCollisionByProperty({ collides : true });
+        // obstacleLayer.setCollisionByProperty({ collides : true });
 
 
         //OBSTACULOS//////////////////////////////////////////////////
@@ -78,6 +78,7 @@ export default class Example extends Phaser.Scene {
             }
         }
 
+        this.map.destroyLayer(obstacleLayer);
         ////////////////////////////////////////////////////////////
 
         // Create rects for damage viz and calc
@@ -94,6 +95,8 @@ export default class Example extends Phaser.Scene {
             this.damageRectsGroup.add(rect);
         });
 
+
+        // PLAYER and ALLIES
         let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
         let allyArray = [
             new Ally(this, 1, 1, "ally_sprite", 0, 20),
@@ -182,8 +185,8 @@ export default class Example extends Phaser.Scene {
     playAllAnimations() {
         let TIME = 200;
         this.player.mainPlayer.playMovingAnimation(TIME)
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].playMovingAnimation(TIME);
+        for(let i = 0; i < this.player.freedAllies.length; i++)
+            this.player.freedAllies[i].playMovingAnimation(TIME);
         this.enemy.playMovingAnimation(TIME);
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
@@ -196,8 +199,8 @@ export default class Example extends Phaser.Scene {
 
     stopAllAnimations() {
         this.player.mainPlayer.onMovingAnimation = false;
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].onMovingAnimation = false;
+        for(let i = 0; i < this.player.freedAllies.length; i++)
+            this.player.freedAllies[i].onMovingAnimation = false;
         this.enemy.onMovingAnimation = false;
         this.startPlayerTurn();
     }
@@ -206,8 +209,8 @@ export default class Example extends Phaser.Scene {
         this.uiManager.update();
 
         this.player.mainPlayer.update(time, delta);
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].update();
+        for(let i = 0; i < this.player.freedAllies.length; i++)
+            this.player.freedAllies[i].update();
         this.enemy.update(time, delta);
     }
 

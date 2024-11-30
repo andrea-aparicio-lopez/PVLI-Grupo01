@@ -2,9 +2,11 @@ import { GI, tileToScreenX, tileToScreenY } from '../graphics/graphicsInterface.
 
 export default class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, maxHealth) {
+
         super(scene, tileToScreenX(x), tileToScreenY(y), texture, frame);
         this.setScale(GI.tileMapConst.scale);
-        this.setOrigin(0,0);
+        this.setOrigin(0,0.3);
+
         this.worldPos = {   // Coordenadas en tiles
             x: x,
             y: y
@@ -61,13 +63,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     // Mueve en la direccion. Devuelve true si ha tenido exito, false si no
     moveInDirection() {
-        // No deja acceder al Height y Width del tilemap
-
-        // if (this.worldPos.x === 0 && this.direction.x < 0) return false;
-        // else if (this.worldPos.x === this.scene.layer1.displayWidth - 1 && this.direction.x > 0) return false;
-        // else if (this.worldPos.y === 0 && this.direction.y < 0) return false;
-        // else if (this.worldPos.y = this.scene.layer1.displayHeight - 1 && this.direction.y > 0) return false;
-
         if (this.direction.x < 0 && this.worldPos.x === 0) return false;
 
         else if (this.direction.x > 0 && this.worldPos.x === this.scene.map.width - 1 ) return false;

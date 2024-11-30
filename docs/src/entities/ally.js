@@ -13,20 +13,32 @@ export default class Ally extends Entity {
         super.preUpdate(t, dt);
     }
 
-    moveToPlayer() {
-        // TODO: De momento idéntico a los enemigos, lo tengo que refinar
-        if (this.worldPos.x > this.scene.player.mainPlayer.worldPos.x)
+    // moveToPlayer() {
+    //     // TODO: De momento idéntico a los enemigos, lo tengo que refinar
+    //     if (this.worldPos.x > this.scene.player.mainPlayer.worldPos.x)
+    //         this.setDirection(-1,0);
+    //     else if (this.worldPos.x < this.scene.player.mainPlayer.worldPos.x) 
+    //         this.setDirection(1,0);
+    //     else if (this.worldPos.y > this.scene.player.mainPlayer.worldPos.y) 
+    //         this.setDirection(0,-1);
+    //     else if (this.worldPos.y < this.scene.player.mainPlayer.worldPos.y) 
+    //         this.setDirection(1,0);
+
+    //     this.moveInDirection();
+    // }
+
+    moveTowardsPosition(position) {
+        if(this.worldPos.x > position.x)
             this.setDirection(-1,0);
-        else if (this.worldPos.x < this.scene.player.mainPlayer.worldPos.x) 
+        else if (this.worldPos.x < position.x) 
             this.setDirection(1,0);
-        else if (this.worldPos.y > this.scene.player.mainPlayer.worldPos.y) 
+        else if (this.worldPos.y > position.y) 
             this.setDirection(0,-1);
-        else if (this.worldPos.y < this.scene.player.mainPlayer.worldPos.y) 
+        else if (this.worldPos.y < position.y) 
             this.setDirection(1,0);
 
         this.moveInDirection();
     }
-
 
     die() {
         super.die();
