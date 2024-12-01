@@ -1,5 +1,4 @@
 import { GI, tileToScreenX, tileToScreenY } from '../graphics/graphicsInterface.js'
-import cardsEvents from '../events/cardsEvents.js';
 
 export default class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, maxHealth) {
