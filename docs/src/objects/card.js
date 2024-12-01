@@ -1,3 +1,5 @@
+import Ally from '../entities/ally.js';
+import Enemy from '../entities/enemy.js';
 import { GI } from '../graphics/graphicsInterface.js'
 
 
@@ -36,7 +38,7 @@ export default class Card
         let direction = entity.getDirection();
         let currPosition = entity.getWorldPos();
         
-        let rectsPositions = [];
+        let damageRects = [];
 
         // DAMAGE
         if (this.damage != 0){
@@ -45,22 +47,22 @@ export default class Card
                 for (let i = - this.range; i <= this.range; i++){
                     for (let j = - this.range; j <= this.range; j++){
                         if (i != 0 || j != 0) {
-                            rectsPositions.push({x: currPosition.x + i, y: currPosition.y + j})
-                            // console.log({x: currPosition.x + i, y: currPosition.y + j});
+                            damageRects.push({x: currPosition.x + i, y: currPosition.y + j})
                         }
                     }
                 }
-                // console.log("Spawned damage RectsPositions", rectsPositions);
             }
             // Spawned rects at adjacent position on facing direction and within range
             else {
                 for (let k = 1; k <= this.range; k++){
-                    rectsPositions.push({x: currPosition.x + k * direction.x, y: currPosition.y + k * direction.y});
+                    damageRects.push({x: currPosition.x + k * direction.x, y: currPosition.y + k * direction.y});
                 }                
-                //console.log("Spawned damage rect:", rectsPositions);
             }
 
-            this.changeRects(rectsPositions, visualize, 0xff0000);
+            this.changeRects(damageRects, visualize, 0xff0000);
+            if(!visualize) {
+                this.scene.cardPlayed(entity, damageRects); // No se hasta que punto esto es una salvajada
+            }
 
         }
 
@@ -80,7 +82,6 @@ export default class Card
 	}
 
     visualizePlay(entity) {
-        //console.log("Visualizing play");
         this.playedBy(entity, true);
 	}
 

@@ -41,6 +41,12 @@ export default class Enemy extends Entity {
         
     }
 
+    checkHit(damageInfo) {
+        if(damageInfo.target == 'enemy' && this.checkMatchingPosition(damageInfo.positions)) {
+            console.log("enemigo golpeado")
+        }
+    }
+
     die() {
         this.emit("Enemy killed");
         super.die();

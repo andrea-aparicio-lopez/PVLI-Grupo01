@@ -1,5 +1,3 @@
-import Board from "../board/Board.js";
-import Game from "../Game.js";
 import Ally from "../entities/ally.js";
 import Toni from "../entities/toni.js";
 import Player from "../player/player.js";
@@ -112,29 +110,6 @@ export default class Example extends Phaser.Scene {
         this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
         this.enemiesGroup.add(this.enemy);
 
-        // Create collision overlap for enemies
-        this.enemyOverlap = this.physics.add.overlap(
-            this.enemiesGroup,
-            this.damageRectsGroup,
-            (rect) => {
-                if (this.enemy.getCombatState()) {
-                    this.enemy.hurt(rect.damage);
-                    this.enemy.stun(rect.stun);
-                    this.enemy.setCombatState(false);
-                }
-            }
-        );
-        this.enemyOverlap.active = false; // desactiva la deteccion
-
-        // // Create collision overlap for allies
-        // this.allyOverlap = this.physics.add.overlap(alliesGroup, this.damageRectsGroup, (ally, rect) => {
-        //   if(ally.getCombatState()) {
-        //      ally.hurt(rect.damage);
-        //      ally.stun(rect.stun);
-        //      ally.setCombatState(false);
-        //     }
-        // });
-        // this.allyOverlap.active = false; // desactiva la deteccion
 
         // Player juega a una carta
         // this.player.playCard(0);
@@ -154,7 +129,7 @@ export default class Example extends Phaser.Scene {
         this.events.on("Level lost", this.levelLost, this);
         this.events.on("Level won", this.levelWon, this);
 
-
+        
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
@@ -162,6 +137,18 @@ export default class Example extends Phaser.Scene {
 
         this.startPlayerTurn();
     }    
+
+    /** @param damageRects: posiciones en tiles */
+    cardPlayed(entity, damageRects) {
+        let _target;
+        if(entity instanceof Enemy)
+            _target = 'ally';
+        else _target = 'enemy';
+        this.events.emit('damage', {
+            target: _target,
+            positions: damageRects
+        })
+    }
 
     startPlayerTurn() {
         this.player.startTurn();

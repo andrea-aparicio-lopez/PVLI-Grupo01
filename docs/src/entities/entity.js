@@ -1,4 +1,5 @@
 import { GI, tileToScreenX, tileToScreenY } from '../graphics/graphicsInterface.js'
+import cardsEvents from '../events/cardsEvents.js';
 
 export default class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, maxHealth) {
@@ -28,8 +29,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         };
         //////
 
-        // this.screenPos = setScreenPos();
-
         // Empiezan mirando hacia abajo
         this.direction = {
             x: 0,
@@ -41,9 +40,15 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
 
         this.canCombat = true; // flag para daño de overlap
+
         this.scene.physics.add.existing(this); // añade fisicas para collide overlap con rectangulos de daño
 
         this.pathFinding = new EasyStar.js();
+        
+        
+        // EVENTOS
+        this.scene.events.on('damage', this.checkHit, this); // implementación de checkHit en las sublcases
+
     }
 
     preupdate(t, dt) {
@@ -85,13 +90,23 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         return true;
     }
 
-    
+    checkMatchingPosition(positionArray) {
+        for(let i = 0; i < positionArray.length; i++) {
+            if(positionArray[i].x == this.worldPos.x && positionArray[i].y == this.worldPos.y) {
+                console.log('matching pos ', positionArray[i]);
+                return true;
+            }
+        }
+        console.log('socorro')
+        return false;
+    }
+
     /** @summary Cantidad de daño recibida */
     hurt(points) {
         this.health -= points;
         this.isHurt = true;
-        console.log(this.health);
-    }
+        console.log("dañado " + this.health);
+    } 
 
     /** @summary Cambia estado de aturdimiento */
     stun(state){
@@ -108,7 +123,11 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setCombatState(state) { this.canCombat = state};
 
 
-    die() { };
+    die() { 
+        this.setActive(false);
+        // Animación de muerte
+        // Añadirse como obstáculo
+    };
 
     update(time, delta) {
         if (!this.onMovingAnimation) {
