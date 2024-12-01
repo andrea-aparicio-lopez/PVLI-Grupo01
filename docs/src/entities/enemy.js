@@ -26,22 +26,19 @@ export default class Enemy extends Entity {
                 alert("Path was not found.");
             } else {
                 alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+                // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
+                var dir = {};
+                dir.x = path[1].x - this.worldPos.x;
+                dir.y = path[1].y - this.worldPos.y;
+                this.setDirection(dir.x, dir.y);
+
+                this.moveInDirection();
             }
         });
 
         this.pathFinding.calculate();
 
-        // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-        if (this.worldPos.x > this.scene.player.toni.worldPos.x)
-            this.setDirection(-1,0);
-        else if (this.worldPos.x < this.scene.player.toni.worldPos.x) 
-            this.setDirection(1,0);
-        else if (this.worldPos.y > this.scene.player.toni.worldPos.y) 
-            this.setDirection(0,-1);
-        else if (this.worldPos.y < this.scene.player.toni.worldPos.y) 
-            this.setDirection(0,1);
-
-        this.moveInDirection();
+        
     }
 
     die() {
