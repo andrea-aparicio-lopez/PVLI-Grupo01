@@ -25,7 +25,7 @@ export default class Enemy extends Entity {
             if (path === null) {
                 alert("Path was not found.");
             } else {
-                alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+                //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
                 // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
                 var dir = {};
                 dir.x = path[1].x - this.worldPos.x;
