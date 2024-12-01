@@ -150,11 +150,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.scene.addObstacle(this.worldPos)
     };
 
-    update(time, delta) {
-        super.update();
-        
-    }
-
     playMovingAnimation(TIME) {
 
         //TWEEN

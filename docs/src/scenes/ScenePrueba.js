@@ -182,11 +182,6 @@ export default class Example extends Phaser.Scene {
 
     update(time, delta) {
         this.uiManager.update();
-
-        this.player.toni.update(time, delta);
-        for(let i = 0; i < this.player.freedAllies.length; i++)
-            this.player.freedAllies[i].update();
-        this.enemyArray.forEach((enemy) => enemy.update(time, delta));
     }
 
     addObstacle(position) {
