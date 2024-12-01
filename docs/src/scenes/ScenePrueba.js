@@ -24,8 +24,6 @@ export default class Example extends Phaser.Scene {
         this.damageRectsGroup;
 
         this.obstacles = [];
-
-        this.allyArray = [];
     }
 
     preload() {
@@ -102,7 +100,7 @@ export default class Example extends Phaser.Scene {
         // this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
         this.toni.setToTop();
 
-        this.player = new Player(this, cardsData, deckData, this.toni, this.allyArray, this.enemyArray.length);
+        this.player = new Player(this, cardsData, deckData, this.toni, this.enemyArray.length);
 
 
         // UI

@@ -5,6 +5,8 @@ export default class Ally extends Entity {
         super(scene, id, x, y, texture, frame, maxHealth);
 
         this.isFree = false;
+
+        this.scene.events.emit('ally-spawned', this)
     }
 
     checkHit(damageInfo) {
@@ -35,7 +37,7 @@ export default class Ally extends Entity {
     }
 
     die() {
-        this.scene.events.emit("ally-killed");
+        this.scene.events.emit("ally-killed", this);
         super.die();
     }
 }

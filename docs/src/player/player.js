@@ -4,7 +4,7 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(scene, cardsData, deckData, toni, allyArray, enemyCount) {
+    constructor(scene, cardsData, deckData, toni, enemyCount) {
         this.scene = scene;
 
         this.deck = new Deck(scene, cardsData, deckData);
@@ -21,13 +21,15 @@ export default class Player {
 
         this.freedAllies = [];
 
-        this.alliesAlive = allyArray.length;
+        this.alliesAlive = 0;
         this.enemiesAlive = enemyCount;
 
         this.scene.events.on('ally-killed', this.allyKilled, this)
         this.scene.events.on('toni-killed', this.toniKilled, this)
         this.scene.events.on('enemy-killed', this.enemyKilled, this)
         this.scene.events.on('jail_broken', this.jailBroken, this)
+
+        this.scene.events.on('ally-spawned', () => this.alliesAlive++);
 
         this.isTurn = false;
     }

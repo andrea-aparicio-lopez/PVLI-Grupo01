@@ -25,9 +25,13 @@ export default class InfoPanel {
 
         this.createPlayerInfo(scene, info);
 
+        /*
         scene.allyArray.forEach((ally, index) => {
             this.createBullInfo(scene, ally, index)
         });
+        */
+
+        scene.events.on('ally-spawned', (event)=> this.createBullInfo(scene,event,0 ), this)
     }
 
     createPlayerInfo(scene, info) {
