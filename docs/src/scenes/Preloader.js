@@ -5,6 +5,9 @@ export default class Preloader extends Phaser.Scene {
     }
 
     preload() {
+        // TILES
+        this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
+
         // SPRITES
         this.load.image('player_sprite', './assets/textures/Toro_1.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
@@ -15,7 +18,6 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('table_background', './assets/textures/table_background.png');
         this.load.image('table_text_box', './assets/textures/table_text_box.png');
         this.load.image('card', './assets/textures/card.png');
-
         this.load.image('info_background', './assets/textures/info_background.png'); // info panel
     }
 

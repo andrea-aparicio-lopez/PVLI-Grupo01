@@ -26,12 +26,11 @@ export default class Example extends Phaser.Scene {
     }
 
     preload() {
-
+        // DECK
         this.load.json("cardsData", "./assets/cards.json");
         this.load.json("deckData", "./assets/deck.json");
 
-        //carga de tilemap
-        this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
+        // TILEMAP
         this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
 
     }
@@ -91,11 +90,11 @@ export default class Example extends Phaser.Scene {
             new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20),
         ];
         
-        this.enemiesGroup = this.physics.add.group();
+        // this.enemiesGroup = this.physics.add.group();
         this.enemyArray = [
             new Enemy(this, 'Enemy_1', 2, 3, "pirate_sprite", 0, 20)
         ];
-        this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
+        // this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
         this.toni.setToTop();
 
         this.player = new Player(this, cardsData, deckData, this.toni, this.allyArray, this.enemyArray.length);

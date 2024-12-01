@@ -82,6 +82,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     // Mueve en la direccion. Devuelve true si ha tenido exito, false si no
     moveInDirection() {
+        if(!this.active) return false;
+        
         if (this.direction.x < 0 && this.worldPos.x === 0) return false;
 
         else if (this.direction.x > 0 && this.worldPos.x === this.scene.map.width - 1 ) return false;
