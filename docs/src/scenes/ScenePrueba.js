@@ -38,6 +38,7 @@ export default class Example extends Phaser.Scene {
         this.load.image('player_sprite', './assets/textures/Toro_1.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
+        this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png')
 
         // table
         this.load.image('table_background', './assets/textures/table_background.png');
@@ -109,7 +110,8 @@ export default class Example extends Phaser.Scene {
             new Enemy(this, 2, 3, "pirate_sprite", 0, 20)
         ];
         this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
-
+        toni.setToTop();
+        
         this.player = new Player(this, cardsData, deckData, toni, allyArray, this.enemyArray.length);
 
 
