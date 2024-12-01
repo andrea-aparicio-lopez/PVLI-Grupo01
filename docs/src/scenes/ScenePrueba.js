@@ -151,8 +151,8 @@ export default class Example extends Phaser.Scene {
         this.uiManager = new UIManager(this, this.player, this.table);
 
         // EVENTOS
-        this.scene.events.on("Level lost", this.levelLost, this);
-        this.scene.events.on("Level won", this.levelWon, this);
+        this.events.on("Level lost", this.levelLost, this);
+        this.events.on("Level won", this.levelWon, this);
 
 
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
