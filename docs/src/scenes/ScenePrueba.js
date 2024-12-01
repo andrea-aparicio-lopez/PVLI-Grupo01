@@ -5,6 +5,7 @@ import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
 import UIManager from "../UI/uiManager.js";
 import Table from '../graphics/table.js'
+import Jail from '../entities/jail.js'
 
 import { GI } from '../graphics/graphicsInterface.js'
 import InfoPanel from "../graphics/infoPanel.js";
@@ -23,6 +24,8 @@ export default class Example extends Phaser.Scene {
         this.damageRectsGroup;
 
         this.obstacles = [];
+
+        this.allyArray = [];
     }
 
     preload() {
@@ -85,12 +88,11 @@ export default class Example extends Phaser.Scene {
 
         // PLAYER, ALLIES AND ENEMIES
         this.toni = new Toni(this, 5, 5, "player_sprite", 0, 50);
-        /*
-        this.allyArray = [
-            new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20),
-            new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20),
-        ];
-        */
+        
+        
+        //new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20);
+        //new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20);
+        new Jail(this, 'jail1', 3, 3, 'jail_sprite');
 
         
         // this.enemiesGroup = this.physics.add.group();

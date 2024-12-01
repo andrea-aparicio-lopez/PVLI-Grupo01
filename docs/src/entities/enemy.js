@@ -56,6 +56,8 @@ export default class Enemy extends Entity {
         this.scene.enemyArray.splice(index,1);
         // console.log(this.scene.enemyArray);
         this.setTexture('pirate_dead');
+
+        this.scene.addObstacle(this.worldPos)
         super.die();
     }
 }

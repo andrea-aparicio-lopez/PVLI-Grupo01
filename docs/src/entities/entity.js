@@ -149,7 +149,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.setActive(false);
         // Animación de muerte
         // Añadirse como obstáculo
-        this.scene.addObstacle(this.worldPos)
     };
 
     playMovingAnimation(TIME) {
