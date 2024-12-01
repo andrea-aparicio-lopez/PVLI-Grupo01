@@ -70,8 +70,8 @@ export default class InfoPanel {
         // Life bar
         this.playerLifeBar = new LifeBar(
             scene,
-            scene.bull.id,
-            scene.bull.maxHealth,
+            scene.toni.id,
+            scene.toni.maxHealth,
             info.player.lifeBar.x,
             info.player.lifeBar.y,
             info.player.lifeBar.width,
