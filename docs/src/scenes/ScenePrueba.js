@@ -97,17 +97,17 @@ export default class Example extends Phaser.Scene {
 
 
         // PLAYER and ALLIES
-        let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
-        let allyArray = [
-            new Ally(this, 1, 1, "ally_sprite", 0, 20),
-            new Ally(this, 2, 5, "ally_sprite", 0, 20),
+        this.bull  = new Ally(this, 'player', 5, 5, "player_sprite", 0, 50);
+        this.allyArray = [
+            new Ally(this, 'bull_1', 1, 1, "ally_sprite", 0, 20),
+            new Ally(this, 'bull_2', 2, 5, "ally_sprite", 0, 20),
         ];
-        this.player = new Player(this, cardsData, deckData, bull, allyArray);
+        this.player = new Player(this, cardsData, deckData, this.bull, this.allyArray);
 
         
         // ENEMIES
         this.enemiesGroup = this.physics.add.group();
-        this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
+        this.enemy = new Enemy(this, 'enemy_1', 2, 3, "pirate_sprite", 0, 20);
         this.enemiesGroup.add(this.enemy);
 
         // Create collision overlap for enemies
@@ -124,16 +124,6 @@ export default class Example extends Phaser.Scene {
         );
         this.enemyOverlap.active = false; // desactiva la deteccion
 
-        // // Create collision overlap for allies
-        // this.allyOverlap = this.physics.add.overlap(alliesGroup, this.damageRectsGroup, (ally, rect) => {
-        //   if(ally.getCombatState()) {
-        //      ally.hurt(rect.damage);
-        //      ally.stun(rect.stun);
-        //      ally.setCombatState(false);
-        //     }
-        // });
-        // this.allyOverlap.active = false; // desactiva la deteccion
-
         // Player juega a una carta
         // this.player.playCard(0);
         // let hasDraw = this.player.drawCard();
@@ -146,7 +136,7 @@ export default class Example extends Phaser.Scene {
         // Create info panel:
         this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
         // Create UI Manager
-        this.uiManager = new UIManager(this, this.player, this.table);
+        this.uiManager = new UIManager(this);
 
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 

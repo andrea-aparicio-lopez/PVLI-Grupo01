@@ -43,7 +43,11 @@ export default class CardUI extends Button {
 
     }
     
-    onClick() { this.scene.uiManager.listenToCardClick(this.index); }
+    onClick() { 
+        this.scene.uiManager.listenToCardClick(this.index); 
+        // this.scene.events.emit('gainLife', this.scene.bull.id, 120);
+        // this.scene.bull.hurt(20);
+    }
 
     onHover() { 
         this.scene.uiManager.listenToCardHover(this.index);

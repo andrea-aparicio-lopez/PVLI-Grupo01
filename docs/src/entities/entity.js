@@ -1,11 +1,14 @@
 import { GI, tileToScreenX, tileToScreenY } from '../graphics/graphicsInterface.js'
 
 export default class Entity extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame, maxHealth) {
+    constructor(scene, id, x, y, texture, frame, maxHealth) {
 
         super(scene, tileToScreenX(x), tileToScreenY(y), texture, frame);
         this.setScale(GI.tileMapConst.scale);
         this.setOrigin(0,0.3);
+
+        this.id = id;
+        this.scene = scene;
 
         this.worldPos = {   // Coordenadas en tiles
             x: x,
@@ -89,6 +92,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.health -= points;
         this.isHurt = true;
         console.log(this.health);
+        this.scene.events.emit('loseLife', this.id, this.health);
     }
 
     /** @summary Cambia estado de aturdimiento */
@@ -99,7 +103,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     /** @summary Cura vida */
     heal(points) {
         this.health += points;
-        this.health = min(this.health, this.maxHealth); // clamp
+        this.health = Phaser.Math.Clamp(this.health, 0, this.maxHealth); // clamp
+        this.scene.events.emit('gainLife', this.id, this.health);
     }
 
     getCombatState() { return this.canCombat };

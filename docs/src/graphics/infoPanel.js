@@ -1,84 +1,135 @@
-import { GI } from './graphicsInterface.js'
-
-const initialNumSlots = 6;
+import { GI } from './graphicsInterface.js';
+import LifeBar from '../UI/lifeBar.js';
 
 export default class InfoPanel {
     constructor(scene, x, y) {
-
-
-        // this.numSlots = initialNumSlots;
+        const info = GI.infoPanel;
 
         this.background = new Phaser.GameObjects.Sprite(scene, x, y, 'info_background').setOrigin(0);
         scene.add.existing(this.background);
 
-        // this.cardSlots = [
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_1_x,
-        //         y: GI.table.hand.card_1_y
-        //     },
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_2_x,
-        //         y: GI.table.hand.card_2_y
-        //     },
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_3_x,
-        //         y: GI.table.hand.card_3_y
-        //     },
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_4_x,
-        //         y: GI.table.hand.card_4_y
-        //     },
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_5_x,
-        //         y: GI.table.hand.card_5_y
-        //     },
-        //     {
-        //         card: null,
-        //         x: GI.table.hand.card_6_x,
-        //         y: GI.table.hand.card_6_y
-        //     },
-        // ]
+        // INFO TEXT
+        this.infoText = new Phaser.GameObjects.Text(
+            scene,
+            info.margin + info.x,
+            info.margin,
+            "Zona 1: rescate a X toros y huja.",
+            {
+                fontFamily: 'Arial',
+                fontSize: '15px',
+                color: '#4234ff',
+                wordWrap: { width: info.player.width - info.padding },
+            }
+        );
+        scene.add.existing(this.infoText);
 
-        // for(let i = 0; i < this.numSlots; i++) {
-        //     this.cardSlots[i].card = new CardUI(
-        //         scene,
-        //         this.cardSlots[i].x,
-        //         this.cardSlots[i].y,
-        //         GI.cardSpecs.width,
-        //         GI.cardSpecs.height,
-        //         GI.cardSpecs.color,
-        //         1,
-        //         "empty1234",
-        //         i
-        //     );
-        // }
+        this.createPlayerInfo(scene, info);
 
-        // // Text region
-        // this.textBackground = new Phaser.GameObjects.Sprite(
-        //     scene, 
-        //     GI.table.textBox.x,
-        //     GI.table.textBox.y,
-        //     'table_text_box'
-        // ).setOrigin(0);
-        // scene.add.existing(this.textBackground);
+        scene.allyArray.forEach((ally, index) => {
+            this.createBullInfo(scene, ally, index)
+        });
+    }
 
-        // this.text = "Hover a card to see description here...";
-        // this.textDisplay = scene.make.text({
-        //     x: GI.table.text.x, 
-        //     y: GI.table.text.y, 
-        //     text: this.text,
-        //     style: {
-        //         font: 'bold 10px Arial',
-        //         fill: '#EE4266',
-        //         wordWrap: { width: GI.table.text.width }
-        //     },
-        // })
+    createPlayerInfo(scene, info) {
+        // Player box
+        this.playerBox = new Phaser.GameObjects.Rectangle(
+            scene,
+            info.player.x,
+            info.player.y,
+            info.player.width,
+            info.player.height,
+            0x23addf,
+            1
+        ).setOrigin(0);
+        scene.add.existing(this.playerBox);
 
-        
+        // Player image
+        this.playerImage = new Phaser.GameObjects.Rectangle(
+            scene,
+            info.player.image.x,
+            info.player.image.y,
+            info.player.image.width,
+            info.player.image.height,
+            0xffffff,
+            1
+        ).setOrigin(0);
+        scene.add.existing(this.playerImage);
+
+        // Life box
+        this.playerLifeBox = new Phaser.GameObjects.Rectangle(
+            scene,
+            info.player.lifeBox.x,
+            info.player.lifeBox.y,
+            info.player.lifeBox.width,
+            info.player.lifeBox.height,
+            0x777777,
+            1
+        ).setOrigin(0);
+        scene.add.existing(this.playerLifeBox);
+
+        // Life bar
+        this.playerLifeBar = new LifeBar(
+            scene,
+            scene.bull.id,
+            scene.bull.maxHealth,
+            info.player.lifeBar.x,
+            info.player.lifeBar.y,
+            info.player.lifeBar.width,
+            info.player.lifeBar.height,
+            'player'
+        );
+    }
+
+    createBullInfo(scene, ally, index) {
+        const bullInfo = {};
+        const bull = GI.infoPanel.bulls[index];
+
+        // Bull box
+        bullInfo.box = new Phaser.GameObjects.Rectangle(
+            scene,
+            bull.x,
+            bull.y,
+            bull.w,
+            bull.h,
+            0xf3afdf,
+            1
+        ).setOrigin(0);
+        scene.add.existing(bullInfo.box);
+
+        // Bull image
+        bullInfo.image = new Phaser.GameObjects.Rectangle(
+            scene,
+            bull.image.x,
+            bull.image.y,
+            30,
+            30,
+            0xffffff,
+            1
+        ).setOrigin(0);
+        scene.add.existing(bullInfo.image);
+
+        // Life box
+        bullInfo.lifeBox = new Phaser.GameObjects.Rectangle(
+            scene,
+            bull.lifeBox.x,
+            bull.lifeBox.y,
+            bull.lifeBox.width,
+            bull.lifeBox.height,
+            0x777777,
+            1
+        ).setOrigin(0);
+        scene.add.existing(bullInfo.lifeBox);
+
+        // Life bar
+        bullInfo.lifeBar = new LifeBar(
+            scene,
+            ally.id,
+            ally.maxHealth,
+            bull.lifeBar.x,
+            bull.lifeBar.y,
+            bull.lifeBar.width,
+            bull.lifeBar.height,
+            'ally'
+        );
     }
 }

@@ -1,8 +1,8 @@
 import Entity from "./entity.js";
 
 export default class Ally extends Entity {
-    constructor(scene, x, y, texture, frame, maxHealth) {
-        super(scene, x, y, texture, frame, maxHealth);
+    constructor(scene, id, x, y, texture, frame, maxHealth) {
+        super(scene, id, x, y, texture, frame, maxHealth);
 
         this.isFree = false;
     }

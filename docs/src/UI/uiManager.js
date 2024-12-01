@@ -9,16 +9,16 @@ export default class UIManager {
     /**
      * Constructor
      * @param {Scene} scene
-     * @param {Player} player
-     * @param {Table} table
      */
-    constructor(scene, player, table){
+    constructor(scene){
 
         this.scene = scene;
-        this.player = player;
+        this.player = scene.player;
         this.hand = this.player.hand;
 
-        this.cardsUI = table.cardSlots;
+        this.allys = scene.allyArray;
+
+        this.cardsUI = scene.table.cardSlots;
         
         this.indexSelectedCard;
         this.clickedCard;
