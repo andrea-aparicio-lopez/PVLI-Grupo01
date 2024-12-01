@@ -3,7 +3,7 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(scene, cardsData, deckData, toni, allyArray) {
+    constructor(scene, cardsData, deckData, toni, allyArray, enemyCount) {
         this.scene = scene;
 
         this.deck = new Deck(scene, cardsData, deckData);
@@ -24,6 +24,8 @@ export default class Player {
         this.freedAllies = [];
 
         this.alliesAlive = allyArray.length;
+        this.enemiesAlive = enemyCount;
+
         this.scene.events.on("Ally killed", this.allyKilled, this)
         this.scene.events.on("Toni killed", this.toniKilled, this)
 
@@ -123,5 +125,11 @@ export default class Player {
 
     toniKilled() {
         this.emit("Level lost");
+    }
+
+    enemyKilled() {
+        this.enemiesAlive--;
+        if(this.enemiesAlive == 0)
+            this.emit("Level won")
     }
 }

@@ -61,7 +61,7 @@ export default class Card
 
             this.changeRects(damageRects, visualize, 0xff0000);
             if(!visualize) {
-                this.scene.cardPlayed(entity, damageRects); // No se hasta que punto esto es una salvajada
+                this.scene.cardPlayed(entity, damageRects, this.damage);
             }
 
         }

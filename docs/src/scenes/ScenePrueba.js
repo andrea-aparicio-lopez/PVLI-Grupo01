@@ -78,7 +78,6 @@ export default class Example extends Phaser.Scene {
                 if (obstacleLayer.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
             }
         }
-        console.log(this.obstacles);
 
         this.map.destroyLayer(obstacleLayer);
         ////////////////////////////////////////////////////////////
@@ -98,34 +97,30 @@ export default class Example extends Phaser.Scene {
         });
 
 
-        // PLAYER and ALLIES
+        // PLAYER, ALLIES AND ENEMIES
         let toni = new Toni(this, 5, 5, "player_sprite", 0, 50);
         let allyArray = [
             new Ally(this, 1, 1, "ally_sprite", 0, 20),
             new Ally(this, 2, 5, "ally_sprite", 0, 20),
         ];
-        this.player = new Player(this, cardsData, deckData, toni, allyArray);
-
         
-        // ENEMIES
         this.enemiesGroup = this.physics.add.group();
-        this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
-        this.enemiesGroup.add(this.enemy);
+        this.enemyArray = [
+            new Enemy(this, 2, 3, "pirate_sprite", 0, 20)
+        ];
+        this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
+
+        this.player = new Player(this, cardsData, deckData, toni, allyArray, this.enemyArray.length);
 
 
-        // Player juega a una carta
-        // this.player.playCard(0);
-        // let hasDraw = this.player.drawCard();
-        // console.log("Deck:", this.player.deck.currentDeck);
-        // console.log("Hand:", this.player.hand);
-        // console.log("Graveyard", this.player.graveyard);
-
+        // UI
         // Create table:
         this.table = new Table(this, GI.table.x, GI.table.y);
         // Create info panel:
         this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
         // Create UI Manager
         this.uiManager = new UIManager(this, this.player, this.table);
+
 
         // EVENTOS
         this.events.on("Level lost", this.levelLost, this);
@@ -141,14 +136,15 @@ export default class Example extends Phaser.Scene {
     }    
 
     /** @param damageRects: posiciones en tiles */
-    cardPlayed(entity, damageRects) {
+    cardPlayed(entity, damageRects, damage) {
         let _target;
         if(entity instanceof Enemy)
             _target = 'ally';
         else _target = 'enemy';
         this.events.emit('damage', {
             target: _target,
-            positions: damageRects
+            positions: damageRects,
+            damage: damage
         })
     }
 
@@ -169,12 +165,11 @@ export default class Example extends Phaser.Scene {
     }
 
     startEnemyTurn() {
-        this.enemy.playTurn();
+        this.enemyArray.forEach((enemy) =>enemy.playTurn());
         this.endEnemyTurn();
     }
 
     endEnemyTurn() {
-        
         this.playAllAnimations();
     }
 
@@ -183,7 +178,7 @@ export default class Example extends Phaser.Scene {
         this.player.toni.playMovingAnimation(TIME)
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].playMovingAnimation(TIME);
-        this.enemy.playMovingAnimation(TIME);
+        this.enemyArray.forEach((enemy) =>enemy.playMovingAnimation(TIME));
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
             TIME,
@@ -197,7 +192,7 @@ export default class Example extends Phaser.Scene {
         this.player.toni.onMovingAnimation = false;
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].onMovingAnimation = false;
-        this.enemy.onMovingAnimation = false;
+        this.enemyArray.forEach((enemy) => enemy.onMovingAnimation = false);
         this.startPlayerTurn();
     }
 
@@ -207,7 +202,11 @@ export default class Example extends Phaser.Scene {
         this.player.toni.update(time, delta);
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].update();
-        this.enemy.update(time, delta);
+        this.enemyArray.forEach((enemy) => enemy.update(time, delta));
+    }
+
+    addObstacle(position) {
+        this.obstacles[position.x][position.y] = true;
     }
 
     // TODO

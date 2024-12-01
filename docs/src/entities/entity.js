@@ -51,6 +51,13 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     }
 
+    checkHit(damageInfo) {
+        if(this.checkMatchingPosition(damageInfo.positions)) {
+            this.hurt(damageInfo.damage);
+            this.checkDeath();
+        }
+    }
+
     preupdate(t, dt) {
         super.preUpdate(t, dt);
     }
@@ -62,7 +69,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setDirection(x,y) {
         this.direction.x = x;
         this.direction.y = y;
-        // console.log(this.direction);
     }
 
     getWorldPos() {return this.worldPos;}
@@ -93,17 +99,16 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     checkMatchingPosition(positionArray) {
         for(let i = 0; i < positionArray.length; i++) {
             if(positionArray[i].x == this.worldPos.x && positionArray[i].y == this.worldPos.y) {
-                console.log('matching pos ', positionArray[i]);
                 return true;
             }
         }
-        console.log('socorro')
         return false;
     }
 
     /** @summary Cantidad de daño recibida */
     hurt(points) {
         this.health -= points;
+        this.health = Math.max(this.health, 0); // clamp
         this.isHurt = true;
         console.log("dañado " + this.health);
     } 
@@ -116,29 +121,38 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     /** @summary Cura vida */
     heal(points) {
         this.health += points;
-        this.health = min(this.health, this.maxHealth); // clamp
+        this.health = Math.min(this.health, this.maxHealth); // clamp
     }
 
     getCombatState() { return this.canCombat };
     setCombatState(state) { this.canCombat = state};
 
+    checkDeath() {
+        if(this.health == 0) {
+            this.die();
+            return true;
+        }
+        return false;
+    }
 
     die() { 
         this.setActive(false);
         // Animación de muerte
         // Añadirse como obstáculo
+        this.scene.addObstacle(this.worldPos)
     };
 
     update(time, delta) {
-        if (!this.onMovingAnimation) {
-            this.x = tileToScreenX(this.worldPos.x);
-            this.y = tileToScreenY(this.worldPos.y);
+        if(this.active) {
+            if (!this.onMovingAnimation) {
+                this.x = tileToScreenX(this.worldPos.x);
+                this.y = tileToScreenY(this.worldPos.y);
+            }
+            else {
+                this.x += this.velocity.x * (delta/1000);
+                this.y += this.velocity.y * (delta/1000);
+            }
         }
-        else {
-            this.x += this.velocity.x * (delta/1000);
-            this.y += this.velocity.y * (delta/1000);
-        }
-        
     }
 
     playMovingAnimation(TIME) {

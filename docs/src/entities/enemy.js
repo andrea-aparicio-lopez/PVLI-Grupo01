@@ -1,11 +1,10 @@
 import Entity from "./entity.js";
 
 export default class Enemy extends Entity {
-    constructor(scene, x, y, texture, frame, maxHealth, AIdata) {
+    constructor(scene, x, y, texture, frame, maxHealth) {
         super(scene, x, y, texture, frame, maxHealth);
 
-        // Por definir
-        this.AI = AIdata;
+        this.health = 1;
     }
 
     preupdate(t, dt) {
@@ -42,12 +41,13 @@ export default class Enemy extends Entity {
     }
 
     checkHit(damageInfo) {
-        if(damageInfo.target == 'enemy' && this.checkMatchingPosition(damageInfo.positions)) {
-            console.log("enemigo golpeado")
+        if(damageInfo.target == 'enemy') {
+            super.checkHit(damageInfo);
         }
     }
 
     die() {
+        console.log("enemy killed")
         this.emit("Enemy killed");
         super.die();
     }
