@@ -14,6 +14,7 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
         this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png');
         this.load.image('jail_sprite', '././assets/textures/jail.png');
+        this.load.image('jail_broken', '././assets/textures/broken_jail.png');
 
         // UI
         this.load.image('table_background', './assets/textures/table_background.png');

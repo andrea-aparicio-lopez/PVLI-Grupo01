@@ -19,7 +19,8 @@ export default class Jail extends Entity {
             // console.log(this.scene.enemyArray);
             //this.setTexture('broken_jail');
             console.log("died");
-            this.setActive(false).setVisible(false);
+            this.setActive(false).setVisible(true);
+            this.setTexture('jail_broken');
             super.die();
         }
         
