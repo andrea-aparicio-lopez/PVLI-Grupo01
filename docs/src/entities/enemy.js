@@ -26,12 +26,16 @@ export default class Enemy extends Entity {
             } else {
                 //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
                 // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-                var dir = {};
-                dir.x = path[1].x - this.worldPos.x;
-                dir.y = path[1].y - this.worldPos.y;
-                this.setDirection(dir.x, dir.y);
+                if (this.worldPos.x == this.scene.player.toni.worldPos.x && this.worldPos.y == this.scene.player.toni.worldPos.y) this.moveInDirection();
+                else {
+                    var dir = {};
+                    dir.x = path[1].x - this.worldPos.x;
+                    dir.y = path[1].y - this.worldPos.y;
+                    this.setDirection(dir.x, dir.y);
 
-                this.moveInDirection();
+                    this.moveInDirection();
+                }
+                
             }
         });
 

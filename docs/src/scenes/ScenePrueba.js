@@ -182,17 +182,12 @@ export default class Example extends Phaser.Scene {
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
             TIME,
-            this.stopAllAnimations,
+            this.endAnimations,
             null,
             this
         ); // delay in ms
     }
-
-    stopAllAnimations() {
-        this.player.toni.onMovingAnimation = false;
-        for(let i = 0; i < this.player.freedAllies.length; i++)
-            this.player.freedAllies[i].onMovingAnimation = false;
-        this.enemyArray.forEach((enemy) => enemy.onMovingAnimation = false);
+    endAnimations() {
         this.startPlayerTurn();
     }
 

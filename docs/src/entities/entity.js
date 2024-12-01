@@ -23,10 +23,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         //ANIMACIONES
         this.onMovingAnimation = false;
-        this.velocity = {
-            x: 0,
-            y:0
-        };
         //////
 
         // Empiezan mirando hacia abajo
@@ -149,18 +145,29 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 this.y = tileToScreenY(this.worldPos.y);
             }
             else {
-                this.x += this.velocity.x * (delta/1000);
-                this.y += this.velocity.y * (delta/1000);
             }
         }
     }
 
     playMovingAnimation(TIME) {
-        //console.log("animation");
-        this.velocity.x = this.direction.x * (GI.tileMapConst.scaledSize) / (TIME / 1000);
-        this.velocity.y = this.direction.y * (GI.tileMapConst.scaledSize) / (TIME / 1000);
 
+        //TWEEN
         this.onMovingAnimation = true;
+
+        var yoyo = true;
+        
+        this.scene.tweens.add({
+            targets: this,
+            y: this.worldPos.y * 45,
+            ease: 'power1',
+            duration: TIME - 100,
+            yoyo: yoyo,
+            repeat: 0,
+            onComplete: () => {
+                this.onMovingAnimation = false;
+            }
+        })
+
     }
 
     finishMovingAnimation() {
