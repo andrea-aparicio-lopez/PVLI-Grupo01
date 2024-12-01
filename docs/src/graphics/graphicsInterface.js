@@ -12,6 +12,7 @@ const tileMapConst = {
     scale: TILE_SCALE,
     scaledSize: TILE_SCALED_SIZE,
     width: 15, // in tiles
+    height: 10,
 };
 
 const layerWidth_px = tileMapConst.width * tileMapConst.scaledSize;

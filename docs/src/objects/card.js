@@ -29,11 +29,18 @@ export default class Card
 		this.damage = damage;
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;
-		this.stun = stun;        
+		this.stun = stun;
+
     }
 
     // Visualize set to false by default
 	playedBy(entity, visualize = false) {
+
+        const upper_bound = 0;
+        const lower_bound = GI.tileMapConst.height - 1;
+        const left_bound = 0;
+        const right_bound = GI.tileMapConst.width - 1;
+
         //console.log("Card effect played");
         let direction = entity.getDirection();
         let currPosition = entity.getWorldPos();
@@ -70,7 +77,30 @@ export default class Card
         if(this.move != 0){
             //console.log("Current position:", currPosition);
             let newPos = [];
-            newPos.push({x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y});
+
+            
+            // console.log(this.scene.obstacles[9][14])
+
+            let i = this.move;
+            let valid = false;
+            while(i >= 0 && !valid){
+                let newPosX = currPosition.x + i * direction.x;
+                let newPosY = currPosition.y + i * direction.y;
+
+                if (newPosX <= right_bound && newPosX >= left_bound
+                    &&
+                    newPosY >= upper_bound && newPosY <= lower_bound)
+                    {
+                        if (!this.scene.obstacles[newPosY][newPosX]){
+                            newPos[0] = {
+                                x: Phaser.Math.Clamp(newPosX, left_bound, right_bound),
+                                y: Phaser.Math.Clamp(newPosY, upper_bound, lower_bound)};
+                            valid = true;
+                        }
+                    }
+                i--;
+            }
+            // newPos.push({x: currPosition.x + i * direction.x, y: currPosition.y + i * direction.y});
             // console.log("dirx", currPosition.x + this.move * direction.x);
             // console.log("diry", direction.y);
 
@@ -93,8 +123,8 @@ export default class Card
 
         let rectsArray = this.scene.damageRectsGroup.children.entries;
         let rectSize = this.scene.damageRectsGroup.children.entries[0].width;
-        let maxX = rectsArray[rectsArray.length -1].x / rectSize;
-        let maxY = rectsArray[rectsArray.length -1].y / rectSize;
+        let maxX = GI.tileMapConst.width - 1;
+        let maxY = GI.tileMapConst.height - 1;
 
         rects.forEach((rect) => {
             let j = rect.x;
