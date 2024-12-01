@@ -25,13 +25,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         //ANIMACIONES
         this.onMovingAnimation = false;
-        this.velocity = {
-            x: 0,
-            y:0
-        };
         //////
-
-        // this.screenPos = setScreenPos();
 
         // Empiezan mirando hacia abajo
         this.direction = {
@@ -44,7 +38,22 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
 
         this.canCombat = true; // flag para daño de overlap
-        this.scene.physics.add.existing(this); // añade fisicas para collide overlap con rectangulos de daño        
+
+        this.scene.physics.add.existing(this); // añade fisicas para collide overlap con rectangulos de daño
+
+        this.pathFinding = new EasyStar.js();
+        
+        
+        // EVENTOS
+        this.scene.events.on('damage', this.checkHit, this); // implementación de checkHit en las sublcases
+
+    }
+
+    checkHit(damageInfo) {
+        if(this.checkMatchingPosition(damageInfo.positions)) {
+            this.hurt(damageInfo.damage);
+            this.checkDeath();
+        }
     }
 
     preupdate(t, dt) {
@@ -58,7 +67,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     setDirection(x,y) {
         this.direction.x = x;
         this.direction.y = y;
-        // console.log(this.direction);
     }
 
     getWorldPos() {return this.worldPos;}
@@ -86,10 +94,19 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         return true;
     }
 
-    
+    checkMatchingPosition(positionArray) {
+        for(let i = 0; i < positionArray.length; i++) {
+            if(positionArray[i].x == this.worldPos.x && positionArray[i].y == this.worldPos.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** @summary Cantidad de daño recibida */
     hurt(points) {
         this.health -= points;
+        this.health = Math.max(this.health, 0); // clamp
         this.isHurt = true;
         console.log(this.health);
         this.scene.events.emit('loseLife', this.id, this.health);
@@ -110,27 +127,50 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     getCombatState() { return this.canCombat };
     setCombatState(state) { this.canCombat = state};
 
+    checkDeath() {
+        if(this.health == 0) {
+            this.die();
+            return true;
+        }
+        return false;
+    }
 
-    die() { };
+    die() { 
+        this.setActive(false);
+        // Animación de muerte
+        this.scene.addObstacle(this.worldPos)
+    };
 
     update(time, delta) {
-        if (!this.onMovingAnimation) {
-            this.x = tileToScreenX(this.worldPos.x);
-            this.y = tileToScreenY(this.worldPos.y);
+        if(this.active) {
+            if (!this.onMovingAnimation) {
+                this.x = tileToScreenX(this.worldPos.x);
+                this.y = tileToScreenY(this.worldPos.y);
+            }
+            else {
+            }
         }
-        else {
-            this.x += this.velocity.x * (delta/1000);
-            this.y += this.velocity.y * (delta/1000);
-        }
-        
     }
 
     playMovingAnimation(TIME) {
-        //console.log("animation");
-        this.velocity.x = this.direction.x * (GI.tileMapConst.scaledSize) / (TIME / 1000);
-        this.velocity.y = this.direction.y * (GI.tileMapConst.scaledSize) / (TIME / 1000);
 
+        //TWEEN
         this.onMovingAnimation = true;
+
+        var yoyo = true;
+        
+        this.scene.tweens.add({
+            targets: this,
+            y: this.worldPos.y * 45,
+            ease: 'power1',
+            duration: TIME - 100,
+            yoyo: yoyo,
+            repeat: 0,
+            onComplete: () => {
+                this.onMovingAnimation = false;
+            }
+        })
+
     }
 
     finishMovingAnimation() {
