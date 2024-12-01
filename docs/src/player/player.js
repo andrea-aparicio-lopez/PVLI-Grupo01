@@ -3,7 +3,9 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(scene, cardsData, deckData, player, allyArray) {
+    constructor(scene, cardsData, deckData, toni, allyArray) {
+        this.scene = scene;
+
         this.deck = new Deck(scene, cardsData, deckData);
         this.hand = [];
         this.graveyard = [];
@@ -14,12 +16,16 @@ export default class Player {
         // this.selectedCard = null;
 
 
-        this.mainPlayer = player;
+        this.toni = toni;
         this.trappedAllies = [];
         allyArray.forEach(ally => {
             this.trappedAllies.push(ally);
         });
         this.freedAllies = [];
+
+        this.alliesAlive = allyArray.length;
+        this.scene.events.on("Ally killed", this.allyKilled, this)
+        this.scene.events.on("Toni killed", this.toniKilled, this)
 
         this.isTurn = false;
     }
@@ -44,7 +50,7 @@ export default class Player {
         if (this.isTurn) {
             let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
             let card = cardArray[0];
-            card.playedBy(this.mainPlayer);
+            card.playedBy(this.toni);
             this.graveyard.push(card);
             //console.log("Player hand:", this.deck.currentDeck);
 
@@ -66,20 +72,20 @@ export default class Player {
             let hasMoved;
             //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.mainPlayer.setDirection(0, -1);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(0, -1);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.mainPlayer.setDirection(-1, 0);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(-1, 0);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.mainPlayer.setDirection(0, 1);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(0, 1);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.mainPlayer.setDirection(1, 0);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(1, 0);
+                hasMoved = this.toni.moveInDirection();
             }
             if(hasMoved) {
                 this.updateAllies();
@@ -90,13 +96,13 @@ export default class Player {
 
     updateAllies() {
         if(this.freedAllies.length != 0){
-            this.freedAllies[0].setWorldPos(this.mainPlayer.getWorldPos());
+            this.freedAllies[0].setWorldPos(this.toni.getWorldPos());
             for(let i = 1; i < this.freedAllies.length; i++) {
                 this.freedAllies[i].setWorldPos(this.freedAllies[i-1].getWorldPos());
             }
         }
 
-        this.mainPlayer.scene.endPlayerTurn();
+        this.toni.scene.endPlayerTurn();
     }
 
     endTurn() {
@@ -104,8 +110,18 @@ export default class Player {
         this.isTurn = false;
     }
 
-    // Comprueba aliados en casillas adyacentes
+    // TODO Comprueba aliados en casillas adyacentes
     checkNearbyTrappedAllies() {
 
+    }
+
+    allyKilled() {
+        this.alliesAlive--;
+        if(this.alliesAlive == 0)
+            this.emit("Level lost");
+    }
+
+    toniKilled() {
+        this.emit("Level lost");
     }
 }

@@ -1,6 +1,7 @@
 import Board from "../board/Board.js";
 import Game from "../Game.js";
 import Ally from "../entities/ally.js";
+import Toni from "../entities/toni.js";
 import Player from "../player/player.js";
 import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
@@ -9,6 +10,7 @@ import Table from '../graphics/table.js'
 
 import { GI } from '../graphics/graphicsInterface.js'
 import InfoPanel from "../graphics/infoPanel.js";
+
 
 export default class Example extends Phaser.Scene {
     constructor() {
@@ -97,12 +99,12 @@ export default class Example extends Phaser.Scene {
 
 
         // PLAYER and ALLIES
-        let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
+        let toni = new Toni(this, 5, 5, "player_sprite", 0, 50);
         let allyArray = [
             new Ally(this, 1, 1, "ally_sprite", 0, 20),
             new Ally(this, 2, 5, "ally_sprite", 0, 20),
         ];
-        this.player = new Player(this, cardsData, deckData, bull, allyArray);
+        this.player = new Player(this, cardsData, deckData, toni, allyArray);
 
         
         // ENEMIES
@@ -148,6 +150,11 @@ export default class Example extends Phaser.Scene {
         // Create UI Manager
         this.uiManager = new UIManager(this, this.player, this.table);
 
+        // EVENTOS
+        this.scene.events.on("Level lost", this.levelLost, this);
+        this.scene.events.on("Level won", this.levelWon, this);
+
+
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
@@ -184,7 +191,7 @@ export default class Example extends Phaser.Scene {
 
     playAllAnimations() {
         let TIME = 200;
-        this.player.mainPlayer.playMovingAnimation(TIME)
+        this.player.toni.playMovingAnimation(TIME)
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].playMovingAnimation(TIME);
         this.enemy.playMovingAnimation(TIME);
@@ -198,7 +205,7 @@ export default class Example extends Phaser.Scene {
     }
 
     stopAllAnimations() {
-        this.player.mainPlayer.onMovingAnimation = false;
+        this.player.toni.onMovingAnimation = false;
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].onMovingAnimation = false;
         this.enemy.onMovingAnimation = false;
@@ -208,10 +215,18 @@ export default class Example extends Phaser.Scene {
     update(time, delta) {
         this.uiManager.update();
 
-        this.player.mainPlayer.update(time, delta);
+        this.player.toni.update(time, delta);
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].update();
         this.enemy.update(time, delta);
     }
 
+    // TODO
+    levelLost() {
+        console.log("Nivel perdido")
+    }
+
+    levelWon() {
+        console.log("Nivel ganado")
+    }
 }
