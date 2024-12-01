@@ -1,3 +1,4 @@
+import Ally from "../entities/ally.js";
 import Deck from "../objects/deck.js";
 
 export default class Player {
@@ -17,10 +18,7 @@ export default class Player {
 
 
         this.toni = toni;
-        this.trappedAllies = [];
-        allyArray.forEach(ally => {
-            this.trappedAllies.push(ally);
-        });
+
         this.freedAllies = [];
 
         this.alliesAlive = allyArray.length;
@@ -29,6 +27,7 @@ export default class Player {
         this.scene.events.on('ally-killed', this.allyKilled, this)
         this.scene.events.on('toni-killed', this.toniKilled, this)
         this.scene.events.on('enemy-killed', this.enemyKilled, this)
+        this.scene.events.on('jail_broken', this.jailBroken, this)
 
         this.isTurn = false;
     }
@@ -134,5 +133,11 @@ export default class Player {
         if(this.enemiesAlive == 0) {
             this.scene.events.emit("level-won")
         }
+    }
+
+    jailBroken(event) {
+        var ally = new Ally(this.scene, "Ally", event.worldPos.x, event.worldPos.y, "ally_sprite", 0, 20);
+        this.scene.add(ally);
+        this.freedAllies.push(ally);
     }
 }

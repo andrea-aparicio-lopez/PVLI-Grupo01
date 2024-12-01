@@ -85,10 +85,13 @@ export default class Example extends Phaser.Scene {
 
         // PLAYER, ALLIES AND ENEMIES
         this.toni = new Toni(this, 5, 5, "player_sprite", 0, 50);
+        /*
         this.allyArray = [
             new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20),
             new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20),
         ];
+        */
+
         
         // this.enemiesGroup = this.physics.add.group();
         this.enemyArray = [
