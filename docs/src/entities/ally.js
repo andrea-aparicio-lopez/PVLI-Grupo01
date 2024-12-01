@@ -1,11 +1,11 @@
 import Entity from "./entity.js";
 
 export default class Ally extends Entity {
-    constructor(scene, id, x, y, texture, frame, maxHealth) {
+    constructor(scene, id, x, y, texture, frame, maxHealth, arrayIndex) {
         super(scene, id, x, y, texture, frame, maxHealth);
 
+        this.arrayIndex = arrayIndex;
         this.isFree = false;
-
         this.scene.events.emit('ally-spawned', this)
     }
 

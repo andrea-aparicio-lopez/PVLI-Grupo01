@@ -31,7 +31,7 @@ export default class InfoPanel {
         });
         */
 
-        scene.events.on('ally-spawned', (event)=> this.createBullInfo(scene,event,0 ), this)
+        scene.events.on('ally-spawned', (event)=> this.createBullInfo(scene,event,event.arrayIndex ), this)
     }
 
     createPlayerInfo(scene, info) {

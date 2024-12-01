@@ -91,6 +91,7 @@ export default class Example extends Phaser.Scene {
         //new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20);
         //new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20);
         new Jail(this, 'jail1', 3, 3, 'jail_sprite');
+        new Jail(this, 'jail2', 10, 7, 'jail_sprite');
 
         
         // this.enemiesGroup = this.physics.add.group();

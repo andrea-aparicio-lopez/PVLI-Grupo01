@@ -138,7 +138,7 @@ export default class Player {
     }
 
     jailBroken(event) {
-        var ally = new Ally(this.scene, "Ally", event.worldPos.x, event.worldPos.y, "ally_sprite", 0, 20);
+        var ally = new Ally(this.scene, "Ally " + this.freedAllies.length, event.worldPos.x, event.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
         this.freedAllies.push(ally);
     }
 }
