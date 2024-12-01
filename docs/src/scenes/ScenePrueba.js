@@ -64,12 +64,13 @@ export default class Example extends Phaser.Scene {
 
 
         //OBSTACULOS//////////////////////////////////////////////////
-        for (var i = 0; i < this.map.width; i++) {
+        for (var i = 0; i < this.map.height; i++) {
             this.obstacles[i] = [];
-            for (var j = 0; j < this.map.height; j++) {
+            for (var j = 0; j < this.map.width; j++) {
                 this.obstacles[i][j] = false;
             }
         }
+        
 
         for (let i = 0; i < this.map.height; i++) {
             
@@ -77,6 +78,7 @@ export default class Example extends Phaser.Scene {
                 if (obstacleLayer.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
             }
         }
+        console.log(this.obstacles);
 
         this.map.destroyLayer(obstacleLayer);
         ////////////////////////////////////////////////////////////
