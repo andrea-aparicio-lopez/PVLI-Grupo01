@@ -1,0 +1,28 @@
+
+export default class Preloader extends Phaser.Scene {
+    constructor() {
+        super('Preloader')
+    }
+
+    preload() {
+        // SPRITES
+        this.load.image('player_sprite', './assets/textures/Toro_1.png');
+        this.load.image('ally_sprite', './assets/textures/allyBull.png');
+        this.load.image('pirate_sprite', './assets/textures/pirata.png');
+        this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png');
+
+        // UI
+        this.load.image('table_background', './assets/textures/table_background.png');
+        this.load.image('table_text_box', './assets/textures/table_text_box.png');
+        this.load.image('card', './assets/textures/card.png');
+
+        this.load.image('info_background', './assets/textures/info_background.png'); // info panel
+    }
+
+    create() {
+        // ANIMACIONES
+
+        // Cargar nivel 1
+        this.scene.start('ScenePrueba');
+    }
+}

@@ -108,7 +108,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.health -= points;
         this.health = Math.max(this.health, 0); // clamp
         this.isHurt = true;
-        console.log(this.health);
+        console.log("dañado " + this.health);
         this.scene.events.emit('loseLife', this.id, this.health);
     }
 
@@ -138,6 +138,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     die() { 
         this.setActive(false);
         // Animación de muerte
+        // Añadirse como obstáculo
         this.scene.addObstacle(this.worldPos)
     };
 
@@ -157,19 +158,32 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         //TWEEN
         this.onMovingAnimation = true;
 
-        var yoyo = true;
-        
         this.scene.tweens.add({
             targets: this,
-            y: this.worldPos.y * 45,
+            x: this.x - (this.x - tileToScreenX(this.worldPos.x)),
+            y: this.y - (this.y - tileToScreenY(this.worldPos.y)),
+            ease: 'linear',
+            duration: TIME,
+            yoyo: false,
+            repeat: 0,
+        })
+
+        var yoyo = true;
+        this.scene.tweens.add({
+            targets: this,
+            y: this.y -25,
             ease: 'power1',
-            duration: TIME - 100,
+            duration: TIME/2,
             yoyo: yoyo,
             repeat: 0,
             onComplete: () => {
                 this.onMovingAnimation = false;
-            }
+            },
+
+
         })
+        
+        
 
     }
 
