@@ -161,27 +161,44 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.scene.tweens.add({
             targets: this,
             x: this.x - (this.x - tileToScreenX(this.worldPos.x)),
-            y: this.y - (this.y - tileToScreenY(this.worldPos.y)),
             ease: 'linear',
             duration: TIME,
             yoyo: false,
             repeat: 0,
         })
 
-        var yoyo = true;
-        this.scene.tweens.add({
-            targets: this,
-            y: this.y -25,
-            ease: 'power1',
-            duration: TIME/2,
-            yoyo: yoyo,
-            repeat: 0,
-            onComplete: () => {
-                this.onMovingAnimation = false;
-            },
+        
+        var yoyo = this.direction.y == 0;
+        if (this.direction.y != 0) {
+            this.scene.tweens.add({
+                targets: this,
+                y: this.y - (this.y - tileToScreenY(this.worldPos.y)),
+                ease: 'power1',
+                duration: TIME,
+                yoyo: yoyo,
+                repeat: 0,
+                onComplete: () => {
+                    this.onMovingAnimation = false;
+                },
 
+            })
+        }
+        
+        else {
+            this.scene.tweens.add({
+                targets: this,
+                y: this.y - 25,
+                ease: 'power1',
+                duration: TIME / 2,
+                yoyo: true,
+                repeat: 0,
+                onComplete: () => {
+                    this.onMovingAnimation = false;
+                },
 
-        })
+            })
+        }
+        
         
         
 
