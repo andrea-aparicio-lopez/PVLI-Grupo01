@@ -24,7 +24,7 @@ export default class MainMenu extends Phaser.Scene {
 
         // EVENTOS
         startButton.on("pointerdown", ()=>{
-            this.scene.start("ScenePrueba")
+            this.scene.start("Preloader")
         })
     }
 

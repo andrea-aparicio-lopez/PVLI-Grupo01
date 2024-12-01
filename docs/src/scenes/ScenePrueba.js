@@ -34,19 +34,6 @@ export default class Example extends Phaser.Scene {
         this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
         this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
 
-        this.load.image('player_sprite', './assets/textures/Toro_1.png');
-        this.load.image('ally_sprite', './assets/textures/allyBull.png');
-        this.load.image('pirate_sprite', './assets/textures/pirata.png');
-        this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png')
-
-        // table
-        this.load.image('table_background', './assets/textures/table_background.png');
-        this.load.image('table_text_box', './assets/textures/table_text_box.png');
-        this.load.image('card', './assets/textures/card.png');
-
-        // info panel
-        this.load.image('info_background', './assets/textures/info_background.png');
-
     }
 
         
