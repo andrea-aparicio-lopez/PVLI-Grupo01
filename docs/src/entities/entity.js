@@ -115,11 +115,14 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     /** @summary Cantidad de daño recibida */
     hurt(points) {
-        this.health -= points;
-        this.health = Math.max(this.health, 0); // clamp
-        this.isHurt = true;
-        console.log("dañado " + this.health);
-        this.scene.events.emit('loseLife', this.id, this.health);
+        if (this.active) {
+            this.health -= points;
+            this.health = Math.max(this.health, 0); // clamp
+            this.isHurt = true;
+            console.log("dañado " + this.health);
+            this.scene.events.emit('loseLife', this.id, this.health);
+        }
+        
     }
 
     /** @summary Cambia estado de aturdimiento */
