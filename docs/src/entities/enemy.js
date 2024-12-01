@@ -51,7 +51,10 @@ export default class Enemy extends Entity {
     }
 
     die() {
-        this.scene.events.emit('enemy-killed')
+        this.scene.events.emit('enemy-killed', this)
+        let index = this.scene.enemyArray.indexOf(this);
+        this.scene.enemyArray.splice(index,1);
+        // console.log(this.scene.enemyArray);
         this.setTexture('pirate_dead');
         super.die();
     }
