@@ -6,6 +6,6 @@ export default class Toni extends Ally {
     }
 
     die() {
-        this.emit("Toni killed");
+        this.scene.events.emit("toni-killed");
     }
 }

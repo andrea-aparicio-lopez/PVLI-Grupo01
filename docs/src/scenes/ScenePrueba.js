@@ -26,7 +26,6 @@ export default class Example extends Phaser.Scene {
     }
 
     preload() {
-        //carga de todo lo que se necesite en la escena (por ejemplo la info de Tiled)
 
         this.load.json("cardsData", "./assets/cards.json");
         this.load.json("deckData", "./assets/deck.json");
@@ -111,7 +110,7 @@ export default class Example extends Phaser.Scene {
         ];
         this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
         toni.setToTop();
-        
+
         this.player = new Player(this, cardsData, deckData, toni, allyArray, this.enemyArray.length);
 
 
@@ -125,8 +124,9 @@ export default class Example extends Phaser.Scene {
 
 
         // EVENTOS
-        this.events.on("Level lost", this.levelLost, this);
-        this.events.on("Level won", this.levelWon, this);
+        // this.events.on('enemy-killed', ()=>console.log("sos"), this)
+        this.events.on("level-lost", this.levelLost, this);
+        this.events.on("level-won", this.levelWon, this);
 
         
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
@@ -212,6 +212,17 @@ export default class Example extends Phaser.Scene {
     }
 
     levelWon() {
-        console.log("Nivel ganado")
+        console.log("Nivel ganado");
+        this.time.addEvent({
+            delay: 3000,
+            callback: this.nextLevel,
+            callbackScope: this
+        })
+        
+    }
+
+    nextLevel() {
+        // this.scene.start('firstLevel')
+        console.log("cargando siguiente nivel")
     }
 }

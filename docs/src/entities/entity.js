@@ -105,7 +105,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.health -= points;
         this.health = Math.max(this.health, 0); // clamp
         this.isHurt = true;
-        console.log("dañado " + this.health);
+        // console.log("dañado " + this.health);
     } 
 
     /** @summary Cambia estado de aturdimiento */
@@ -133,7 +133,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     die() { 
         this.setActive(false);
         // Animación de muerte
-        // Añadirse como obstáculo
         this.scene.addObstacle(this.worldPos)
     };
 

@@ -26,8 +26,9 @@ export default class Player {
         this.alliesAlive = allyArray.length;
         this.enemiesAlive = enemyCount;
 
-        this.scene.events.on("Ally killed", this.allyKilled, this)
-        this.scene.events.on("Toni killed", this.toniKilled, this)
+        this.scene.events.on('ally-killed', this.allyKilled, this)
+        this.scene.events.on('toni-killed', this.toniKilled, this)
+        this.scene.events.on('enemy-killed', this.enemyKilled, this)
 
         this.isTurn = false;
     }
@@ -120,16 +121,18 @@ export default class Player {
     allyKilled() {
         this.alliesAlive--;
         if(this.alliesAlive == 0)
-            this.emit("Level lost");
+            this.scene.events.emit("Level lost");
     }
 
     toniKilled() {
-        this.emit("Level lost");
+        this.scene.events.emit("Level lost");
     }
 
-    enemyKilled() {
+    enemyKilled(event) {
         this.enemiesAlive--;
-        if(this.enemiesAlive == 0)
-            this.emit("Level won")
+        console.log(this.enemiesAlive)
+        if(this.enemiesAlive == 0) {
+            this.scene.events.emit("level-won")
+        }
     }
 }
