@@ -58,6 +58,14 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     preupdate(t, dt) {
         super.preUpdate(t, dt);
+        if (this.active) {
+            if (!this.onMovingAnimation) {
+                this.x = tileToScreenX(this.worldPos.x);
+                this.y = tileToScreenY(this.worldPos.y);
+            }
+            else {
+            }
+        }
     }
 
 
@@ -143,14 +151,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     };
 
     update(time, delta) {
-        if(this.active) {
-            if (!this.onMovingAnimation) {
-                this.x = tileToScreenX(this.worldPos.x);
-                this.y = tileToScreenY(this.worldPos.y);
-            }
-            else {
-            }
-        }
+        super.update();
+        
     }
 
     playMovingAnimation(TIME) {
