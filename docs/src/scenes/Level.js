@@ -1,73 +1,84 @@
-import Toni from "../entities/toni.js";
+import { levelKeys } from "./levelsInfo.js";
+import { GI } from '../graphics/graphicsInterface.js'
+
 import Player from "../player/player.js";
-import DamageRect from "../objects/damageRect.js";
+
 import Enemy from "../entities/enemy.js";
+import Jail from "../entities/jail.js";
+import Toni from "../entities/toni.js";
+
+import DamageRect from "../objects/damageRect.js";
+
 import UIManager from "../UI/uiManager.js";
 import Table from '../graphics/table.js'
-import Jail from '../entities/jail.js'
-
-import { GI } from '../graphics/graphicsInterface.js'
 import InfoPanel from "../graphics/infoPanel.js";
 
+export default class Level extends Phaser.Scene {
+    /**@param lvl: level-number */
+    constructor(lvl) {
+        super(levelKeys[lvl]);
 
-export default class Example extends Phaser.Scene {
-    constructor() {
-        super("ScenePrueba");
+        this.level = lvl;
 
         this.playerTurn = true;
         this.wait = false;
 
-        //mapa
         this.map;
+        this.obstacles = [];
+        this.enemyArray = [];
 
         this.damageRectsGroup;
-
-        this.obstacles = [];
     }
 
-    preload() {
-        // TILEMAP
-        this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
+    // preload() {
+    //     // TILEMAP -> carga de tilemapTiledJSON
+    // }
 
-    }
-
-        
     create() {
+        // TILEMAP -> crear tilemap, añadir tilesetImage, crear Layers (terreno, obstáculos)
+
         const cardsData = this.cache.json.get('cardsData');
         const deckData = this.cache.json.get('deckData');
 
-        // TILEMAP
-        this.map = this.make.tilemap({ key: "boat" });
-        const tileset = this.map.addTilesetImage("barco", "boat-tiles");
-        const waterLayer = this.map.createLayer("water", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
-        const groundLayer = this.map.createLayer("ground", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
-        const obstacleLayer = this.map.createLayer("obstacles", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
-
-
-        //OBSTACULOS//////////////////////////////////////////////////
+        //#region OBSTACLES, ENTITIES
         for (var i = 0; i < this.map.height; i++) {
             this.obstacles[i] = [];
-            for (var j = 0; j < this.map.width; j++) {
+            for (var j = 0; j < this.map.width; j++) 
                 this.obstacles[i][j] = false;
-            }
         }
-        
+        let enemyCount, jailCount;
+        enemyCount = jailCount = 0;
+        let toni;
 
+        const obstacleLayer = this.map.getLayer("obstacles");
         for (let i = 0; i < this.map.height; i++) {
-            
-            for (let j = 0; j < this.map.width; j++) {
-                if(obstacleLayer.layer.data[i][j].properties.collides) this.obstacles[i][j] = true;
+            for (let j = 0; j < this.map.width; j++)  {
+                if (obstacleLayer.data[i][j].properties.collides) this.obstacles[i][j] = true;
+                switch(obstacleLayer.data[i][j].properties.spawn) {
+                    case 'enemy':
+                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, i, j, "pirate_sprite", 0, 20));
+                        break;
+                    case 'jail':
+                        new Jail(this, 'jail_' + ++jailCount, i, j, 'jail_sprite');
+                        console.log(jailCount, i, j)
+                        break;
+                    case 'toni':
+                        toni = new Toni(this, i, j, 'player_sprite', 0);
+                        break;
+                }
             }
         }
+        toni.setToTop();
+        this.player = new Player(this, cardsData, deckData, toni, this.enemyArray.length);
 
-        this.map.destroyLayer(obstacleLayer);
-        ////////////////////////////////////////////////////////////
+        //#endregion
 
-        // Create rects for damage viz and calc
+        //#region DAMAGE RECTS
         this.damageRectsGroup = this.physics.add.group();
         let rectColor = 0xff0000;
 
-        groundLayer.forEachTile((tile) => {
+        const groundLayer = this.map.getLayer("ground");
+        groundLayer.data.forEach((tile) => {
             const x = GI.centralPanel.x + tile.pixelX * groundLayer.scaleX;
             const y = GI.centralPanel.y + tile.pixelY * groundLayer.scaleY;
             const width = tile.width * groundLayer.scaleX;
@@ -75,41 +86,17 @@ export default class Example extends Phaser.Scene {
 
             let rect = new DamageRect(this, x, y, width, height, rectColor, 0.5, 10);
             this.damageRectsGroup.add(rect);
-
         });
+        //#endregion
 
-        // PLAYER, ALLIES AND ENEMIES
-        let toni = new Toni(this, 5, 5, "player_sprite", 0);
-        
-        
-        //new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20);
-        //new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20);
-        new Jail(this, 'jail1', 3, 3, 'jail_sprite');
-        new Jail(this, 'jail2', 9, 7, 'jail_sprite');
-        new Jail(this, 'jail3', 8, 9, 'jail_sprite');
-        new Jail(this, 'jail4', 5, 4, 'jail_sprite');
-
-        
-        // this.enemiesGroup = this.physics.add.group();
-        this.enemyArray = [
-            //new Enemy(this, 'Enemy_1', 1, 3, "pirate_sprite", 0, 20)
-        ];
-        toni.setToTop();
-
-        this.player = new Player(this, cardsData, deckData, toni, this.enemyArray.length);
-
-
-        // UI
-        // Create table:
+        //#region UI
         this.table = new Table(this, GI.table.x, GI.table.y);
-        // Create info panel:
         this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
-        // Create UI Manager
         this.uiManager = new UIManager(this);
-
-
-        // EVENTOS
-        // this.events.on('enemy-killed', ()=>console.log("sos"), this)
+        //#endregion
+        
+        
+        //#region EVENTOS
         this.events.on("level-lost", this.levelLost, this);
         this.events.on("level-won", this.levelWon, this);
 
@@ -118,10 +105,12 @@ export default class Example extends Phaser.Scene {
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-D', this.inputToPlayer, this);
+        //#endregion
 
         this.startPlayerTurn();
-    }    
+    }
 
+    
     /** @param damageRects: posiciones en tiles */
     cardPlayed(entity, damageRects, damage) {
         let _target;
@@ -135,6 +124,7 @@ export default class Example extends Phaser.Scene {
         })
     }
 
+    //#region turns
     startPlayerTurn() {
         this.player.startTurn();
     }
@@ -159,6 +149,7 @@ export default class Example extends Phaser.Scene {
     endEnemyTurn() {
         this.playAllAnimations();
     }
+    //#endregion
 
     playAllAnimations() {
         let TIME = 200;
@@ -189,6 +180,11 @@ export default class Example extends Phaser.Scene {
     // TODO
     levelLost() {
         console.log("Nivel perdido")
+        this.time.addEvent({
+            delay: 40000,
+            callback: this.reloadLevel,
+            callbackScope: this
+        });
     }
 
     levelWon() {
@@ -197,12 +193,19 @@ export default class Example extends Phaser.Scene {
             delay: 3000,
             callback: this.nextLevel,
             callbackScope: this
-        })
-        
+        });        
+    }
+
+    reloadLevel() {
+        this.scene.restart();
     }
 
     nextLevel() {
-        // this.scene.start('firstLevel')
-        console.log("cargando siguiente nivel")
+        console.log("cargando siguiente nivel");
+        this.events.removeAllListeners();
+        this.scene.start(levelKeys[this.level+1]);
     }
+
 }
+
+

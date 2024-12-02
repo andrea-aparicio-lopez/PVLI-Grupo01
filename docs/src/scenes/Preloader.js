@@ -1,3 +1,4 @@
+import { levelKeys } from "./levelsInfo.js";
 
 export default class Preloader extends Phaser.Scene {
     constructor() {
@@ -6,7 +7,7 @@ export default class Preloader extends Phaser.Scene {
 
     preload() {
         // TILES
-        this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
+        this.load.image('boat_tiles', './assets/maps/boat_tileset.png');
 
         // SPRITES
         this.load.image('player_sprite', './assets/textures/Toro_1.png');
@@ -21,12 +22,16 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('table_text_box', './assets/textures/table_text_box.png');
         this.load.image('card', './assets/textures/card.png');
         this.load.image('info_background', './assets/textures/info_background.png'); // info panel
+
+        // DECK
+        this.load.json("cardsData", "./assets/cards.json");
+        this.load.json("deckData", "./assets/deck.json");
     }
 
     create() {
         // ANIMACIONES
 
         // Cargar nivel 1
-        this.scene.start('ScenePrueba');
+        this.scene.start(levelKeys[1]);
     }
 }

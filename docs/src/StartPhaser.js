@@ -1,6 +1,7 @@
 import MainMenu from './scenes/MainMenu.js';
 import Preloader from './scenes/Preloader.js';
 import ScenePrueba from './scenes/ScenePrueba.js'
+import FirstLevel from './scenes/boat/Level1.js';
 
 import { GI } from './graphics/graphicsInterface.js'
 
@@ -15,7 +16,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [MainMenu, Preloader, ScenePrueba],
+    scene: [MainMenu, Preloader, FirstLevel],
     physics: {  
         default: 'arcade', //Tenemos físicas simple, arcade
         arcade: { 
