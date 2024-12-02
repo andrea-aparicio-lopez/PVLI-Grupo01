@@ -96,7 +96,7 @@ export default class Example extends Phaser.Scene {
         
         // this.enemiesGroup = this.physics.add.group();
         this.enemyArray = [
-            new Enemy(this, 'Enemy_1', 2, 3, "pirate_sprite", 0, 20)
+            new Enemy(this, 'Enemy_1', 1, 3, "pirate_sprite", 0, 20)
         ];
         // this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
         this.toni.setToTop();
