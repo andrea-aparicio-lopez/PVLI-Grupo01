@@ -18,7 +18,7 @@ export default class Player {
         this.toni = toni;
 
         this.freedAllies = [];
-
+        this.remainingJails = jailCount;
         this.alliesAlive = jailCount;
         this.enemiesAlive = enemyCount;
 
@@ -112,8 +112,8 @@ export default class Player {
 
     allyKilled() {
         this.alliesAlive--;
-        if(this.alliesAlive == 0)
-            this.scene.events.emit("Level lost");
+        // if(this.alliesAlive == 0)
+        //     this.scene.events.emit("Level lost");
     }
 
     toniKilled() {
@@ -122,14 +122,19 @@ export default class Player {
 
     enemyKilled(event) {
         this.enemiesAlive--;
-        console.log(this.enemiesAlive)
-        if(this.enemiesAlive == 0) {
-            this.scene.events.emit("level-won")
-        }
+        this.checkVictory();
     }
 
     jailBroken(jail) {
+        this.remainingJails--;
         let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
         this.freedAllies.push(ally);
+
+        this.checkVictory();
+    }
+
+    checkVictory() {
+        if (this.enemiesAlive == 0 && this.remainingJails == 0)
+            this.scene.events.emit("level-won");
     }
 }

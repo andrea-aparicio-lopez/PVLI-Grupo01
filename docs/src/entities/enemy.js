@@ -3,6 +3,7 @@ import Entity from "./entity.js";
 export default class Enemy extends Entity {
     constructor(scene, id, x, y, texture, frame, maxHealth) {
         super(scene, id, x, y, texture, frame, maxHealth);
+        this.health = 1;
     }
 
     preupdate(t, dt) {
