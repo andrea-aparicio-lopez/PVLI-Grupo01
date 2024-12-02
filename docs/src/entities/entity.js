@@ -190,7 +190,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         else {
             this.scene.tweens.add({
                 targets: this,
-                y: this.y - 25,
+                y: this.y - 25 + Math.floor(Math.random() * 10),
                 ease: 'power1',
                 duration: (TIME - Math.floor(Math.random() * 50))/ 2 ,
                 yoyo: true,
