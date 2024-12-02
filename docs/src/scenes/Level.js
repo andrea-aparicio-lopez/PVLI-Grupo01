@@ -60,16 +60,15 @@ export default class Level extends Phaser.Scene {
                         break;
                     case 'jail':
                         new Jail(this, 'jail_' + ++jailCount, j, i, 'jail_sprite');
-                        console.log(jailCount, i, j)
                         break;
                     case 'toni':
-                        toni = new Toni(this, j, i, 'player_sprite', 0);
+                        toni = new Toni(this, j, i, 'toni_front', 0);
                         break;
                 }
             }
         }
         toni.setToTop();
-        this.player = new Player(this, cardsData, deckData, toni, this.enemyArray.length);
+        this.player = new Player(this, cardsData, deckData, toni, enemyCount, jailCount);
 
         //#endregion
 

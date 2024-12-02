@@ -71,10 +71,14 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     // GETTERS Y SETTERS
     getDirection() {return this.direction;}
-    setDirection(dir) {this.direction = dir;}
+    setDirection(dir) {
+        this.direction = dir;
+        this.changeSprite();
+    }
     setDirection(x,y) {
         this.direction.x = x;
         this.direction.y = y;
+        this.changeSprite();
     }
 
     getWorldPos() {return this.worldPos;}
@@ -210,4 +214,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     finishMovingAnimation() {
         this.onMovingAnimation = false;
     }
+
+    changeSprite() {} // according to direction
 }

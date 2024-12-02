@@ -8,4 +8,10 @@ export default class Toni extends Ally {
     die() {
         this.scene.events.emit("toni-killed");
     }
+
+    changeSprite() {
+        if(this.direction.y < 0)
+            this.setTexture('toni_back');
+        else this.setTexture('toni_front')
+    }
 }

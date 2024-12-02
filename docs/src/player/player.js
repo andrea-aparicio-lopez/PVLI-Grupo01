@@ -4,7 +4,7 @@ import Deck from "../objects/deck.js";
 export default class Player {
     static MAX_CARD_NUM = 6;
 
-    constructor(scene, cardsData, deckData, toni, enemyCount) {
+    constructor(scene, cardsData, deckData, toni, enemyCount, jailCount) {
         this.scene = scene;
 
         this.deck = new Deck(scene, cardsData, deckData);
@@ -14,22 +14,18 @@ export default class Player {
         for(let i=0; i < Player.MAX_CARD_NUM; i++) {
             this.hand[i] = this.deck.draw();
         }
-        // this.selectedCard = null;
-
 
         this.toni = toni;
 
         this.freedAllies = [];
 
-        this.alliesAlive = 0;
+        this.alliesAlive = jailCount;
         this.enemiesAlive = enemyCount;
 
         this.scene.events.on('ally-killed', this.allyKilled, this)
         this.scene.events.on('toni-killed', this.toniKilled, this)
         this.scene.events.on('enemy-killed', this.enemyKilled, this)
         this.scene.events.on('jail_broken', this.jailBroken, this)
-
-        this.scene.events.on('ally-spawned', () => this.alliesAlive++);
 
         this.isTurn = false;
     }
@@ -114,11 +110,6 @@ export default class Player {
         this.isTurn = false;
     }
 
-    // TODO Comprueba aliados en casillas adyacentes
-    checkNearbyTrappedAllies() {
-
-    }
-
     allyKilled() {
         this.alliesAlive--;
         if(this.alliesAlive == 0)
@@ -137,8 +128,8 @@ export default class Player {
         }
     }
 
-    jailBroken(event) {
-        var ally = new Ally(this.scene, "Ally " + this.freedAllies.length, event.worldPos.x, event.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
+    jailBroken(jail) {
+        let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
         this.freedAllies.push(ally);
     }
 }

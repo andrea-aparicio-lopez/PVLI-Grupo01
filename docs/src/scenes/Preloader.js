@@ -10,7 +10,8 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('boat_tiles', './assets/maps/boat_tileset.png');
 
         // SPRITES
-        this.load.image('player_sprite', './assets/textures/Toro_1.png');
+        this.load.image('toni_front', './assets/textures/toni_front.png');
+        this.load.image('toni_back', './assets/textures/toni_back.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
         this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png');
