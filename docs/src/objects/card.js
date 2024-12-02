@@ -120,9 +120,6 @@ export default class Card
     }
 
     changeRects(rects, visualize, color) {
-
-        let rectsArray = this.scene.damageRectsGroup.children.entries;
-        let rectSize = this.scene.damageRectsGroup.children.entries[0].width;
         let maxX = GI.tileMapConst.width - 1;
         let maxY = GI.tileMapConst.height - 1;
 

@@ -75,18 +75,21 @@ export default class Level extends Phaser.Scene {
 
         //#region DAMAGE RECTS
         this.damageRectsGroup = this.physics.add.group();
-        let rectColor = 0xff0000;
 
-        const groundLayer = this.map.getLayer("ground");
-        groundLayer.data.forEach((tile) => {
-            const x = GI.centralPanel.x + tile.pixelX * groundLayer.scaleX;
-            const y = GI.centralPanel.y + tile.pixelY * groundLayer.scaleY;
-            const width = tile.width * groundLayer.scaleX;
-            const height = tile.height * groundLayer.scaleY;
-
-            let rect = new DamageRect(this, x, y, width, height, rectColor, 0.5, 10);
-            this.damageRectsGroup.add(rect);
-        });
+        for(let i = 0; i < GI.tileMapConst.height; i++) {
+            for (let j = 0; j < GI.tileMapConst.width; j++) {
+                this.damageRectsGroup.add(new DamageRect(
+                    this,
+                    GI.centralPanel.x + j * GI.tileMapConst.scaledSize,
+                    GI.centralPanel.y + i * GI.tileMapConst.scaledSize,
+                    GI.tileMapConst.scaledSize,
+                    GI.tileMapConst.scaledSize,
+                    0xff0000,
+                    0.5,
+                    10
+                ));
+            }
+        }
         //#endregion
 
         //#region UI
