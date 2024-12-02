@@ -91,12 +91,14 @@ export default class Example extends Phaser.Scene {
         //new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20);
         //new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20);
         new Jail(this, 'jail1', 3, 3, 'jail_sprite');
-        new Jail(this, 'jail2', 10, 7, 'jail_sprite');
+        new Jail(this, 'jail2', 9, 7, 'jail_sprite');
+        new Jail(this, 'jail3', 8, 9, 'jail_sprite');
+        new Jail(this, 'jail4', 5, 4, 'jail_sprite');
 
         
         // this.enemiesGroup = this.physics.add.group();
         this.enemyArray = [
-            new Enemy(this, 'Enemy_1', 1, 3, "pirate_sprite", 0, 20)
+            //new Enemy(this, 'Enemy_1', 1, 3, "pirate_sprite", 0, 20)
         ];
         // this.enemyArray.forEach((enemy) => this.enemiesGroup.add(enemy));
         this.toni.setToTop();
