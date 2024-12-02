@@ -41,7 +41,7 @@ export default class Ally extends Entity {
                     this.setDirection(dir.x, dir.y);
 
                     this.moveInDirection();
-
+                    
                     
                 }
 

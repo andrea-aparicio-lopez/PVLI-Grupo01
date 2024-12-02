@@ -176,8 +176,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             this.scene.tweens.add({
                 targets: this,
                 y: this.y - (this.y - tileToScreenY(this.worldPos.y)),
-                ease: 'power1',
-                duration: TIME,
+                ease: 'linear',
+                duration: TIME ,
                 yoyo: yoyo,
                 repeat: 0,
                 onComplete: () => {
@@ -192,7 +192,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 targets: this,
                 y: this.y - 25,
                 ease: 'power1',
-                duration: TIME / 2,
+                duration: (TIME - Math.floor(Math.random() * 50))/ 2 ,
                 yoyo: true,
                 repeat: 0,
                 onComplete: () => {
