@@ -192,7 +192,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 targets: this,
                 y: this.y - 25 + Math.floor(Math.random() * 10),
                 ease: 'power1',
-                duration: (TIME - Math.floor(Math.random() * 50))/ 2 ,
+                duration: TIME/ 2 ,
                 yoyo: true,
                 repeat: 0,
                 onComplete: () => {
