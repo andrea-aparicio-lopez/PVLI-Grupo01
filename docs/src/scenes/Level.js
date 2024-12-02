@@ -56,14 +56,14 @@ export default class Level extends Phaser.Scene {
                 if (obstacleLayer.data[i][j].properties.collides) this.obstacles[i][j] = true;
                 switch(obstacleLayer.data[i][j].properties.spawn) {
                     case 'enemy':
-                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, i, j, "pirate_sprite", 0, 20));
+                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, j, i, "pirate_sprite", 0, 20));
                         break;
                     case 'jail':
-                        new Jail(this, 'jail_' + ++jailCount, i, j, 'jail_sprite');
+                        new Jail(this, 'jail_' + ++jailCount, j, i, 'jail_sprite');
                         console.log(jailCount, i, j)
                         break;
                     case 'toni':
-                        toni = new Toni(this, i, j, 'player_sprite', 0);
+                        toni = new Toni(this, j, i, 'player_sprite', 0);
                         break;
                 }
             }

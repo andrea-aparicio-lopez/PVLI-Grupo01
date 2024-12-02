@@ -84,7 +84,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     moveInDirection() {
         if (!this.active) return false;
 
-        console.log(this.direction)
+        // console.log(this.direction)
         
         if (this.direction.x < 0 && this.worldPos.x === 0) return false;
 
