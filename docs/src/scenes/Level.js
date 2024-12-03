@@ -25,6 +25,7 @@ export default class Level extends Phaser.Scene {
 
         this.map;
         this.obstacles = [];
+        this.entityObstacles = [];
         this.enemyArray = [];
 
         this.damageRectsGroup;
@@ -43,8 +44,10 @@ export default class Level extends Phaser.Scene {
         //#region OBSTACLES, ENTITIES
         for (var i = 0; i < this.map.height; i++) {
             this.obstacles[i] = [];
+            this.entityObstacles[i] = [];
             for (var j = 0; j < this.map.width; j++) 
                 this.obstacles[i][j] = false;
+                this.entityObstacles[i][j] = false;
         }
         let enemyCount, jailCount;
         enemyCount = jailCount = 0;
@@ -57,12 +60,14 @@ export default class Level extends Phaser.Scene {
                 switch(obstacleLayer.data[i][j].properties.spawn) {
                     case 'enemy':
                         this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, j, i, "pirate_sprite", 0, 20));
+                        this.addEntityObstacle({x: j, y: i})
                         break;
                     case 'jail':
                         new Jail(this, 'jail_' + ++jailCount, j, i, 'jail_sprite');
                         break;
                     case 'toni':
                         toni = new Toni(this, j, i, 'toni_front', 0);
+                        this.addEntityObstacle({x: j, y: i})
                         break;
                 }
             }
@@ -145,6 +150,7 @@ export default class Level extends Phaser.Scene {
 
     startEnemyTurn() {
         this.enemyArray.forEach((enemy) =>enemy.playTurn());
+        // AQUI
         this.endEnemyTurn();
     }
 
@@ -176,7 +182,19 @@ export default class Level extends Phaser.Scene {
     }
 
     addObstacle(position) {
-        this.obstacles[position.x][position.y] = true;
+        this.obstacles[position.y][position.x] = true;
+    }
+
+    removeEntityObstacle(position) {
+        this.entityObstacles[position.y][position.x] = false;
+    }
+    addEntityObstacle(position) {
+        this.entityObstacles[position.y][position.x] = true;
+    }
+
+    updateEntityObstacles(prevPos, currentPos) {
+        this.removeEntityObstacle(prevPos);
+        this.addEntityObstacle(currentPos);
     }
 
     // TODO

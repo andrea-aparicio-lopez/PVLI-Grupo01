@@ -17,36 +17,17 @@ export default class Ally extends Entity {
 
     setFree() {this.isFree = true;}
 
-    preupdate(t, dt) {
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
     }
 
 
 
-    moveTowardsPosition(position) {
+    moveTowardsPosition(destPos) {
         this.pathFinding.setGrid(this.scene.obstacles);
         this.pathFinding.setAcceptableTiles([false]);
 
-        this.pathFinding.findPath(this.worldPos.x, this.worldPos.y, position.x, position.y, (path) => {
-            if (path === null) {
-                alert("Path was not found.");
-            } else {
-                //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
-                // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-                if (this.worldPos.x == position.x && this.worldPos.y == position.y) this.moveInDirection();
-                else {
-                    var dir = {};
-                    dir.x = path[1].x - this.worldPos.x;
-                    dir.y = path[1].y - this.worldPos.y;
-                    this.setDirection(dir.x, dir.y);
-
-                    this.moveInDirection();
-                    
-                    
-                }
-
-            }
-        });
+        this.findPath(destPos);
 
         this.pathFinding.calculate();
     }

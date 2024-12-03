@@ -1,3 +1,4 @@
+// import Obstacle from "../objects/obstacle.js";
 import Entity from "./entity.js";
 
 export default class Enemy extends Entity {
@@ -6,7 +7,7 @@ export default class Enemy extends Entity {
         this.health = 1;
     }
 
-    preupdate(t, dt) {
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
     }
 
@@ -19,24 +20,7 @@ export default class Enemy extends Entity {
         this.pathFinding.setGrid(this.scene.obstacles);
         this.pathFinding.setAcceptableTiles([false]);
 
-        this.pathFinding.findPath(this.worldPos.x, this.worldPos.y, this.scene.player.toni.worldPos.x, this.scene.player.toni.worldPos.y, (path) =>{
-            if (path === null) {
-                alert("Path was not found.");
-            } else {
-                //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
-                // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-                if (this.worldPos.x == this.scene.player.toni.worldPos.x && this.worldPos.y == this.scene.player.toni.worldPos.y) this.moveInDirection();
-                else {
-                    var dir = {};
-                    dir.x = path[1].x - this.worldPos.x;
-                    dir.y = path[1].y - this.worldPos.y;
-                    this.setDirection(dir.x, dir.y);
-
-                    this.moveInDirection();
-                }
-                
-            }
-        });
+        this.findPath(this.scene.player.toni.worldPos);
 
         this.pathFinding.calculate();
 
@@ -47,6 +31,13 @@ export default class Enemy extends Entity {
         if(damageInfo.target == 'enemy') {
             super.checkHit(damageInfo);
         }
+    }
+
+    calculatePath() {
+        this.pathFinding.setGrid(this.scene.obstacles);
+        this.pathFinding.setAcceptableTiles([false]);
+        
+        this.pathFinding.calculate();
     }
 
     die() {

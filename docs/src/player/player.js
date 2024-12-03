@@ -60,8 +60,6 @@ export default class Player {
     }   
 
     startTurn() {
-        // console.log("started player turn");
-        
         this.isTurn = true;
         this.drawCard();
     }
@@ -70,7 +68,6 @@ export default class Player {
         
         if (this.isTurn == true) {
             let hasMoved;
-            //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
                 this.toni.setDirection(0, -1);
                 hasMoved = this.toni.moveInDirection();
@@ -96,13 +93,13 @@ export default class Player {
 
     updateAllies() {
         if(this.freedAllies.length != 0){
-            this.freedAllies[0].moveTowardsPosition(this.toni.worldPos);
+            this.freedAllies[0].moveTowardsPosition(this.toni.prevWorldPos);
             for(let i = 1; i < this.freedAllies.length; i++) {
                 this.freedAllies[i].moveTowardsPosition(this.freedAllies[i - 1].worldPos);
             }
         }
 
-        this.toni.scene.endPlayerTurn();
+        this.scene.endPlayerTurn();
     }
 
     endTurn() {

@@ -46,6 +46,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         
         // EVENTOS
         this.scene.events.on('damage', this.checkHit, this); // implementación de checkHit en las sublcases
+        this.scene.events.on('obstacles-updated', this.calculatePath, this)
 
     }
 
@@ -56,14 +57,33 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         }
     }
 
-    preupdate(t, dt) {
+    findPath(destPos) {
+        this.pathFinding.findPath(this.worldPos.x, this.worldPos.y, destPos.x, destPos.y, (path) => {
+            if (path === null) {
+                console.warn("Path was not found.");
+            } else {
+                //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
+                // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
+                if (this.worldPos.x == destPos.x && this.worldPos.y == destPos.y) this.moveInDirection(); {
+                    let dir = {};
+                    dir.x = path[1].x - this.worldPos.x;
+                    dir.y = path[1].y - this.worldPos.y;
+                    this.setDirection(dir.x, dir.y);
+                }              
+                
+                this.moveInDirection();  
+            }
+        });
+    }
+
+    calculatePath() {}
+
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
         if (this.active) {
             if (!this.onMovingAnimation) {
                 this.x = tileToScreenX(this.worldPos.x);
                 this.y = tileToScreenY(this.worldPos.y);
-            }
-            else {
             }
         }
     }
@@ -82,13 +102,16 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     }
 
     getWorldPos() {return this.worldPos;}
-    setWorldPos(pos) {this.worldPos = pos;}
+    setWorldPos(pos) {
+        this.prevWorldPos = this.worldPos;
+        this.worldPos = pos;
+        this.scene.updateEntityObstacles(this.prevWorldPos, this.worldPos);
+    }
+
 
     // Mueve en la direccion. Devuelve true si ha tenido exito, false si no
     moveInDirection() {
         if (!this.active) return false;
-
-        // console.log(this.direction)
         
         if (this.direction.x < 0 && this.worldPos.x === 0) return false;
 
@@ -98,7 +121,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         else if (this.direction.y > 0 && this.worldPos.y === this.scene.map.height - 1) return false;
 
-        if (this.scene.obstacles[this.worldPos.y + this.direction.y][this.worldPos.x + this.direction.x] == true) return false;
+        if (this.scene.obstacles[this.worldPos.y + this.direction.y][this.worldPos.x + this.direction.x] ||
+            this.scene.entityObstacles[this.worldPos.y + this.direction.y][this.worldPos.x + this.direction.x]
+        ) return false;
 
         this.prevWorldPos.x = this.worldPos.x;
         this.prevWorldPos.y = this.worldPos.y;
@@ -106,7 +131,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.worldPos.x = this.worldPos.x + this.direction.x;
         this.worldPos.y = this.worldPos.y + this.direction.y;
 
-        // console.log(this.worldPos);
+        this.scene.updateEntityObstacles(this.prevWorldPos, this.worldPos);
+
         return true;
     }
 
@@ -167,7 +193,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         this.scene.tweens.add({
             targets: this,
-            x: this.x - (this.x - tileToScreenX(this.worldPos.x)),
+            x: tileToScreenX(this.worldPos.x),
             ease: 'linear',
             duration: TIME,
             yoyo: false,
@@ -179,7 +205,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         if (this.direction.y != 0) {
             this.scene.tweens.add({
                 targets: this,
-                y: this.y - (this.y - tileToScreenY(this.worldPos.y)),
+                y: tileToScreenY(this.worldPos.y),
                 ease: 'linear',
                 duration: TIME ,
                 yoyo: yoyo,

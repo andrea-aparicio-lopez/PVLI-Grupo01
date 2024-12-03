@@ -1,9 +1,7 @@
-import Object from "./object.js";
 
-export default class Obstacle extends Object {
-    constructor(scene, x, y, texture, frame, isWalkable) {
-        super(scene, x, y, texture, frame);
-
-        this.isWalkable = isWalkable;
+export default class Obstacle {
+    constructor(isMapObstacle = false, isEntityObstacle = false) {
+        this.map = isMapObstacle;
+        this.entity = isEntityObstacle;
     }
 }
