@@ -98,7 +98,7 @@ export default class Player {
                 this.freedAllies[i].moveTowardsPosition(this.freedAllies[i - 1].worldPos);
             }
         }
-
+        
         this.scene.endPlayerTurn();
     }
 
