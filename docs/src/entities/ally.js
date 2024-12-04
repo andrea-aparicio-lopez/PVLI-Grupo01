@@ -21,8 +21,6 @@ export default class Ally extends Entity {
         super.preUpdate(t, dt);
     }
 
-
-
     moveTowardsPosition(destPos) {
         this.pathFinding.setGrid(this.scene.obstacles);
         this.pathFinding.setAcceptableTiles([false]);
@@ -30,6 +28,15 @@ export default class Ally extends Entity {
         this.findPath(destPos);
 
         this.pathFinding.calculate();
+    }
+
+    atAdjacentPos(destPos) {
+        // dirección contraria
+        // this.setDirection({
+        //     x: this.worldPos.x - destPos.x,
+        //     y: this.worldPos.y - destPos.y
+        // })
+        this.setDirection(this.worldPos.x - destPos.x, this.worldPos.y - destPos.y);
     }
 
     die() {

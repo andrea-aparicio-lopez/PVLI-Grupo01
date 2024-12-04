@@ -22,9 +22,11 @@ export default class Enemy extends Entity {
 
         this.findPath(this.scene.player.toni.worldPos);
 
-        this.pathFinding.calculate();
+        this.pathFinding.calculate();        
+    }
 
-        
+    atAdjacentPos(destPos) {
+        this.attackPos(destPos);
     }
 
     checkHit(damageInfo) {
@@ -40,11 +42,15 @@ export default class Enemy extends Entity {
         this.pathFinding.calculate();
     }
 
+    // TODO
+    attackPos(position) {
+        console.log(`atacando a Toni en ${position}`)
+    }
+
     die() {
         this.scene.events.emit('enemy-killed', this)
         let index = this.scene.enemyArray.indexOf(this);
         this.scene.enemyArray.splice(index,1);
-        // console.log(this.scene.enemyArray);
         this.setTexture('pirate_dead');
 
         this.scene.addObstacle(this.worldPos)

@@ -63,8 +63,15 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 console.warn("Path was not found.");
             } else {
                 //alert("Path was found. The first Point is " + path[0].x + " " + path[0].y);
-                // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-                if (this.worldPos.x == destPos.x && this.worldPos.y == destPos.y) this.moveInDirection(); {
+                // Si ya está en la casilla destino
+                if (this.worldPos.x == destPos.x && this.worldPos.y == destPos.y) {
+                    this.atDestPos(); 
+                }
+                // Si está adyacente
+                else if(path[1].x == destPos.x && path[1].y == destPos.y) {
+                    this.atAdjacentPos(destPos);
+                }
+                else {
                     let dir = {};
                     dir.x = path[1].x - this.worldPos.x;
                     dir.y = path[1].y - this.worldPos.y;
@@ -77,6 +84,12 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     }
 
     calculatePath() {}
+
+    atDestPos() {
+        this.moveInDirection();
+    }
+
+    atAdjacentPos(destPos) {}
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
@@ -202,7 +215,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
         
         var yoyo = this.direction.y == 0;
-        if (this.direction.y != 0) {
+        if (!yoyo) {
             this.scene.tweens.add({
                 targets: this,
                 y: tileToScreenY(this.worldPos.y),
@@ -223,7 +236,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 y: this.y - 25 + Math.floor(Math.random() * 10),
                 ease: 'power1',
                 duration: TIME/ 2 ,
-                yoyo: true,
+                yoyo: yoyo,
                 repeat: 0,
                 onComplete: () => {
                     this.onMovingAnimation = false;
