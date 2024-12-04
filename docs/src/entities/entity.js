@@ -93,12 +93,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
-        if (this.active) {
-            if (!this.onMovingAnimation) {
-                this.x = tileToScreenX(this.worldPos.x);
-                this.y = tileToScreenY(this.worldPos.y);
-            }
-        }
+        
     }
 
 
