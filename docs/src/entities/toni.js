@@ -2,7 +2,7 @@ import Ally from "./ally.js";
 
 export default class Toni extends Ally {
     constructor(scene, x, y, texture, frame) {
-        super(scene, 'player', x, y, texture, frame, 50);
+        super(scene, 'player', x, y, texture, frame, 5);
     }
 
     die() {

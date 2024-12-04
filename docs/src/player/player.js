@@ -103,7 +103,6 @@ export default class Player {
     }
 
     endTurn() {
-        // console.log("ended player turn");
         this.isTurn = false;
     }
 
@@ -114,7 +113,7 @@ export default class Player {
     }
 
     toniKilled() {
-        this.scene.events.emit("Level lost");
+        this.scene.events.emit("level-lost");
     }
 
     enemyKilled(event) {
@@ -126,6 +125,7 @@ export default class Player {
         this.remainingJails--;
         let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
         this.freedAllies.push(ally);
+        this.scene.events.emit('ally-spawned', ally)
 
         this.checkVictory();
     }

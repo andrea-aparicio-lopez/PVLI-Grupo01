@@ -59,7 +59,7 @@ export default class Level extends Phaser.Scene {
                 if (obstacleLayer.data[i][j].properties.collides) this.obstacles[i][j] = true;
                 switch(obstacleLayer.data[i][j].properties.spawn) {
                     case 'enemy':
-                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, j, i, "pirate_sprite", 0, 20));
+                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, j, i, "pirate_sprite", 0, 1));
                         this.addEntityObstacle({x: j, y: i})
                         break;
                     case 'jail':
@@ -201,7 +201,7 @@ export default class Level extends Phaser.Scene {
     levelLost() {
         console.log("Nivel perdido")
         this.time.addEvent({
-            delay: 40000,
+            delay: 4000,
             callback: this.reloadLevel,
             callbackScope: this
         });

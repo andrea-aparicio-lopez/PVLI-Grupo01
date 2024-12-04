@@ -69,7 +69,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 }
                 // Si está adyacente
                 else if(path[1].x == destPos.x && path[1].y == destPos.y) {
-                    this.atAdjacentPos(destPos);
+                    this.atAdjacentPos(path);
                 }
                 else {
                     let dir = {};
@@ -89,7 +89,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         this.moveInDirection();
     }
 
-    atAdjacentPos(destPos) {}
+    atAdjacentPos(path) {}
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);
@@ -159,10 +159,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             this.health -= points;
             this.health = Math.max(this.health, 0); // clamp
             this.isHurt = true;
-            console.log("dañado " + this.health);
             this.scene.events.emit('loseLife', this.id, this.health);
-        }
-        
+        }        
     }
 
     /** @summary Cambia estado de aturdimiento */
