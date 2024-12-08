@@ -119,7 +119,7 @@ export default class Card
         this.resetRects();
     }
 
-    changeRects(rects, visualize, color) {
+    changeRects(rects, visualize = false, color = 0x000000) {
         let maxX = GI.tileMapConst.width - 1;
         let maxY = GI.tileMapConst.height - 1;
 
@@ -144,7 +144,6 @@ export default class Card
                 }
             }
         });
-        
     }
 
     /** @summary Recieves the entity that was hit. Applies damage and stun if exists. Use as callback function for collision between entity and damage rects*/

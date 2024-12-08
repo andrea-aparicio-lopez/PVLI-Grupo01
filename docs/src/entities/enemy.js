@@ -25,8 +25,8 @@ export default class Enemy extends Entity {
         this.pathFinding.calculate();        
     }
 
-    atAdjacentPos(destPos) {
-        this.attackPos(destPos);
+    atAdjacentPos(path) {
+        this.straightAttack(path);
     }
 
     checkHit(damageInfo) {
@@ -43,8 +43,13 @@ export default class Enemy extends Entity {
     }
 
     // TODO
-    attackPos(position) {
-        console.log(`atacando a Toni en ${position}`)
+    straightAttack(path) {
+        // console.log(`atacando a Toni`);
+        let damageRects = [];
+        for(let i = 1; i < path.length; i++)
+            damageRects.push({x: path[i].x, y: path[i].y})
+
+        this.scene.cardPlayed(this, damageRects, 1);
     }
 
     die() {
@@ -56,4 +61,6 @@ export default class Enemy extends Entity {
         this.scene.addObstacle(this.worldPos)
         super.die();
     }
+
+
 }

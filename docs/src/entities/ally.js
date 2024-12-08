@@ -6,12 +6,11 @@ export default class Ally extends Entity {
 
         this.arrayIndex = arrayIndex;
         this.isFree = false;
-        this.scene.events.emit('ally-spawned', this)
     }
 
     checkHit(damageInfo) {
         if(damageInfo.target == 'ally') {
-            console.log('aliado targeteado')
+            super.checkHit(damageInfo);
         }
     }
 
@@ -30,13 +29,13 @@ export default class Ally extends Entity {
         this.pathFinding.calculate();
     }
 
-    atAdjacentPos(destPos) {
+    atAdjacentPos(path) {
         // dirección contraria
         // this.setDirection({
         //     x: this.worldPos.x - destPos.x,
         //     y: this.worldPos.y - destPos.y
         // })
-        this.setDirection(this.worldPos.x - destPos.x, this.worldPos.y - destPos.y);
+        this.setDirection(this.worldPos.x - path[path.length-1].x, this.worldPos.y - path[path.length-1].y);
     }
 
     die() {
