@@ -29,6 +29,7 @@ export default class Level extends Phaser.Scene {
         this.enemyArray = [];
 
         this.damageRectsGroup;
+        this.onMenu = false;
     }
 
     // preload() {
@@ -112,6 +113,7 @@ export default class Level extends Phaser.Scene {
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-D', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-P', this.inputToUiManager, this);
         //#endregion
 
         this.startPlayerTurn();
@@ -224,6 +226,10 @@ export default class Level extends Phaser.Scene {
         console.log("cargando siguiente nivel");
         this.events.removeAllListeners();
         this.scene.start(levelKeys[this.level+1]);
+    }
+
+    inputToUiManager(event) {
+        this.uiManager.receiveEvent(event);
     }
 
 }

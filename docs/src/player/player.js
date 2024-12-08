@@ -66,7 +66,7 @@ export default class Player {
 
     receiveEvent(event) {
         
-        if (this.isTurn == true) {
+        if (this.isTurn == true && !this.scene.onMenu) {
             let hasMoved;
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
                 this.toni.setDirection(0, -1);

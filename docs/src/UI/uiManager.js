@@ -1,5 +1,6 @@
 import Player from "../player/player.js";
 // import Button from "./button.js";
+import MenuPausa from "./menuPausa.js";
 import CardUI from "./cardUI.js";
 
 import { GI } from '../graphics/graphicsInterface.js'
@@ -23,6 +24,8 @@ export default class UIManager {
         this.indexSelectedCard;
         this.clickedCard;
 
+        this.menu = new MenuPausa(scene);
+        this.menu.menuOff();
     }
 
     update() {
@@ -85,6 +88,12 @@ export default class UIManager {
     disableInteractiveCards() {
         for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
             this.cardsUI[i].card.unsetButtonInteractive();
+        }
+    }
+
+    receiveEvent(event) {
+        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.P){
+            this.menu.toggle();
         }
     }
 }

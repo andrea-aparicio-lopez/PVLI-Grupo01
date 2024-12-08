@@ -23,6 +23,7 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('table_text_box', './assets/textures/table_text_box.png');
         this.load.image('card', './assets/textures/card.png');
         this.load.image('info_background', './assets/textures/info_background.png'); // info panel
+        this.load.image('game_pause', './assets/textures/gamePause.png');
 
         // DECK
         this.load.json("cardsData", "./assets/cards.json");
