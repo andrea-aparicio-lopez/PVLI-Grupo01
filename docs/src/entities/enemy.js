@@ -22,7 +22,7 @@ export default class Enemy extends Entity {
 
         this.findPath(this.scene.player.toni.worldPos);
 
-        this.pathFinding.calculate();        
+        this.pathFinding.calculate();
     }
 
     atAdjacentPos(path) {
@@ -33,13 +33,6 @@ export default class Enemy extends Entity {
         if(damageInfo.target == 'enemy') {
             super.checkHit(damageInfo);
         }
-    }
-
-    calculatePath() {
-        this.pathFinding.setGrid(this.scene.obstacles);
-        this.pathFinding.setAcceptableTiles([false]);
-        
-        this.pathFinding.calculate();
     }
 
     // TODO

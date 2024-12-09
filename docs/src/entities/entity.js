@@ -195,9 +195,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     };
 
     playMovingAnimation(TIME) {
-
         //TWEEN
         this.onMovingAnimation = true;
+        console.log(this.y);
 
         this.scene.tweens.add({
             targets: this,
@@ -218,7 +218,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 duration: TIME ,
                 yoyo: yoyo,
                 repeat: 0,
-
             })
         }
         
@@ -244,10 +243,13 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     onAnimationFinished() {
         this.onMovingAnimation = false;
+        console.log(this.y);
     }
 
     finishMovingAnimation() {
         this.onMovingAnimation = false;
+
+        
     }
 
     changeSprite() {} // according to direction
