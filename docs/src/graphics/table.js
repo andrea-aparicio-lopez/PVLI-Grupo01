@@ -1,7 +1,8 @@
 import { GI } from '../graphics/graphicsInterface.js'
 import CardUI from '../UI/cardUI.js';
+import Player from '../player/player.js';
 
-const initialNumSlots = 6;
+const initialNumSlots = Player.MAX_CARD_NUM;
 
 export default class Table {
     constructor(scene, x, y) {
@@ -86,5 +87,20 @@ export default class Table {
         this.scene.events.on('outCard', (cardUI) =>{
             this.textDisplay.setText(this.default_text);
             });
+
+        this.scene.events.on('jail_broken', () =>{
+            this.cardSlots[this.numSlots].card = new CardUI(
+                scene,
+                this.cardSlots[this.numSlots].x,
+                this.cardSlots[this.numSlots].y,
+                GI.cardSpecs.width,
+                GI.cardSpecs.height,
+                GI.cardSpecs.color,
+                this.numSlots
+            );
+            this.numSlots++;
+            this.scene.player.drawCard();
+            });
     }
+
 }

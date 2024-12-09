@@ -2,16 +2,17 @@ import Ally from "../entities/ally.js";
 import Deck from "../objects/deck.js";
 
 export default class Player {
-    static MAX_CARD_NUM = 6;
+    static MAX_CARD_NUM = 2;
 
     constructor(scene, cardsData, deckData, toni, enemyCount, jailCount) {
         this.scene = scene;
 
         this.deck = new Deck(scene, cardsData, deckData);
         this.hand = [];
+        this.handSize = Player.MAX_CARD_NUM;
         this.graveyard = [];
 
-        for(let i=0; i < Player.MAX_CARD_NUM; i++) {
+        for(let i=0; i < this.handSize; i++) {
             this.hand[i] = this.deck.draw();
         }
 
@@ -33,7 +34,7 @@ export default class Player {
     // Draw a card: returns true if succeeds, else return false if no card was drawn
     drawCard() {
 
-        if(this.hand.length < Player.MAX_CARD_NUM)
+        if(this.hand.length < this.handSize)
         {
             if(this.deck.empty()) {
                 this.deck.regenerate(this.graveyard); // Returns graveyard cards to deck and shuffles it
@@ -126,6 +127,7 @@ export default class Player {
         let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
         this.freedAllies.push(ally);
         this.scene.events.emit('ally-spawned', ally)
+        this.handSize++;
 
         this.checkVictory();
     }

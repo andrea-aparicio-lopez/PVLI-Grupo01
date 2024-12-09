@@ -1,5 +1,5 @@
 import Player from "../player/player.js";
-// import Button from "./button.js";
+import Button from "./button.js";
 import MenuPausa from "./menuPausa.js";
 import CardUI from "./cardUI.js";
 
@@ -26,6 +26,12 @@ export default class UIManager {
 
         this.menu = new MenuPausa(scene);
         this.menu.menuOff();
+
+        this.menu_button = new Button(scene, 960, 10, 30, 30, 0xff0fff, 1);
+        this.menu_button.onClick = () => {this.menu.toggle()};
+        this.menu_button.highlight = () => {this.menu_button.setFillStyle(0xaaaaaa, 1)};
+        this.menu_button.onHover = () => {this.menu_button.highlight()}
+        this.menu_button.onOut = () => {this.menu_button.unhighlight()};
     }
 
     update() {
@@ -66,7 +72,7 @@ export default class UIManager {
     }
 
     updateHand() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
+        for (let i = 0; i < this.player.handSize; i++) {
 
             if(i < this.hand.length){
                 this.cardsUI[i].card.enable();
@@ -80,13 +86,13 @@ export default class UIManager {
     }
 
     setInteractiveCards() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
+        for (let i = 0; i < this.player.handSize; i++) {
             this.cardsUI[i].card.setButtonInteractive();
         }
     }
 
     disableInteractiveCards() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
+        for (let i = 0; i < this.player.handSize; i++) {
             this.cardsUI[i].card.unsetButtonInteractive();
         }
     }

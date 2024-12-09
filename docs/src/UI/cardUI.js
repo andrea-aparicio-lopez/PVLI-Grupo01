@@ -20,7 +20,7 @@ export default class CardUI extends Button {
 
         this.scene = scene;
         this.sprite = this.scene.add.sprite(x, y, 'card').setOrigin(0);
-        this.sprite.angle = 2;
+        // this.sprite.angle = 2;
 
         this.description = "";
 

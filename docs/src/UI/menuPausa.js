@@ -36,8 +36,6 @@ export default class MenuPausa extends Phaser.GameObjects.Container {
 
         const menu_button_right_x = this.bannerSprite.width - padding_x - button_width;
         const menu_button_right_y = this.bannerSprite.height/2 + 30;
-        const menu_button_right_width = button_width;
-        const menu_button_right_height = button_height;
 
         
 
