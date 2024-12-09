@@ -28,6 +28,12 @@ export default class Preloader extends Phaser.Scene {
         // DECK
         this.load.json("cardsData", "./assets/cards.json");
         this.load.json("deckData", "./assets/deck.json");
+
+        //SONIDO
+        this.load.audio('toniMoveSound', "./assets/sound/toniMoveSound.wav");
+        this.load.audio('jailBrokenSound', "./assets/sound/jailBrokenSound.wav");
+        this.load.audio('hurtSound', "./assets/sound/hurtSound.wav");
+        this.load.audio('allyMoveSound', "./assets/sound/allyMoveSound.wav");
     }
 
     create() {

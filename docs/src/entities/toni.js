@@ -14,4 +14,10 @@ export default class Toni extends Ally {
             this.setTexture('toni_back');
         else this.setTexture('toni_front')
     }
+
+    playMovingAnimation(TIME) {
+        this.scene.toniMoveSound.play();
+        this.scene.allyMoveSound.play();
+        super.playMovingAnimation(TIME);
+    }
 }

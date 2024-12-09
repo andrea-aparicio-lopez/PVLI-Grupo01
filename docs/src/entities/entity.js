@@ -160,6 +160,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             this.health = Math.max(this.health, 0); // clamp
             this.isHurt = true;
             this.scene.events.emit('loseLife', this.id, this.health);
+
+            this.scene.hurtSound.play();
         }        
     }
 
@@ -216,9 +218,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 duration: TIME ,
                 yoyo: yoyo,
                 repeat: 0,
-                onComplete: () => {
-                    this.onMovingAnimation = false;
-                },
 
             })
         }
@@ -232,7 +231,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 yoyo: yoyo,
                 repeat: 0,
                 onComplete: () => {
-                    this.onMovingAnimation = false;
+                    this.onAnimationFinished();
                 },
 
             })
@@ -241,6 +240,10 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         
         
 
+    }
+
+    onAnimationFinished() {
+        this.onMovingAnimation = false;
     }
 
     finishMovingAnimation() {

@@ -116,6 +116,12 @@ export default class Level extends Phaser.Scene {
         this.input.keyboard.on('keydown-P', this.inputToUiManager, this);
         //#endregion
 
+        //SONIDOS
+        this.toniMoveSound = this.sound.add('toniMoveSound');
+        this.jailBrokenSound = this.sound.add('jailBrokenSound');
+        this.hurtSound = this.sound.add('hurtSound');
+        this.allyMoveSound = this.sound.add('allyMoveSound');
+
         this.startPlayerTurn();
     }
 

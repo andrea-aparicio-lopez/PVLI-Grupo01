@@ -17,6 +17,7 @@ export default class Jail extends Entity {
         if (this.active) {
             this.scene.events.emit('jail_broken', this);
             this.setTexture('jail_broken');
+            this.scene.jailBrokenSound.play();
             super.die();
         }
         

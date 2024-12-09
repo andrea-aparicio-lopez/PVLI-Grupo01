@@ -42,4 +42,9 @@ export default class Ally extends Entity {
         this.scene.events.emit("ally-killed", this);
         super.die();
     }
+
+    onAnimationFinished() {
+        super.onAnimationFinished();
+        
+    }
 }
