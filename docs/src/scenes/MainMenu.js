@@ -20,11 +20,14 @@ export default class MainMenu extends Phaser.Scene {
             GI.centralPanel.height*0.7 + GI.centralPanel.y,
             "startButton"
         ).setScale(0.5);
-        startButton.setInteractive({useHandCursor: true});
+        startButton.setInteractive({ useHandCursor: true });
+        
 
         // EVENTOS
-        startButton.on("pointerdown", ()=>{
+        startButton.on("pointerdown", () => {
+
             this.scene.start("Preloader")
+            
         })
     }
 

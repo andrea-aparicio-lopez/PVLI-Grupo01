@@ -34,12 +34,15 @@ export default class Preloader extends Phaser.Scene {
         this.load.audio('jailBrokenSound', "./assets/sound/jailBrokenSound.wav");
         this.load.audio('hurtSound', "./assets/sound/hurtSound.wav");
         this.load.audio('allyMoveSound', "./assets/sound/allyMoveSound.wav");
+        this.load.audio('music', "./assets/sound/flamenco.wav");
     }
 
     create() {
         // ANIMACIONES
 
         // Cargar nivel 1
+        this.music = this.sound.add('music', { loop: true });
+        this.music.play();
         this.scene.start(levelKeys[1]);
     }
 }

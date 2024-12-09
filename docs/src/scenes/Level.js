@@ -121,6 +121,8 @@ export default class Level extends Phaser.Scene {
         this.jailBrokenSound = this.sound.add('jailBrokenSound');
         this.hurtSound = this.sound.add('hurtSound');
         this.allyMoveSound = this.sound.add('allyMoveSound');
+        
+        
 
         this.startPlayerTurn();
     }
