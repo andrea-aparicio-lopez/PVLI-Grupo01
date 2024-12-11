@@ -165,12 +165,17 @@ export default class Level extends Phaser.Scene {
     }
 
     endEnemyTurn() {
-        this.playAllAnimations();
+        var timer = this.time.delayedCall(
+            50,
+            this.playAllAnimations,
+            null,
+            this
+        ); // delay in ms
     }
     //#endregion
 
     playAllAnimations() {
-        let TIME = 200;
+        let TIME = 150;
         this.player.toni.playMovingAnimation(TIME)
         for(let i = 0; i < this.player.freedAllies.length; i++)
             this.player.freedAllies[i].playMovingAnimation(TIME);

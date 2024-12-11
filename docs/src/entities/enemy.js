@@ -14,6 +14,7 @@ export default class Enemy extends Entity {
     /** @summary Llama a la IA para jugar su turno */
     playTurn() {
         this.moveToPlayer();
+        
     }
 
     moveToPlayer() {
@@ -37,7 +38,7 @@ export default class Enemy extends Entity {
 
     // TODO
     straightAttack(path) {
-        // console.log(`atacando a Toni`);
+        
         let damageRects = [];
         for(let i = 1; i < path.length; i++)
             damageRects.push({x: path[i].x, y: path[i].y})

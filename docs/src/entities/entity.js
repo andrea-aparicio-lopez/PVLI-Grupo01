@@ -197,7 +197,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     playMovingAnimation(TIME) {
         //TWEEN
         this.onMovingAnimation = true;
-        console.log(this.y);
+        console.log("hola");
 
         this.scene.tweens.add({
             targets: this,
@@ -206,6 +206,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
             duration: TIME,
             yoyo: false,
             repeat: 0,
+            onComplete: () => {
+                this.onAnimationFinished();
+            },
         })
 
         
@@ -218,6 +221,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 duration: TIME ,
                 yoyo: yoyo,
                 repeat: 0,
+                onComplete: () => {
+                },
             })
         }
         
@@ -228,22 +233,15 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 ease: 'power1',
                 duration: TIME/ 2 ,
                 yoyo: yoyo,
-                repeat: 0,
-                onComplete: () => {
-                    this.onAnimationFinished();
-                },
+                repeat: 0
 
             })
         }
-        
-        
-        
-
     }
 
     onAnimationFinished() {
         this.onMovingAnimation = false;
-        console.log(this.y);
+        console.log("adios");
     }
 
     finishMovingAnimation() {
