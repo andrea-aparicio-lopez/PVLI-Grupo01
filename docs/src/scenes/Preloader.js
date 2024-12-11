@@ -73,8 +73,6 @@ export default class Preloader extends Phaser.Scene {
         })
 
         // Cargar nivel 1
-        this.music = this.sound.add('music', { loop: true });
-        this.music.play();
         this.scene.start(levelKeys[1]);
     }
 }

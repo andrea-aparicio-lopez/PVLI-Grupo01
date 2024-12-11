@@ -115,13 +115,16 @@ export default class Level extends Phaser.Scene {
         this.input.keyboard.on('keydown-ESC', this.inputToUiManager, this);
         //#endregion
 
-        //SONIDOS
+        //#region SONIDOS
+        this.sound.add('music');
         this.toniMoveSound = this.sound.add('toniMoveSound');
         this.jailBrokenSound = this.sound.add('jailBrokenSound');
         this.hurtSound = this.sound.add('hurtSound');
         this.allyMoveSound = this.sound.add('allyMoveSound');
         
+        this.sound.play('music', { loop: true });
         this.sound.play('trumpet', {rate: 1.25, detune:1});
+        //#endregion
 
         this.startPlayerTurn();
     }
@@ -212,21 +215,32 @@ export default class Level extends Phaser.Scene {
         this.addEntityObstacle(currentPos);
     }
 
-    // TODO
+    onLevelEnd() {
+        this.sound.stopByKey('music');
+    }
+    
     levelLost() {
         console.log("Nivel perdido")
+        // this.sound.play('defeat')
         this.time.addEvent({
             delay: 4000,
-            callback: this.reloadLevel,
+            callback: () => {
+                this.onLevelEnd();
+                this.reloadLevel();
+            },
             callbackScope: this
         });
     }
 
     levelWon() {
         console.log("Nivel ganado");
+        // this.sound.play('victory')
         this.time.addEvent({
             delay: 3000,
-            callback: this.nextLevel,
+            callback: () => {
+                this.onLevelEnd();
+                this.nextLevel();
+            },
             callbackScope: this
         });        
     }
