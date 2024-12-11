@@ -56,8 +56,10 @@ export default class Enemy extends Entity {
         let index = this.scene.enemyArray.indexOf(this);
         this.scene.enemyArray.splice(index,1);
         this.setTexture('pirate_dead');
-
+        
         this.scene.addObstacle(this.worldPos)
+        this.scene.sound.play('cheer', { rate: 1.5, detune: 100 })
+        
         super.die();
     }
 
