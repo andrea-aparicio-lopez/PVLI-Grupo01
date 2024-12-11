@@ -94,9 +94,9 @@ export default class Player {
 
     updateAllies() {
         if(this.freedAllies.length != 0){
-            this.freedAllies[0].moveTowardsPosition(this.toni.worldPos);
+            this.freedAllies[0].moveTowardsPosition(this.toni.prevWorldPos);
             for(let i = 1; i < this.freedAllies.length; i++) {
-                this.freedAllies[i].moveTowardsPosition(this.freedAllies[i - 1].worldPos);
+                this.freedAllies[i].moveTowardsPosition(this.freedAllies[i - 1].prevWorldPos);
             }
         }
         
