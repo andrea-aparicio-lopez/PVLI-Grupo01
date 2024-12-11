@@ -12,8 +12,10 @@ export default class Preloader extends Phaser.Scene {
         // SPRITES
         this.load.image('toni_front', './assets/textures/toni_front.png');
         this.load.image('toni_back', './assets/textures/toni_back.png');
+        this.load.image('toni_hurt', './assets/textures/toni_hurt.png');
         this.load.image('ally_sprite', './assets/textures/allyBull.png');
         this.load.image('pirate_sprite', './assets/textures/pirata.png');
+        this.load.image('pirate_hurt', '././assets/textures/pirata_hurt.png');
         this.load.image('pirate_dead', '././assets/textures/pirata_muerto.png');
         this.load.image('jail_sprite', '././assets/textures/jail.png');
         this.load.image('jail_broken', '././assets/textures/broken_jail.png');
@@ -40,6 +42,35 @@ export default class Preloader extends Phaser.Scene {
 
     create() {
         // ANIMACIONES
+        this.anims.create({
+            key: 'toni-front-hurt',
+            frames: [
+                {key: 'toni_hurt'},
+                {key: 'toni_front'}
+            ],
+            frameRate: 15,
+            repeat: 3
+        });
+
+        this.anims.create({
+            key: 'toni-back-hurt',
+            frames: [
+                {key: 'toni_hurt'},
+                {key: 'toni_back'}
+            ],
+            frameRate: 15,
+            repeat: 3
+        });
+
+        this.anims.create({
+            key: 'pirate-hurt',
+            frames: [
+                {key: 'pirate_hurt'},
+                {key: 'pirate_sprite'}
+            ],
+            frameRate: 15,
+            repeat: 3
+        })
 
         // Cargar nivel 1
         this.music = this.sound.add('music', { loop: true });
