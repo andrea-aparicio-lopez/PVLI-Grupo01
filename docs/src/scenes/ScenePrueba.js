@@ -1,10 +1,14 @@
-import Board from "../board/Board.js";
-import Game from "../Game.js";
-import Ally from "../entities/ally.js";
+import Toni from "../entities/toni.js";
 import Player from "../player/player.js";
 import DamageRect from "../objects/damageRect.js";
 import Enemy from "../entities/enemy.js";
 import UIManager from "../UI/uiManager.js";
+import Table from '../graphics/table.js'
+import Jail from '../entities/jail.js'
+
+import { GI } from '../graphics/graphicsInterface.js'
+import InfoPanel from "../graphics/infoPanel.js";
+
 
 export default class Example extends Phaser.Scene {
     constructor() {
@@ -22,51 +26,41 @@ export default class Example extends Phaser.Scene {
     }
 
     preload() {
-        //carga de todo lo que se necesite en la escena (por ejemplo la info de Tiled)
-
-        this.load.json("cardsData", "./assets/cards.json");
-        this.load.json("deckData", "./assets/deck.json");
-
-        //carga de tilemap
-        this.load.image('tiles', './assets/tiles/tilemap4/boat_tileset.png');
+        // TILEMAP
         this.load.tilemapTiledJSON('boat' , './assets/tiles/tilemap4/boat_map.json');
 
-        this.load.image('player_sprite', './assets/textures/toni.png');
-        this.load.image('ally_sprite', './assets/textures/allyBull.png');
-        this.load.image('pirate_sprite', './assets/textures/pirata.png');
-        }
+    }
 
         
     create() {
         const cardsData = this.cache.json.get('cardsData');
         const deckData = this.cache.json.get('deckData');
-        // let ally = new Ally(this, 10, 10, null, 0, 1, 2);
 
         // TILEMAP
         this.map = this.make.tilemap({ key: "boat" });
-        const tileset = this.map.addTilesetImage("Barco", "tiles");
-        const waterLayer = this.map.createLayer("water", tileset).setScale(3);
-        const groundLayer = this.map.createLayer("ground", tileset).setScale(3);
-        const obstacleLayer = this.map.createLayer("obstacles", tileset).setScale(3);
-        obstacleLayer.setCollisionByProperty({ collides : true });
-
+        const tileset = this.map.addTilesetImage("barco", "boat-tiles");
+        const waterLayer = this.map.createLayer("water", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
+        const groundLayer = this.map.createLayer("ground", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
+        const obstacleLayer = this.map.createLayer("obstacles", tileset, GI.centralPanel.x).setScale(GI.tileMapConst.scale);
 
 
         //OBSTACULOS//////////////////////////////////////////////////
-        for (var i = 0; i < this.map.width; i++) {
+        for (var i = 0; i < this.map.height; i++) {
             this.obstacles[i] = [];
-            for (var j = 0; j < this.map.height; j++) {
+            for (var j = 0; j < this.map.width; j++) {
                 this.obstacles[i][j] = false;
             }
         }
+        
 
         for (let i = 0; i < this.map.height; i++) {
             
             for (let j = 0; j < this.map.width; j++) {
-                if (obstacleLayer.layer.data[i][j].index != -1) this.obstacles[i][j] = true;
+                if(obstacleLayer.layer.data[i][j].properties.collides) this.obstacles[i][j] = true;
             }
         }
 
+        this.map.destroyLayer(obstacleLayer);
         ////////////////////////////////////////////////////////////
 
         // Create rects for damage viz and calc
@@ -74,62 +68,52 @@ export default class Example extends Phaser.Scene {
         let rectColor = 0xff0000;
 
         groundLayer.forEachTile((tile) => {
-            const x = tile.pixelX * groundLayer.scaleX;
-            const y = tile.pixelY * groundLayer.scaleY;
+            const x = GI.centralPanel.x + tile.pixelX * groundLayer.scaleX;
+            const y = GI.centralPanel.y + tile.pixelY * groundLayer.scaleY;
             const width = tile.width * groundLayer.scaleX;
             const height = tile.height * groundLayer.scaleY;
 
             let rect = new DamageRect(this, x, y, width, height, rectColor, 0.5, 10);
             this.damageRectsGroup.add(rect);
+
         });
 
-        let bull = new Ally(this, 5, 5, "player_sprite", 0, 50);
-        let allyArray = [
-            new Ally(this, 1, 1, "ally_sprite", 0, 20),
-            new Ally(this, 2, 5, "ally_sprite", 0, 20),
-        ];
-        this.player = new Player(this, cardsData, deckData, bull, allyArray);
+        // PLAYER, ALLIES AND ENEMIES
+        let toni = new Toni(this, 5, 5, "player_sprite", 0);
+        
+        
+        //new Ally(this, 'Ally_1', 1, 1, "ally_sprite", 0, 20);
+        //new Ally(this, 'Ally_2', 2, 5, "ally_sprite", 0, 20);
+        new Jail(this, 'jail1', 3, 3, 'jail_sprite');
+        new Jail(this, 'jail2', 9, 7, 'jail_sprite');
+        new Jail(this, 'jail3', 8, 9, 'jail_sprite');
+        new Jail(this, 'jail4', 5, 4, 'jail_sprite');
 
         
-        // ENEMIES
-        this.enemiesGroup = this.physics.add.group();
-        this.enemy = new Enemy(this, 2, 3, "pirate_sprite", 0, 20);
-        this.enemiesGroup.add(this.enemy);
+        // this.enemiesGroup = this.physics.add.group();
+        this.enemyArray = [
+            //new Enemy(this, 'Enemy_1', 1, 3, "pirate_sprite", 0, 20)
+        ];
+        toni.setToTop();
 
-        // Create collision overlap for enemies
-        this.enemyOverlap = this.physics.add.overlap(
-            this.enemiesGroup,
-            this.damageRectsGroup,
-            (rect) => {
-                if (this.enemy.getCombatState()) {
-                    this.enemy.hurt(rect.damage);
-                    this.enemy.stun(rect.stun);
-                    this.enemy.setCombatState(false);
-                }
-            }
-        );
-        this.enemyOverlap.active = false; // desactiva la deteccion
+        this.player = new Player(this, cardsData, deckData, toni, this.enemyArray.length);
 
-        // // Create collision overlap for allies
-        // this.allyOverlap = this.physics.add.overlap(alliesGroup, this.damageRectsGroup, (ally, rect) => {
-        //   if(ally.getCombatState()) {
-        //      ally.hurt(rect.damage);
-        //      ally.stun(rect.stun);
-        //      ally.setCombatState(false);
-        //     }
-        // });
-        // this.allyOverlap.active = false; // desactiva la deteccion
 
-        // Player juega a una carta
-        // this.player.playCard(0);
-        // let hasDraw = this.player.drawCard();
-        console.log("Deck:", this.player.deck.currentDeck);
-        console.log("Hand:", this.player.hand);
-        console.log("Graveyard", this.player.graveyard);
-
+        // UI
+        // Create table:
+        this.table = new Table(this, GI.table.x, GI.table.y);
+        // Create info panel:
+        this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
         // Create UI Manager
-        this.uiManager = new UIManager(this, this.player);
+        this.uiManager = new UIManager(this);
 
+
+        // EVENTOS
+        // this.events.on('enemy-killed', ()=>console.log("sos"), this)
+        this.events.on("level-lost", this.levelLost, this);
+        this.events.on("level-won", this.levelWon, this);
+
+        
         this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
@@ -137,6 +121,19 @@ export default class Example extends Phaser.Scene {
 
         this.startPlayerTurn();
     }    
+
+    /** @param damageRects: posiciones en tiles */
+    cardPlayed(entity, damageRects, damage) {
+        let _target;
+        if(entity instanceof Enemy)
+            _target = 'ally';
+        else _target = 'enemy';
+        this.events.emit('damage', {
+            target: _target,
+            positions: damageRects,
+            damage: damage
+        })
+    }
 
     startPlayerTurn() {
         this.player.startTurn();
@@ -155,45 +152,57 @@ export default class Example extends Phaser.Scene {
     }
 
     startEnemyTurn() {
-        this.enemy.playTurn();
+        this.enemyArray.forEach((enemy) =>enemy.playTurn());
         this.endEnemyTurn();
     }
 
     endEnemyTurn() {
-        
         this.playAllAnimations();
     }
 
     playAllAnimations() {
         let TIME = 200;
-        this.player.mainPlayer.playMovingAnimation(TIME)
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].playMovingAnimation(TIME);
-        this.enemy.playMovingAnimation(TIME);
+        this.player.toni.playMovingAnimation(TIME)
+        for(let i = 0; i < this.player.freedAllies.length; i++)
+            this.player.freedAllies[i].playMovingAnimation(TIME);
+        this.enemyArray.forEach((enemy) =>enemy.playMovingAnimation(TIME));
         //se para un tiempo definido para las animaciones
         var timer = this.time.delayedCall(
             TIME,
-            this.stopAllAnimations,
+            this.endAnimations,
             null,
             this
         ); // delay in ms
     }
-
-    stopAllAnimations() {
-        this.player.mainPlayer.onMovingAnimation = false;
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].onMovingAnimation = false;
-        this.enemy.onMovingAnimation = false;
+    endAnimations() {
         this.startPlayerTurn();
     }
 
     update(time, delta) {
         this.uiManager.update();
-
-        this.player.mainPlayer.update(time, delta);
-        for(let i = 0; i < this.player.allies.length; i++)
-            this.player.allies[i].update();
-        this.enemy.update(time, delta);
     }
 
+    addObstacle(position) {
+        this.obstacles[position.x][position.y] = true;
+    }
+
+    // TODO
+    levelLost() {
+        console.log("Nivel perdido")
+    }
+
+    levelWon() {
+        console.log("Nivel ganado");
+        this.time.addEvent({
+            delay: 3000,
+            callback: this.nextLevel,
+            callbackScope: this
+        })
+        
+    }
+
+    nextLevel() {
+        // this.scene.start('firstLevel')
+        console.log("cargando siguiente nivel")
+    }
 }

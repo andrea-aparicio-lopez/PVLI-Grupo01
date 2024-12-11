@@ -1,38 +1,37 @@
 import Player from "../player/player.js";
-// import Button from "./button.js";
+import Button from "./button.js";
+import MenuPausa from "./menuPausa.js";
 import CardUI from "./cardUI.js";
+
+import { GI } from '../graphics/graphicsInterface.js'
 
 
 export default class UIManager {
-
-    constructor(scene, player){
+    /**
+     * Constructor
+     * @param {Scene} scene
+     */
+    constructor(scene){
 
         this.scene = scene;
-        this.player = player;
+        this.player = scene.player;
         this.hand = this.player.hand;
 
-        this.cardsUI = [];
-        let cardColor = 0xFCA311;
+        this.allys = scene.allyArray;
 
-        for (let i = 0; i < Player.MAX_CARD_NUM ; i++) {
-            // Create buttons
-            let card = new CardUI(this.scene,
-                60 * i + 20,
-                400,
-                40,
-                70,
-                cardColor,
-                1,
-                "empty1234",
-                i
-            );
-            this.cardsUI.push(card);
-        }
-
+        this.cardsUI = scene.table.cardSlots;
         
         this.indexSelectedCard;
         this.clickedCard;
 
+        this.menu = new MenuPausa(scene);
+        this.menu.menuOff();
+
+        this.menu_button = new Button(scene, 960, 10, 30, 30, 0xff0fff, 1);
+        this.menu_button.onClick = () => {this.menu.toggle()};
+        this.menu_button.highlight = () => {this.menu_button.setFillStyle(0xaaaaaa, 1)};
+        this.menu_button.onHover = () => {this.menu_button.highlight()}
+        this.menu_button.onOut = () => {this.menu_button.unhighlight()};
     }
 
     update() {
@@ -58,13 +57,13 @@ export default class UIManager {
 
     listenToCardHover(index) {
         // console.log("Hovering:", index);
-        this.cardsUI[index].highlight();
-        this.hand[index].visualizePlay(this.player.mainPlayer);
+        this.cardsUI[index].card.highlight();
+        this.hand[index].visualizePlay(this.player.toni);
     }
 
     listenToCardOut(index) {
         // console.log("Out:", index);
-        this.cardsUI[index].unhighlight();
+        this.cardsUI[index].card.unhighlight();
         this.hand[index].endVisualizePlay();
     }
 
@@ -73,28 +72,37 @@ export default class UIManager {
     }
 
     updateHand() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
+        for (let i = 0; i < this.player.handSize; i++) {
+            // console.log("updatehand i ", i)
+            // console.log("updatehand handsize", this.player.handSize)
+
 
             if(i < this.hand.length){
-                this.cardsUI[i].enable();
-                this.cardsUI[i].update(this.hand[i].name);
+                this.cardsUI[i].card.enable();
+                this.cardsUI[i].card.update(this.hand[i]);
             }
             else {
-                this.cardsUI[i].disable();
-                this.cardsUI[i].unhighlight();
+                this.cardsUI[i].card.disable();
+                this.cardsUI[i].card.unhighlight();
             }
         }
     }
 
     setInteractiveCards() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
-            this.cardsUI[i].setButtonInteractive();
+        for (let i = 0; i < this.player.handSize; i++) {
+            this.cardsUI[i].card.setButtonInteractive();
         }
     }
 
     disableInteractiveCards() {
-        for (let i = 0; i < Player.MAX_CARD_NUM; i++) {
-            this.cardsUI[i].unsetButtonInteractive();
+        for (let i = 0; i < this.player.handSize; i++) {
+            this.cardsUI[i].card.unsetButtonInteractive();
+        }
+    }
+
+    receiveEvent(event) {
+        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ESC){
+            this.menu.toggle();
         }
     }
 }

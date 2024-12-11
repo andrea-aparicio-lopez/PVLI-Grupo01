@@ -1,3 +1,5 @@
+import { GI } from '../graphics/graphicsInterface.js'
+
 export default class MainMenu extends Phaser.Scene {
     constructor() {
         super("MainMenu")
@@ -12,13 +14,20 @@ export default class MainMenu extends Phaser.Scene {
         const scale = 3;
 
         // OBJETOS
-        this.add.image(0,0, 'background').setOrigin(0,0).setScale(scale);
-        var startButton = this.add.image(this.sys.game.canvas.width*0.5, this.sys.game.canvas.height*0.7, "startButton").setScale(0.5);
-        startButton.setInteractive({useHandCursor: true});
+        this.add.image(GI.centralPanel.x, GI.centralPanel.y, 'background').setOrigin(0,0).setScale(scale);
+        var startButton = this.add.image(
+            GI.centralPanel.width *0.5 + GI.centralPanel.x, 
+            GI.centralPanel.height*0.7 + GI.centralPanel.y,
+            "startButton"
+        ).setScale(0.5);
+        startButton.setInteractive({ useHandCursor: true });
+        
 
         // EVENTOS
-        startButton.on("pointerdown", ()=>{
-            this.scene.start("ScenePrueba")
+        startButton.on("pointerdown", () => {
+
+            this.scene.start("Preloader")
+            
         })
     }
 

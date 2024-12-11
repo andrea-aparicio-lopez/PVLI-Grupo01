@@ -1,32 +1,41 @@
+import Ally from "../entities/ally.js";
 import Deck from "../objects/deck.js";
 
 export default class Player {
-    static MAX_CARD_NUM = 6;
+    static INITIAL_HAND_SLOTS = 2;
+    static MAX_HAND_SLOTS = 5;
 
-    constructor(scene, cardsData, deckData, player, allyArray) {
+    constructor(scene, cardsData, deckData, toni, enemyCount, jailCount) {
+        this.scene = scene;
+
         this.deck = new Deck(scene, cardsData, deckData);
         this.hand = [];
+        this.handSize = Player.INITIAL_HAND_SLOTS;
         this.graveyard = [];
 
-        for(let i=0; i < Player.MAX_CARD_NUM; i++) {
+        for(let i=0; i < this.handSize; i++) {
             this.hand[i] = this.deck.draw();
         }
-        // this.selectedCard = null;
 
+        this.toni = toni;
 
-        this.mainPlayer = player;
-        this.allies = [];
-        allyArray.forEach(ally => {
-            this.allies.push(ally);
-        });
+        this.freedAllies = [];
+        this.remainingJails = jailCount;
+        this.alliesAlive = jailCount;
+        this.enemiesAlive = enemyCount;
+
+        this.scene.events.on('ally-killed', this.allyKilled, this)
+        this.scene.events.on('toni-killed', this.toniKilled, this)
+        this.scene.events.on('enemy-killed', this.enemyKilled, this)
+        this.scene.events.on('jail_broken', this.jailBroken, this)
 
         this.isTurn = false;
     }
 
-    // Draw a card: returns true if succeeds, else return false if no card was draw
+    // Draw a card: returns true if succeeds, else return false if no card was drawn
     drawCard() {
 
-        if(this.hand.length < Player.MAX_CARD_NUM)
+        if(this.hand.length < this.handSize)
         {
             if(this.deck.empty()) {
                 this.deck.regenerate(this.graveyard); // Returns graveyard cards to deck and shuffles it
@@ -43,7 +52,7 @@ export default class Player {
         if (this.isTurn) {
             let cardArray = this.hand.splice(cardPos, 1); // retorna un array de 1 elemento
             let card = cardArray[0];
-            card.playedBy(this.mainPlayer);
+            card.playedBy(this.toni);
             this.graveyard.push(card);
             //console.log("Player hand:", this.deck.currentDeck);
 
@@ -53,32 +62,29 @@ export default class Player {
     }   
 
     startTurn() {
-        // console.log("started player turn");
-        
         this.isTurn = true;
         this.drawCard();
     }
 
     receiveEvent(event) {
         
-        if (this.isTurn == true) {
+        if (this.isTurn == true && !this.scene.onMenu) {
             let hasMoved;
-            //recieved event
             if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.W) {
-                this.mainPlayer.setDirection(0, -1);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(0, -1);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.A) {
-                this.mainPlayer.setDirection(-1, 0);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(-1, 0);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.S) {
-                this.mainPlayer.setDirection(0, 1);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(0, 1);
+                hasMoved = this.toni.moveInDirection();
             }
             else if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.D) {
-                this.mainPlayer.setDirection(1, 0);
-                hasMoved = this.mainPlayer.moveInDirection();
+                this.toni.setDirection(1, 0);
+                hasMoved = this.toni.moveInDirection();
             }
             if(hasMoved) {
                 this.updateAllies();
@@ -88,18 +94,46 @@ export default class Player {
     }
 
     updateAllies() {
-        for(let i = 0; i < this.allies.length; i++) {
-            this.allies[i].moveToPlayer();
-            //console.log("moviendo aliado " + i + " en posicion " + this.allies[i].worldPos.x + " " + this.allies[i].worldPos.y);
+        if(this.freedAllies.length != 0){
+            this.freedAllies[0].moveTowardsPosition(this.toni.prevWorldPos);
+            for(let i = 1; i < this.freedAllies.length; i++) {
+                this.freedAllies[i].moveTowardsPosition(this.freedAllies[i - 1].prevWorldPos);
+            }
         }
-
-        this.mainPlayer.scene.endPlayerTurn();
+        
+        this.scene.endPlayerTurn();
     }
 
     endTurn() {
-        // console.log("ended player turn");
         this.isTurn = false;
     }
 
+    allyKilled() {
+        this.alliesAlive--;
+        // if(this.alliesAlive == 0)
+        //     this.scene.events.emit("Level lost");
+    }
 
+    toniKilled() {
+        this.scene.events.emit("level-lost");
+    }
+
+    enemyKilled(event) {
+        this.enemiesAlive--;
+        this.checkVictory();
+    }
+
+    jailBroken(jail) {
+        this.remainingJails--;
+        let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
+        this.freedAllies.push(ally);
+        this.scene.events.emit('ally-spawned', ally)
+
+        this.checkVictory();
+    }
+
+    checkVictory() {
+        if (this.enemiesAlive == 0 && this.remainingJails == 0)
+            this.scene.events.emit("level-won");
+    }
 }
