@@ -14,7 +14,7 @@
     "name": "Kick",
     "text": "Description2",
     "move":  0,
-    "damage": 2,
+    "damage": 1,
     "areaOfEffect": false,
     "range": 1,
     "stun": true
@@ -33,7 +33,7 @@
     "id": 4,
     "name": "Horn Drill",
     "text": "Description4",
-    "move":  3,
+    "move":  4,
     "damage": 1,
     "areaOfEffect": false,
     "range": 3,
@@ -64,7 +64,7 @@
     "name": "Tremor",
     "text": "Description7",
     "move":  0,
-    "damage": 3,
+    "damage": 1,
     "areaOfEffect": true,
     "range": 1,
     "stun": true
@@ -74,9 +74,9 @@
     "name": "Coz",
     "text": "Description8",
     "move":  0,
-    "damage": 5,
-    "areaOfEffect": true,
-    "range": 1,
+    "damage": 1,
+    "areaOfEffect": false,
+    "range": 2,
     "stun": true
   }
 ]

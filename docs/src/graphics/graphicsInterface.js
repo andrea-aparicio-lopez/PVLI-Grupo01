@@ -21,9 +21,9 @@ const centralPanel_x = (gameConst.gameWindowWidth - layerWidth_px) / 2;
 
 const card_width = centralPanel_x / 2;
 const cards_x = centralPanel_x / 6;
-const cards_y = gameConst.gameWindowHeight / 5;
+const cards_y = gameConst.gameWindowHeight / 8;
 
-const offset_y = 30;
+const offset_y = 20;
 const card_1_y = cards_y;
 const card_2_y = card_1_y + offset_y;
 const card_3_y = card_2_y + offset_y;
@@ -49,7 +49,7 @@ const cardSpecs = {
 
 const text_box_margin = 5;
 const text_box_x = text_box_margin;
-const text_box_y = card_6_y + cardSpecs.height + text_box_margin;
+const text_box_y = card_5_y + cardSpecs.height + text_box_margin;
 const text_box_width = centralPanel_x - 2 * text_box_margin;
 const text_box_height = gameConst.gameWindowHeight - (text_box_y + text_box_margin);
 

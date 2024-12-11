@@ -143,6 +143,7 @@ export default class Level extends Phaser.Scene {
     //#region turns
     startPlayerTurn() {
         this.player.startTurn();
+        this.uiManager.update();
     }
 
     inputToPlayer(event) {
@@ -154,6 +155,7 @@ export default class Level extends Phaser.Scene {
             rect.makeInvisible();
         });
         this.player.endTurn();
+        this.uiManager.update();
         this.startEnemyTurn();
     }
 
@@ -192,7 +194,6 @@ export default class Level extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.uiManager.update();
     }
 
     addObstacle(position) {

@@ -2,7 +2,7 @@ import { GI } from '../graphics/graphicsInterface.js'
 import CardUI from '../UI/cardUI.js';
 import Player from '../player/player.js';
 
-const initialNumSlots = Player.MAX_CARD_NUM;
+const initialNumSlots = Player.INITIAL_HAND_SLOTS;
 
 export default class Table {
     constructor(scene, x, y) {
@@ -39,11 +39,6 @@ export default class Table {
                 x: GI.table.hand.card_5_x,
                 y: GI.table.hand.card_5_y
             },
-            {
-                card: null,
-                x: GI.table.hand.card_6_x,
-                y: GI.table.hand.card_6_y
-            },
         ]
 
         for(let i = 0; i < this.numSlots; i++) {
@@ -71,7 +66,7 @@ export default class Table {
         this.textDisplay = scene.make.text({
             x: GI.table.text.x, 
             y: GI.table.text.y, 
-            text: this.text,
+            text: this.default_text,
             style: {
                 font: 'bold 10px Arial',
                 fill: '#EE4266',
@@ -79,28 +74,32 @@ export default class Table {
             },
         })
 
-
-        this.scene.events.on('hoveringCard', (cardUI) =>{
-             this.textDisplay.setText(cardUI.description);
-            });
-
-        this.scene.events.on('outCard', (cardUI) =>{
-            this.textDisplay.setText(this.default_text);
-            });
-
         this.scene.events.on('jail_broken', () =>{
-            this.cardSlots[this.numSlots].card = new CardUI(
-                scene,
-                this.cardSlots[this.numSlots].x,
-                this.cardSlots[this.numSlots].y,
-                GI.cardSpecs.width,
-                GI.cardSpecs.height,
-                GI.cardSpecs.color,
-                this.numSlots
-            );
-            this.numSlots++;
-            this.scene.player.drawCard();
+            if (this.numSlots < Player.MAX_HAND_SLOTS){
+                console.log(this.numSlots);
+                this.cardSlots[this.numSlots].card = new CardUI(
+                    scene,
+                    this.cardSlots[this.numSlots].x,
+                    this.cardSlots[this.numSlots].y,
+                    GI.cardSpecs.width,
+                    GI.cardSpecs.height,
+                    GI.cardSpecs.color,
+                    this.numSlots
+                );
+                this.numSlots++;
+                console.log(this.numSlots);
+                this.scene.player.drawCard();
+                this.scene.player.handSize++;
+            }
             });
+    }
+
+    onCardOut(){
+        this.textDisplay.setText(this.default_text);
+    }
+
+    onCardHover(card){
+        this.textDisplay.setText(card.description);
     }
 
 }

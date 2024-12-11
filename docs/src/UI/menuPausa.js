@@ -70,7 +70,8 @@ export default class MenuPausa extends Phaser.GameObjects.Container {
         this.button_quit_rect = new Button(scene, 0, 0, menu_button_left_width, menu_button_left_height, 0xffffff, 1);
         this.button_quit_rect.onClick = () => {
             this.scene.sound.stopAll();
-            this.scene.scene.start('MainMenu')};
+            this.scene.scene.start('MainMenu');
+        };
         this.button_quit_rect.highlight = () => {this.button_quit_rect.setFillStyle(0xaaaaaa, 1)};
         this.button_quit_rect.onHover = () => {this.button_quit_rect.highlight()}
         this.button_quit_rect.onOut = () => {this.button_quit_rect.unhighlight()};
@@ -110,6 +111,7 @@ export default class MenuPausa extends Phaser.GameObjects.Container {
 
     menuOn(){
         this.scene.onMenu = true;
+        this.scene.children.bringToTop(this);
         this.setVisible(true);
     }
     menuOff(){

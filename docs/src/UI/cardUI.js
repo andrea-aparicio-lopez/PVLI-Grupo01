@@ -51,12 +51,12 @@ export default class CardUI extends Button {
 
     onHover() { 
         this.scene.uiManager.listenToCardHover(this.index);
-        this.scene.events.emit('hoveringCard', this);
+        this.scene.table.onCardHover(this);
     }
 
     onOut() { 
-        this.scene.uiManager.listenToCardOut(this.index); 
-        this.scene.events.emit('outCard');
+        this.scene.uiManager.listenToCardOut(this.index);
+        this.scene.table.onCardOut();
     }
 
     highlight() { this.setFillStyle(this.highlightColor, this.alpha); }

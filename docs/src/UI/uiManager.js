@@ -73,6 +73,9 @@ export default class UIManager {
 
     updateHand() {
         for (let i = 0; i < this.player.handSize; i++) {
+            // console.log("updatehand i ", i)
+            // console.log("updatehand handsize", this.player.handSize)
+
 
             if(i < this.hand.length){
                 this.cardsUI[i].card.enable();
