@@ -121,7 +121,7 @@ export default class Level extends Phaser.Scene {
         this.hurtSound = this.sound.add('hurtSound');
         this.allyMoveSound = this.sound.add('allyMoveSound');
         
-        
+        this.sound.play('trumpet', {rate: 1.25, detune:1});
 
         this.startPlayerTurn();
     }
