@@ -5,6 +5,13 @@ export default class Toni extends Ally {
         super(scene, 'player', x, y, texture, frame, 5);
     }
 
+    hurt(points) {
+        if(this.texture.key == 'toni_front')
+            this.play('toni-front-hurt');
+        else this.play('toni-back-hurt');
+        super.hurt(points)
+    }
+
     die() {
         this.scene.events.emit("toni-killed");
     }

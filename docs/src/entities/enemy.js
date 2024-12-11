@@ -4,7 +4,7 @@ import Entity from "./entity.js";
 export default class Enemy extends Entity {
     constructor(scene, id, x, y, texture, frame, maxHealth) {
         super(scene, id, x, y, texture, frame, maxHealth);
-        // this.health = 1;
+        this.health = 50;
     }
 
     preUpdate(t, dt) {
@@ -44,6 +44,11 @@ export default class Enemy extends Entity {
             damageRects.push({x: path[i].x, y: path[i].y})
 
         this.scene.cardPlayed(this, damageRects, 1);
+    }
+
+    hurt(points) {
+        this.play('pirate-hurt');
+        super.hurt(points);
     }
 
     die() {

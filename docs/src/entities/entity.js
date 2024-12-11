@@ -59,6 +59,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     findPath(destPos) {
         this.pathFinding.findPath(this.worldPos.x, this.worldPos.y, destPos.x, destPos.y, (path) => {
+            let move = true;
+
             if (path === null) {
                 console.warn("Path was not found.");
             } else {
@@ -69,6 +71,7 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                 }
                 // Si está adyacente
                 else if(path[1].x == destPos.x && path[1].y == destPos.y) {
+                    move = false;
                     this.atAdjacentPos(path);
                 }
                 else {
@@ -77,8 +80,8 @@ export default class Entity extends Phaser.GameObjects.Sprite {
                     dir.y = path[1].y - this.worldPos.y;
                     this.setDirection(dir.x, dir.y);
                 }              
-                
-                this.moveInDirection();  
+                if(move)
+                    this.moveInDirection();  
             }
         });
     }
