@@ -122,9 +122,12 @@ export default class Level extends Phaser.Scene {
         this.hurtSound = this.sound.add('hurtSound');
         this.allyMoveSound = this.sound.add('allyMoveSound');
         
-        this.sound.play('music', { loop: true });
+        
         this.sound.play('crowd', { loop: true, volume:0.05 });
-        this.sound.play('trumpet', {rate: 1.25, detune:1});
+        var trumpet = this.sound.add('trumpet', { rate: 1.25, detune: 1 });
+        trumpet.play();
+
+        trumpet.once("complete", () => { this.sound.play('music', { loop: true }); });
         //#endregion
 
         this.startPlayerTurn();
