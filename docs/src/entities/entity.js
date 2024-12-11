@@ -197,7 +197,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     playMovingAnimation(TIME) {
         //TWEEN
         this.onMovingAnimation = true;
-        console.log("hola");
 
         this.scene.tweens.add({
             targets: this,
@@ -241,7 +240,6 @@ export default class Entity extends Phaser.GameObjects.Sprite {
 
     onAnimationFinished() {
         this.onMovingAnimation = false;
-        console.log("adios");
     }
 
     finishMovingAnimation() {

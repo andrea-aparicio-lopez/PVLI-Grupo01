@@ -112,7 +112,7 @@ export default class Level extends Phaser.Scene {
         this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
         this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
         this.input.keyboard.on('keydown-D', this.inputToPlayer, this);
-        this.input.keyboard.on('keydown-P', this.inputToUiManager, this);
+        this.input.keyboard.on('keydown-ESC', this.inputToUiManager, this);
         //#endregion
 
         //SONIDOS
