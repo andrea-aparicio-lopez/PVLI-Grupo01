@@ -35,6 +35,7 @@ export default class Preloader extends Phaser.Scene {
         this.load.audio('hurtSound', "./assets/sound/hurtSound.wav");
         this.load.audio('allyMoveSound', "./assets/sound/allyMoveSound.wav");
         this.load.audio('music', "./assets/sound/flamenco.wav");
+        this.load.audio('trumpet', "./assets/sound/trumpet.mp3");
     }
 
     create() {
