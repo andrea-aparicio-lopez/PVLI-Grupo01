@@ -9,8 +9,8 @@ export default class MenuPausa extends Phaser.GameObjects.Container {
 
         this.scene = scene;
 
-        this.setInteractive();
         this.setSize(GI.gameWindowWidth, GI.gameWindowHeight);
+        this.setInteractive();
 
         this.background = new Phaser.GameObjects.Rectangle(scene, 0, 0, GI.gameWindowWidth, GI.gameWindowHeight, 0xddd07f, 0.5).setOrigin(0).setInteractive();
         this.add(this.background);
@@ -65,7 +65,7 @@ export default class MenuPausa extends Phaser.GameObjects.Container {
 
 
         this.button_quit = new Phaser.GameObjects.Container(scene, menu_button_right_x, menu_button_right_y);
-        this.button_quit.setSize(menu_button_left_width, menu_button_left_height)
+        this.button_quit.setSize(menu_button_left_width, menu_button_left_height);
         this.button_quit.setInteractive();
         this.button_quit_rect = new Button(scene, 0, 0, menu_button_left_width, menu_button_left_height, 0xffffff, 1);
         this.button_quit_rect.onClick = () => {this.scene.scene.start('MainMenu')};

@@ -17,8 +17,14 @@ export default class Level extends Phaser.Scene {
     /**@param lvl: level-number */
     constructor(lvl) {
         super(levelKeys[lvl]);
-
         this.level = lvl;
+    }
+
+    // preload() {
+    //     // TILEMAP -> carga de tilemapTiledJSON
+    // }
+
+    create() {
 
         this.playerTurn = true;
         this.wait = false;
@@ -30,13 +36,6 @@ export default class Level extends Phaser.Scene {
 
         this.damageRectsGroup;
         this.onMenu = false;
-    }
-
-    // preload() {
-    //     // TILEMAP -> carga de tilemapTiledJSON
-    // }
-
-    create() {
         // TILEMAP -> crear tilemap, añadir tilesetImage, crear Layers (terreno, obstáculos)
 
         const cardsData = this.cache.json.get('cardsData');

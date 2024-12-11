@@ -98,7 +98,7 @@ export default class UIManager {
     }
 
     receiveEvent(event) {
-        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ESC){
+        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.P){
             this.menu.toggle();
         }
     }

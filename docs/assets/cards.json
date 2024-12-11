@@ -24,7 +24,7 @@
     "name": "Giga Impact",
     "text": "Description3",
     "move":  3,
-    "damage": 2,
+    "damage": 1,
     "areaOfEffect": false,
     "range": 2,
     "stun": true
@@ -44,7 +44,7 @@
     "name": "Trample",
     "text": "Description5",
     "move":  2,
-    "damage": 4,
+    "damage": 1,
     "areaOfEffect": false,
     "range": 2,
     "stun": true
@@ -56,7 +56,7 @@
     "move":  0,
     "damage": 1,
     "areaOfEffect": true,
-    "range": 3,
+    "range": 2,
     "stun": true
   },
   {
