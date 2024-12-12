@@ -251,5 +251,9 @@ export default class Entity extends Phaser.GameObjects.Sprite {
         
     }
 
-    changeSprite() {} // according to direction
+    changeSprite() {    // according to direction
+        if(this.direction.x < 0)
+            this.setFlipX(true);
+        else if (this.direction.x > 0) this.setFlipX(false);
+    } 
 }
