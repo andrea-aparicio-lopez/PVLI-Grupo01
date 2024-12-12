@@ -19,7 +19,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [MainMenu, Preloader, FirstLevel, SecondLevel, ThirdLevel, DeathScene, WinScene],
+    scene: [Preloader, MainMenu, FirstLevel, SecondLevel, ThirdLevel, DeathScene, WinScene],
     physics: {  
         default: 'arcade', //Tenemos físicas simple, arcade
         arcade: { 

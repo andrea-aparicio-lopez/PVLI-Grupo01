@@ -79,6 +79,6 @@ export default class Preloader extends Phaser.Scene {
         })
 
         // Cargar nivel 1
-        this.scene.start(levelKeys[1]);
+        this.scene.start(levelKeys[0]);
     }
 }
