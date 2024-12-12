@@ -2,7 +2,9 @@ import MainMenu from './scenes/MainMenu.js';
 import Preloader from './scenes/Preloader.js';
 import FirstLevel from './scenes/boat/Level1.js';
 import SecondLevel from './scenes/boat/Level2.js';
-import ThirdLevel from './scenes/boat/Level3.js';
+import ThirdLevel from './scenes/boat/Level3.js'
+import DeathScene from './scenes/DeathScene.js'
+import WinScene from './scenes/WinScene.js'
 
 import { GI } from './graphics/graphicsInterface.js'
 
@@ -17,7 +19,7 @@ let config = {
 
     },
     pixelArt: true,
-    scene: [MainMenu, Preloader, FirstLevel, SecondLevel, ThirdLevel],
+    scene: [MainMenu, Preloader, FirstLevel, SecondLevel, ThirdLevel, DeathScene, WinScene],
     physics: {  
         default: 'arcade', //Tenemos físicas simple, arcade
         arcade: { 

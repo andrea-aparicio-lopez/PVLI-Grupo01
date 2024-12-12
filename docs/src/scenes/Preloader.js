@@ -40,6 +40,10 @@ export default class Preloader extends Phaser.Scene {
         this.load.audio('trumpet', "./assets/sound/trumpet.mp3");
         this.load.audio('cheer', "./assets/sound/cheer.wav");
         this.load.audio('crowd', "./assets/sound/crowd1.wav");
+
+        //IMAGENES
+        this.load.image('deathSceneImage', "./assets/textures/deathScene.png");
+        this.load.image('winSceneImage', "./assets/textures/winScene.png");
     }
 
     create() {

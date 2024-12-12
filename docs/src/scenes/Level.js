@@ -221,6 +221,7 @@ export default class Level extends Phaser.Scene {
 
     onLevelEnd() {
         this.sound.stopByKey('music');
+        this.sound.stopByKey('crowd');
     }
     
     levelLost() {
@@ -250,12 +251,14 @@ export default class Level extends Phaser.Scene {
     }
 
     reloadLevel() {
-        this.scene.restart();
+        this.scene.start('deathScene')
     }
 
     nextLevel() {
         console.log("cargando siguiente nivel");
         this.events.removeAllListeners();
+        if (this.level + 1 >= 4) this.scene.start("WinScene");
+        else
         this.scene.start(levelKeys[this.level+1]);
     }
 
