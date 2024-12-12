@@ -129,7 +129,7 @@ export default class Level extends Phaser.Scene {
 
         trumpet.once("complete", () => { this.sound.play('music', { loop: true }); });
         //#endregion
-
+        this.sound.setVolume(0.4);
         this.startPlayerTurn();
     }
 
