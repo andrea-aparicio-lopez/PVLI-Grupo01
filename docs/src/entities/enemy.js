@@ -36,7 +36,6 @@ export default class Enemy extends Entity {
         }
     }
 
-    // TODO
     straightAttack(path) {
         
         let damageRects = [];

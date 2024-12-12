@@ -125,7 +125,7 @@ export default class Player {
 
     jailBroken(jail) {
         this.remainingJails--;
-        let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 20, this.freedAllies.length);
+        let ally = new Ally(this.scene, "ally_" + (this.freedAllies.length + 1), jail.worldPos.x, jail.worldPos.y, "ally_sprite", 0, 2, this.freedAllies.length);
         this.freedAllies.push(ally);
         this.scene.events.emit('ally-spawned', ally)
 
