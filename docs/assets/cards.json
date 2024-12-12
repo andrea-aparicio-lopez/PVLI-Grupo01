@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Stomp",
-    "text": "Description1",
+    "text": "Dash and damage one tile",
     "move":  1,
     "damage": 1,
     "areaOfEffect": false,
@@ -12,7 +12,7 @@
   {
     "id": 2,
     "name": "Kick",
-    "text": "Description2",
+    "text": "Damage the tile in front of you",
     "move":  0,
     "damage": 1,
     "areaOfEffect": false,
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "name": "Giga Impact",
-    "text": "Description3",
+    "text": "Rush two tiles and damage everything within the path",
     "move":  3,
     "damage": 1,
     "areaOfEffect": false,
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "name": "Horn Drill",
-    "text": "Description4",
+    "text": "Rush three tiles and damage all within the path",
     "move":  4,
     "damage": 1,
     "areaOfEffect": false,
@@ -42,8 +42,8 @@
   {
     "id": 5,
     "name": "Trample",
-    "text": "Description5",
-    "move":  2,
+    "text": "Rush one tile and damage all within the path",
+    "move": 2,
     "damage": 1,
     "areaOfEffect": false,
     "range": 2,
@@ -52,7 +52,7 @@
   {
     "id": 6,
     "name": "Earthquake",
-    "text": "Description6",
+    "text": "Massive damage area",
     "move":  0,
     "damage": 1,
     "areaOfEffect": true,
@@ -62,7 +62,7 @@
   {
     "id": 7,
     "name": "Tremor",
-    "text": "Description7",
+    "text": "Damage circle around the player",
     "move":  0,
     "damage": 1,
     "areaOfEffect": true,
@@ -72,7 +72,7 @@
   {
     "id": 8,
     "name": "Coz",
-    "text": "Description8",
+    "text": "Damage two tiles in front of the player",
     "move":  0,
     "damage": 1,
     "areaOfEffect": false,
