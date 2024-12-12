@@ -58,7 +58,7 @@ export default class Enemy extends Entity {
         this.setTexture('pirate_dead');
         
         this.scene.addObstacle(this.worldPos)
-        this.scene.sound.play('cheer', { rate: 1.5, detune: 100 })
+        this.scene.sound.play('cheer', { rate: 1.5, detune: 100, volume: 0.25})
         
         super.die();
     }
