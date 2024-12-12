@@ -25,6 +25,10 @@ export default class Level extends Phaser.Scene {
     // }
 
     create() {
+        this.events.off('jail_broken')
+        this.events.off("level-lost");
+        this.events.off("level-won");
+        this.events.off('loseLife');
 
         this.playerTurn = true;
         this.wait = false;
@@ -226,28 +230,16 @@ export default class Level extends Phaser.Scene {
     
     levelLost() {
         console.log("Nivel perdido")
-        // this.sound.play('defeat')
-        this.time.addEvent({
-            delay: 4000,
-            callback: () => {
-                this.onLevelEnd();
-                this.reloadLevel();
-            },
-            callbackScope: this
-        });
+
+        this.onLevelEnd();
+        this.reloadLevel();
     }
 
     levelWon() {
         console.log("Nivel ganado");
-        // this.sound.play('victory')
-        this.time.addEvent({
-            delay: 3000,
-            callback: () => {
-                this.onLevelEnd();
-                this.nextLevel();
-            },
-            callbackScope: this
-        });        
+
+        this.onLevelEnd();
+        this.nextLevel();
     }
 
     reloadLevel() {
@@ -256,7 +248,7 @@ export default class Level extends Phaser.Scene {
 
     nextLevel() {
         console.log("cargando siguiente nivel");
-        this.events.removeAllListeners();
+        //this.events.removeAllListeners();
         if (this.level + 1 >= 4) this.scene.start("WinScene");
         else
         this.scene.start(levelKeys[this.level+1]);
