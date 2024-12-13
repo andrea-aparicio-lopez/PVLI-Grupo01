@@ -11,7 +11,10 @@ Bullfight no es un juego de turnos convencional: la sensación de juego es más 
 
 
 ### Capturas del juego
-![image](capturas/captura1.png)
+
+![image](capturas/menu.png)
+![image](capturas/captura.png)
+![image](capturas/dead.png)
 
 ### Hora de jugar
 [Esta es la web](https://andrea-aparicio-lopez.github.io/PVLI-Grupo01/) donde podrás jugar a BULLFIGHT. El juego se encuentra aún en desarrollo.
@@ -20,6 +23,16 @@ Bullfight no es un juego de turnos convencional: la sensación de juego es más 
 ### Redes
 Tenemos una cuenta de [Instagram](https://www.instagram.com/undefined_pvli/), donde podrás seguir nuestro progreso a medida que vamos desarrollando.
 
+### Arquitectura
+Enlace a la [arquitectura](https://www.figma.com/board/7GMuZDRarw7no5p5UoJq9A/Bullfight-remasterizado?node-id=0-1&t=4C0x3SrfVCsVVHtS-1)
 
 ### Assets
+Sistema de Pathfinding: propiedad de easyStar.
+Botón de inicio del Main Menu: propiedad de Toni.
+
 Todos los assets empleados han sido creados por y son propiedad de `undefined`.
+* Sprites y UI por: Hugo de Brito, Andrea Aparicio, Guillermo Sánchez
+* Música por: Guillermo Sánchez
+
+### Créditos
+Juego creado por Hugo de Brito, Andrea Aparicio y Guillermo Sánchez

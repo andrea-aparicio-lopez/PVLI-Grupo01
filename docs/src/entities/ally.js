@@ -5,7 +5,6 @@ export default class Ally extends Entity {
         super(scene, id, x, y, texture, frame, maxHealth);
 
         this.arrayIndex = arrayIndex;
-        this.isFree = false;
     }
 
     checkHit(damageInfo) {
@@ -13,8 +12,6 @@ export default class Ally extends Entity {
             super.checkHit(damageInfo);
         }
     }
-
-    setFree() {this.isFree = true;}
 
     preUpdate(t, dt) {
         super.preUpdate(t, dt);

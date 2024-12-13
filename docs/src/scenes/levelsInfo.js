@@ -3,5 +3,5 @@ export  const levelKeys = [
     'Level1',
     'Level2',
     'Level3',
-    'VictoryScreen'
+    'WinScene'
 ]

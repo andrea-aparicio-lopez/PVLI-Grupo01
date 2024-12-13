@@ -38,6 +38,12 @@ export default class Preloader extends Phaser.Scene {
         this.load.audio('allyMoveSound', "./assets/sound/allyMoveSound.wav");
         this.load.audio('music', "./assets/sound/flamenco.wav");
         this.load.audio('trumpet', "./assets/sound/trumpet.mp3");
+        this.load.audio('cheer', "./assets/sound/cheer.wav");
+        this.load.audio('crowd', "./assets/sound/crowd1.wav");
+
+        //IMAGENES
+        this.load.image('deathSceneImage', "./assets/textures/deathScene.png");
+        this.load.image('winSceneImage', "./assets/textures/winScene.png");
     }
 
     create() {
@@ -73,6 +79,6 @@ export default class Preloader extends Phaser.Scene {
         })
 
         // Cargar nivel 1
-        this.scene.start(levelKeys[1]);
+        this.scene.start(levelKeys[0]);
     }
 }
