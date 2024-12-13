@@ -1,4 +1,5 @@
 import { GI } from '../graphics/graphicsInterface.js'
+import { levelKeys } from './levelsInfo.js';
 
 export default class MainMenu extends Phaser.Scene {
     constructor() {
@@ -26,7 +27,7 @@ export default class MainMenu extends Phaser.Scene {
         // EVENTOS
         startButton.on("pointerdown", () => {
 
-            this.scene.start("Preloader")
+            this.scene.start(levelKeys[1]);
             
         })
     }

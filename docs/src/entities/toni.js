@@ -20,6 +20,8 @@ export default class Toni extends Ally {
         if(this.direction.y < 0)
             this.setTexture('toni_back');
         else this.setTexture('toni_front')
+
+        super.changeSprite();
     }
 
     playMovingAnimation(TIME) {
