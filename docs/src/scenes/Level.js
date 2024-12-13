@@ -238,7 +238,7 @@ export default class Level extends Phaser.Scene {
         console.log("Nivel perdido");
         // this.sound.play('defeat')
         this.time.addEvent({
-            delay: 4000,
+            delay: 2500,
             callback: () => {
                 this.onLevelEnd();
                 this.reloadLevel();
@@ -251,7 +251,7 @@ export default class Level extends Phaser.Scene {
         console.log("Nivel ganado");
         // this.sound.play('victory')
         this.time.addEvent({
-            delay: 3000,
+            delay: 2500,
             callback: () => {
                 this.onLevelEnd();
                 this.nextLevel();
