@@ -46,8 +46,11 @@ export default class Enemy extends Entity {
     }
 
     hurt(points) {
-        this.play('pirate-hurt');
-        super.hurt(points);
+        if (this.active) {
+            this.play('pirate-hurt');
+            super.hurt(points);
+        }
+        
     }
 
     die() {
