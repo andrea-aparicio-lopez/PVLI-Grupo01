@@ -264,7 +264,6 @@ const infoConst = {
                 width: info_box_bull_1_life_bar_w,
                 height: info_box_bull_1_life_bar_h,
             },
-            name: "Tristán",
         },
         {
             x: info_box_bull_2_x,
@@ -289,7 +288,6 @@ const infoConst = {
                 width: info_box_bull_2_life_bar_w,
                 height: info_box_bull_2_life_bar_h,
             },
-            name: "Huracán",
         },
         {
             x: info_box_bull_3_x,
@@ -314,7 +312,6 @@ const infoConst = {
                 width: info_box_bull_3_life_bar_w,
                 height: info_box_bull_3_life_bar_h,
             },
-            name: "Paco",
         },
         {
             x: info_box_bull_4_x,
@@ -339,7 +336,6 @@ const infoConst = {
                 width: info_box_bull_4_life_bar_w,
                 height: info_box_bull_4_life_bar_h,
             },
-            name: "Pablo, el majo",
         },
     ],
 };

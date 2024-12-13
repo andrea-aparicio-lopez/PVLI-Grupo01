@@ -8,22 +8,22 @@ export default class InfoPanel {
         this.background = new Phaser.GameObjects.Sprite(scene, x, y, 'info_background').setOrigin(0);
         scene.add.existing(this.background);
 
-        this.createPlayerInfo(scene, info);
-
         // INFO TEXT
         this.infoText = new Phaser.GameObjects.Text(
             scene,
-            GI.infoPanel.player.x + GI.infoPanel.padding,
-            GI.infoPanel.player.y + GI.infoPanel.padding,
-            "Toni, el toro",
+            info.margin + info.x,
+            info.margin,
+            "Zona 1: rescate a X toros y huja.",
             {
-                fontSize: '20px',
-                color: '#222032',
+                fontFamily: 'Arial',
+                fontSize: '15px',
+                color: '#4234ff',
                 wordWrap: { width: info.player.width - info.padding },
             }
         );
         scene.add.existing(this.infoText);
 
+        this.createPlayerInfo(scene, info);
 
         /*
         scene.allyArray.forEach((ally, index) => {
@@ -42,22 +42,22 @@ export default class InfoPanel {
             info.player.y,
             info.player.width,
             info.player.height,
-            0xe5a642,
+            0x23addf,
             1
         ).setOrigin(0);
         scene.add.existing(this.playerBox);
 
         // Player image
-        // this.playerImage = new Phaser.GameObjects.Rectangle(
-        //     scene,
-        //     info.player.image.x,
-        //     info.player.image.y,
-        //     info.player.image.width,
-        //     info.player.image.height,
-        //     0xffffff,
-        //     1
-        // ).setOrigin(0);
-        // scene.add.existing(this.playerImage);
+        this.playerImage = new Phaser.GameObjects.Rectangle(
+            scene,
+            info.player.image.x,
+            info.player.image.y,
+            info.player.image.width,
+            info.player.image.height,
+            0xffffff,
+            1
+        ).setOrigin(0);
+        scene.add.existing(this.playerImage);
 
         // Life box
         this.playerLifeBox = new Phaser.GameObjects.Rectangle(
@@ -66,7 +66,7 @@ export default class InfoPanel {
             info.player.lifeBox.y,
             info.player.lifeBox.width,
             info.player.lifeBox.height,
-            0xdddddd,
+            0x777777,
             1
         ).setOrigin(0);
         scene.add.existing(this.playerLifeBox);
@@ -95,22 +95,22 @@ export default class InfoPanel {
             bull.y,
             bull.w,
             bull.h,
-            0xf2d660,
+            0xf3afdf,
             1
         ).setOrigin(0);
         scene.add.existing(bullInfo.box);
 
-        // // Bull image
-        // bullInfo.image = new Phaser.GameObjects.Rectangle(
-        //     scene,
-        //     bull.image.x,
-        //     bull.image.y,
-        //     30,
-        //     30,
-        //     0xf2d660,
-        //     1
-        // ).setOrigin(0);
-        // scene.add.existing(bullInfo.image);
+        // Bull image
+        bullInfo.image = new Phaser.GameObjects.Rectangle(
+            scene,
+            bull.image.x,
+            bull.image.y,
+            30,
+            30,
+            0xffffff,
+            1
+        ).setOrigin(0);
+        scene.add.existing(bullInfo.image);
 
         // Life box
         bullInfo.lifeBox = new Phaser.GameObjects.Rectangle(
@@ -119,7 +119,7 @@ export default class InfoPanel {
             bull.lifeBox.y,
             bull.lifeBox.width,
             bull.lifeBox.height,
-            0xdddddd,
+            0x777777,
             1
         ).setOrigin(0);
         scene.add.existing(bullInfo.lifeBox);
@@ -135,18 +135,5 @@ export default class InfoPanel {
             bull.lifeBar.height,
             'ally'
         );
-
-        let bullName = new Phaser.GameObjects.Text(
-            scene,
-            bull.x + GI.infoPanel.padding,
-            bull.y + GI.infoPanel.padding,
-            bull.name,
-            {
-                fontSize: '15px',
-                color: '#222032',
-                wordWrap: { width: info.player.width - info.padding },
-            }
-        );
-        scene.add.existing(bullName);
     }
 }
