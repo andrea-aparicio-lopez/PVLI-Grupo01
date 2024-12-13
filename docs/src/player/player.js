@@ -27,7 +27,7 @@ export default class Player {
         this.scene.events.on('ally-killed', this.allyKilled, this)
         this.scene.events.on('toni-killed', this.toniKilled, this)
         this.scene.events.on('enemy-killed', this.enemyKilled, this)
-        this.scene.events.on('jail_broken', this.jailBroken, this)
+        this.scene.events.on('jail-broken', this.jailBroken, this)
 
         this.isTurn = false;
     }
