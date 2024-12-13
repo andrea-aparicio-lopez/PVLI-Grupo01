@@ -8,22 +8,21 @@ export default class InfoPanel {
         this.background = new Phaser.GameObjects.Sprite(scene, x, y, 'info_background').setOrigin(0);
         scene.add.existing(this.background);
 
+        this.createPlayerInfo(scene, info);
+
         // INFO TEXT
         this.infoText = new Phaser.GameObjects.Text(
             scene,
-            info.margin + info.x,
-            info.margin,
-            "Zona 1: rescate a X toros y huja.",
+            GI.infoPanel.player.x + GI.infoPanel.padding,
+            GI.infoPanel.player.y + GI.infoPanel.padding,
+            "Toni, el toro",
             {
-                fontFamily: 'Arial',
-                fontSize: '15px',
-                color: '#4234ff',
+                fontSize: '25px',
+                color: '#222032',
                 wordWrap: { width: info.player.width - info.padding },
             }
         );
         scene.add.existing(this.infoText);
-
-        this.createPlayerInfo(scene, info);
 
         /*
         scene.allyArray.forEach((ally, index) => {
@@ -42,22 +41,22 @@ export default class InfoPanel {
             info.player.y,
             info.player.width,
             info.player.height,
-            0x23addf,
+            0xe5a642,
             1
         ).setOrigin(0);
         scene.add.existing(this.playerBox);
 
-        // Player image
-        this.playerImage = new Phaser.GameObjects.Rectangle(
-            scene,
-            info.player.image.x,
-            info.player.image.y,
-            info.player.image.width,
-            info.player.image.height,
-            0xffffff,
-            1
-        ).setOrigin(0);
-        scene.add.existing(this.playerImage);
+        // // Player image
+        // this.playerImage = new Phaser.GameObjects.Rectangle(
+        //     scene,
+        //     info.player.image.x,
+        //     info.player.image.y,
+        //     info.player.image.width,
+        //     info.player.image.height,
+        //     0xffffff,
+        //     1
+        // ).setOrigin(0);
+        // scene.add.existing(this.playerImage);
 
         // Life box
         this.playerLifeBox = new Phaser.GameObjects.Rectangle(
@@ -66,7 +65,7 @@ export default class InfoPanel {
             info.player.lifeBox.y,
             info.player.lifeBox.width,
             info.player.lifeBox.height,
-            0x777777,
+            0xbbbbbb,
             1
         ).setOrigin(0);
         scene.add.existing(this.playerLifeBox);
@@ -95,22 +94,22 @@ export default class InfoPanel {
             bull.y,
             bull.w,
             bull.h,
-            0xf3afdf,
+            0xf2d660,
             1
         ).setOrigin(0);
         scene.add.existing(bullInfo.box);
 
-        // Bull image
-        bullInfo.image = new Phaser.GameObjects.Rectangle(
-            scene,
-            bull.image.x,
-            bull.image.y,
-            30,
-            30,
-            0xffffff,
-            1
-        ).setOrigin(0);
-        scene.add.existing(bullInfo.image);
+        // // Bull image
+        // bullInfo.image = new Phaser.GameObjects.Rectangle(
+        //     scene,
+        //     bull.image.x,
+        //     bull.image.y,
+        //     30,
+        //     30,
+        //     0xffffff,
+        //     1
+        // ).setOrigin(0);
+        // scene.add.existing(bullInfo.image);
 
         // Life box
         bullInfo.lifeBox = new Phaser.GameObjects.Rectangle(
