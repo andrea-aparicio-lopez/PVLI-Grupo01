@@ -25,11 +25,6 @@ export default class Level extends Phaser.Scene {
     // }
 
     create() {
-        this.events.off('jail_broken')
-        this.events.off("level-lost");
-        this.events.off("level-won");
-        this.events.off('loseLife');
-
         this.playerTurn = true;
         this.wait = false;
 
@@ -226,20 +221,43 @@ export default class Level extends Phaser.Scene {
     onLevelEnd() {
         this.sound.stopByKey('music');
         this.sound.stopByKey('crowd');
+        this.removeListeners();
+    }
+
+    removeListeners() {
+        this.events.off('jail-broken');
+        this.events.off("level-lost");
+        this.events.off("level-won");
+        this.events.off('loseLife');
+        this.events.off('ally-killed');
+        this.events.off('toni-killed');
+        this.events.off('enemy-killed');
     }
     
     levelLost() {
-        console.log("Nivel perdido")
-
-        this.onLevelEnd();
-        this.reloadLevel();
+        console.log("Nivel perdido");
+        // this.sound.play('defeat')
+        this.time.addEvent({
+            delay: 4000,
+            callback: () => {
+                this.onLevelEnd();
+                this.reloadLevel();
+            },
+            callbackScope: this
+        });
     }
 
     levelWon() {
         console.log("Nivel ganado");
-
-        this.onLevelEnd();
-        this.nextLevel();
+        // this.sound.play('victory')
+        this.time.addEvent({
+            delay: 3000,
+            callback: () => {
+                this.onLevelEnd();
+                this.nextLevel();
+            },
+            callbackScope: this
+        });  
     }
 
     reloadLevel() {
