@@ -18,6 +18,8 @@ export default class Level extends Phaser.Scene {
     constructor(lvl) {
         super(levelKeys[lvl]);
         this.level = lvl;
+        this.onTutorial = false;
+        this.playedTutorial = false;
     }
 
     // preload() {
@@ -64,6 +66,9 @@ export default class Level extends Phaser.Scene {
                         break;
                     case 'jail':
                         new Jail(this, 'jail_' + ++jailCount, j, i, 'jail_sprite');
+                        console.log("jail i ", i);
+                        console.log("jail j ", j);
+
                         break;
                     case 'toni':
                         toni = new Toni(this, j, i, 'toni_front', 0);
@@ -123,7 +128,7 @@ export default class Level extends Phaser.Scene {
         
         this.sound.play('trumpet', {rate: 1.25, detune:1});
 
-        this.startPlayerTurn();
+        if(this.level != 1) this.startPlayerTurn();
     }
 
     
@@ -194,6 +199,7 @@ export default class Level extends Phaser.Scene {
     }
 
     update(time, delta) {
+        if (this.level == 1 && this.onTutorial) this.tutorial.updateMask();
     }
 
     addObstacle(position) {
