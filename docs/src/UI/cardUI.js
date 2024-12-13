@@ -1,3 +1,4 @@
+import { GI } from '../graphics/graphicsInterface.js'
 import Button from "./button.js";
 
 export default class CardUI extends Button {
@@ -14,18 +15,26 @@ export default class CardUI extends Button {
      * @param {number} index - posición [0, 5]
      * 
      */
-    constructor(scene, x, y, width, height, color, alpha, text, index) {
-        super(scene, x, y, width, height, color, alpha);
+    constructor(scene, x, y, width, height, color, index) {
+        super(scene, x, y, width, height, color, 1);
 
-        this.textDisplay = this.scene.add.text(
-            x, 
-            y, 
-            this.text, 
-            { fontFamily: '"Fantasy", Times, serif',
-                fontSize: '10px',
-                color: '0x8380B6'
-            }
-        ).setOrigin(0);
+        this.scene = scene;
+        this.sprite = this.scene.add.sprite(x, y, 'card').setOrigin(0);
+        // this.sprite.angle = 2;
+
+        this.description = "";
+
+        this.name = this.scene.make.text({
+            x: x,
+            y: y,
+            text: "none",
+            style: {
+                fontFamily: GI.cardSpecs.fontFamily,
+                fontSize: GI.cardSpecs.fontSize,
+                fill: '#ffffff',
+                wordWrap: { width: GI.cardSpecs.width }
+            },
+        })
 
         this.index = index;
 
@@ -34,11 +43,21 @@ export default class CardUI extends Button {
 
     }
     
-    onClick() { this.scene.uiManager.listenToCardClick(this.index); }
+    onClick() { 
+        this.scene.uiManager.listenToCardClick(this.index); 
+        // this.scene.events.emit('gainLife', this.scene.bull.id, 120);
+        // this.scene.bull.hurt(20);
+    }
 
-    onHover() { this.scene.uiManager.listenToCardHover(this.index); }
+    onHover() { 
+        this.scene.uiManager.listenToCardHover(this.index);
+        this.scene.table.onCardHover(this);
+    }
 
-    onOut() { this.scene.uiManager.listenToCardOut(this.index); }
+    onOut() { 
+        this.scene.uiManager.listenToCardOut(this.index);
+        this.scene.table.onCardOut();
+    }
 
     highlight() { this.setFillStyle(this.highlightColor, this.alpha); }
 
@@ -47,19 +66,20 @@ export default class CardUI extends Button {
     enable() {
         this.makeVisible();
         this.setButtonInteractive();
-        this.textDisplay.alpha = 1;
+        this.name.alpha = 1;
     }
 
     disable() {
         this.makeInvisible();
         this.unsetButtonInteractive();
-        this.textDisplay.alpha = 0;
+        this.name.alpha = 0;
     }
 
     // unhighlight() {} 
 
-    update(text) {
-        this.textDisplay.setText(text);
+    update(card) {
+        this.name.setText(card.name);
+        this.description = card.text;
     }
 
 }

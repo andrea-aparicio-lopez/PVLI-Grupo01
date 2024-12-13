@@ -16,6 +16,7 @@
     --info-gap: 2rem;
 
     --header-padding: 0.5rem 3rem;
+    --button-padding: 0.5rem 3vw;
     --info-padding: 2rem;
 
     --round-edges: 10px;
@@ -54,7 +55,7 @@ p {
 }
 
 button {
-    padding: var(--header-padding);
+    padding: var(--button-padding);
     background-color: transparent;
     font-family: var(--primary-font);
     border: solid var(--primary-color);
@@ -85,6 +86,7 @@ header {
     padding: var(--header-padding);
     position: sticky;
     top: 0;
+    overflow: hidden;
 }
 
 .logo p {

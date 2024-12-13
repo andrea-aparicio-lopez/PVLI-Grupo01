@@ -9,7 +9,7 @@ export default class Game extends Phaser.GameObjects.GameObject{
         super(scene, "Game");
         
         this.player = {};
-;
+
         this.allies = [];
         this.enemies = [];
     }
@@ -51,6 +51,14 @@ export default class Game extends Phaser.GameObjects.GameObject{
         if (enemiesAlive == true) return true;
 
         return false;
+    }
+
+    gameWon() {
+
+    }
+
+    gameLost() {
+
     }
     
 }

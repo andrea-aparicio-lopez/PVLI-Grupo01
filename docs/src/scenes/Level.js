@@ -1,0 +1,281 @@
+import { levelKeys } from "./levelsInfo.js";
+import { GI } from '../graphics/graphicsInterface.js'
+
+import Player from "../player/player.js";
+
+import Enemy from "../entities/enemy.js";
+import Jail from "../entities/jail.js";
+import Toni from "../entities/toni.js";
+
+import DamageRect from "../objects/damageRect.js";
+
+import UIManager from "../UI/uiManager.js";
+import Table from '../graphics/table.js'
+import InfoPanel from "../graphics/infoPanel.js";
+
+export default class Level extends Phaser.Scene {
+    /**@param lvl: level-number */
+    constructor(lvl) {
+        super(levelKeys[lvl]);
+        this.level = lvl;
+    }
+
+    // preload() {
+    //     // TILEMAP -> carga de tilemapTiledJSON
+    // }
+
+    create() {
+        this.playerTurn = true;
+        this.wait = false;
+
+        this.map;
+        this.obstacles = [];
+        this.entityObstacles = [];
+        this.enemyArray = [];
+
+        this.damageRectsGroup;
+        this.onMenu = false;
+        // TILEMAP -> crear tilemap, añadir tilesetImage, crear Layers (terreno, obstáculos)
+
+        const cardsData = this.cache.json.get('cardsData');
+        const deckData = this.cache.json.get('deckData');
+
+        //#region OBSTACLES, ENTITIES
+        for (var i = 0; i < this.map.height; i++) {
+            this.obstacles[i] = [];
+            this.entityObstacles[i] = [];
+            for (var j = 0; j < this.map.width; j++) 
+                this.obstacles[i][j] = false;
+                this.entityObstacles[i][j] = false;
+        }
+        let enemyCount, jailCount;
+        enemyCount = jailCount = 0;
+        let toni;
+
+        const obstacleLayer = this.map.getLayer("obstacles");
+        for (let i = 0; i < this.map.height; i++) {
+            for (let j = 0; j < this.map.width; j++)  {
+                if (obstacleLayer.data[i][j].properties.collides) this.obstacles[i][j] = true;
+                switch(obstacleLayer.data[i][j].properties.spawn) {
+                    case 'enemy':
+                        this.enemyArray.push(new Enemy(this, 'enemy_'+ ++enemyCount, j, i, "pirate_sprite", 0, 3));
+                        this.addEntityObstacle({x: j, y: i})
+                        break;
+                    case 'jail':
+                        new Jail(this, 'jail_' + ++jailCount, j, i, 'jail_sprite');
+                        break;
+                    case 'toni':
+                        toni = new Toni(this, j, i, 'toni_front', 0);
+                        this.addEntityObstacle({x: j, y: i})
+                        break;
+                }
+            }
+        }
+        toni.setToTop();
+        this.player = new Player(this, cardsData, deckData, toni, enemyCount, jailCount);
+
+        //#endregion
+
+        //#region DAMAGE RECTS
+        this.damageRectsGroup = this.physics.add.group();
+
+        for(let i = 0; i < GI.tileMapConst.height; i++) {
+            for (let j = 0; j < GI.tileMapConst.width; j++) {
+                this.damageRectsGroup.add(new DamageRect(
+                    this,
+                    GI.centralPanel.x + j * GI.tileMapConst.scaledSize,
+                    GI.centralPanel.y + i * GI.tileMapConst.scaledSize,
+                    GI.tileMapConst.scaledSize,
+                    GI.tileMapConst.scaledSize,
+                    0xff0000,
+                    0.5,
+                    10
+                ));
+            }
+        }
+        //#endregion
+
+        //#region UI
+        this.table = new Table(this, GI.table.x, GI.table.y);
+        this.infoPanel = new InfoPanel(this, GI.infoPanel.x, GI.infoPanel.y);
+        this.uiManager = new UIManager(this);
+        //#endregion
+        
+        
+        //#region EVENTOS
+        this.events.on("level-lost", this.levelLost, this);
+        this.events.on("level-won", this.levelWon, this);
+
+        
+        this.input.keyboard.on('keydown-W', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-A', this.inputToPlayer, this); 
+        this.input.keyboard.on('keydown-S', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-D', this.inputToPlayer, this);
+        this.input.keyboard.on('keydown-ESC', this.inputToUiManager, this);
+        //#endregion
+
+        //#region SONIDOS
+        this.sound.add('music');
+        this.toniMoveSound = this.sound.add('toniMoveSound');
+        this.jailBrokenSound = this.sound.add('jailBrokenSound');
+        this.hurtSound = this.sound.add('hurtSound');
+        this.allyMoveSound = this.sound.add('allyMoveSound');
+        
+        
+        this.sound.play('crowd', { loop: true, volume:0.05 });
+        var trumpet = this.sound.add('trumpet', { rate: 1.25, detune: 1 });
+        trumpet.play();
+
+        trumpet.once("complete", () => { this.sound.play('music', { loop: true }); });
+        //#endregion
+        this.sound.setVolume(0.4);
+        this.startPlayerTurn();
+    }
+
+    
+    /** @param damageRects: posiciones en tiles */
+    cardPlayed(entity, damageRects, damage) {
+        let _target;
+        if(entity instanceof Enemy)
+            _target = 'ally';
+        else _target = 'enemy';
+        this.events.emit('damage', {
+            target: _target,
+            positions: damageRects,
+            damage: damage
+        })
+    }
+
+    //#region turns
+    startPlayerTurn() {
+        this.player.startTurn();
+        this.uiManager.update();
+    }
+
+    inputToPlayer(event) {
+        this.player.receiveEvent(event);
+    }
+
+    endPlayerTurn() {
+        this.damageRectsGroup.children.entries.forEach((rect) => {
+            rect.makeInvisible();
+        });
+        this.player.endTurn();
+        this.uiManager.update();
+        this.startEnemyTurn();
+    }
+
+    startEnemyTurn() {
+        this.enemyArray.forEach((enemy) =>enemy.playTurn());
+        // AQUI
+        this.endEnemyTurn();
+    }
+
+    endEnemyTurn() {
+        var timer = this.time.delayedCall(
+            50,
+            this.playAllAnimations,
+            null,
+            this
+        ); // delay in ms
+    }
+    //#endregion
+
+    playAllAnimations() {
+        let TIME = 150;
+        this.player.toni.playMovingAnimation(TIME)
+        for(let i = 0; i < this.player.freedAllies.length; i++)
+            this.player.freedAllies[i].playMovingAnimation(TIME);
+        this.enemyArray.forEach((enemy) =>enemy.playMovingAnimation(TIME));
+        //se para un tiempo definido para las animaciones
+        var timer = this.time.delayedCall(
+            TIME,
+            this.endAnimations,
+            null,
+            this
+        ); // delay in ms
+    }
+    endAnimations() {
+        this.startPlayerTurn();
+    }
+
+    update(time, delta) {
+    }
+
+    addObstacle(position) {
+        this.obstacles[position.y][position.x] = true;
+    }
+
+    removeEntityObstacle(position) {
+        this.entityObstacles[position.y][position.x] = false;
+    }
+    addEntityObstacle(position) {
+        this.entityObstacles[position.y][position.x] = true;
+    }
+
+    updateEntityObstacles(prevPos, currentPos) {
+        this.removeEntityObstacle(prevPos);
+        this.addEntityObstacle(currentPos);
+    }
+
+    onLevelEnd() {
+        this.sound.stopByKey('music');
+        this.sound.stopByKey('crowd');
+        this.removeListeners();
+    }
+
+    removeListeners() {
+        this.events.off('jail-broken');
+        this.events.off("level-lost");
+        this.events.off("level-won");
+        this.events.off('loseLife');
+        this.events.off('ally-killed');
+        this.events.off('toni-killed');
+        this.events.off('enemy-killed');
+    }
+    
+    levelLost() {
+        console.log("Nivel perdido");
+        // this.sound.play('defeat')
+        this.time.addEvent({
+            delay: 2500,
+            callback: () => {
+                this.onLevelEnd();
+                this.reloadLevel();
+            },
+            callbackScope: this
+        });
+    }
+
+    levelWon() {
+        console.log("Nivel ganado");
+        // this.sound.play('victory')
+        this.time.addEvent({
+            delay: 2500,
+            callback: () => {
+                this.onLevelEnd();
+                this.nextLevel();
+            },
+            callbackScope: this
+        });  
+    }
+
+    reloadLevel() {
+        this.scene.start('deathScene')
+    }
+
+    nextLevel() {
+        console.log("cargando siguiente nivel");
+        //this.events.removeAllListeners();
+        if (this.level + 1 >= 4) this.scene.start("WinScene");
+        else
+        this.scene.start(levelKeys[this.level+1]);
+    }
+
+    inputToUiManager(event) {
+        this.uiManager.receiveEvent(event);
+    }
+
+}
+
+

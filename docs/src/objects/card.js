@@ -1,3 +1,7 @@
+import Ally from '../entities/ally.js';
+import Enemy from '../entities/enemy.js';
+import { GI } from '../graphics/graphicsInterface.js'
+
 
 export default class Card 
 {
@@ -25,16 +29,23 @@ export default class Card
 		this.damage = damage;
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;
-		this.stun = stun;        
+		this.stun = stun;
+
     }
 
     // Visualize set to false by default
 	playedBy(entity, visualize = false) {
+
+        const upper_bound = 0;
+        const lower_bound = GI.tileMapConst.height - 1;
+        const left_bound = 0;
+        const right_bound = GI.tileMapConst.width - 1;
+
         //console.log("Card effect played");
         let direction = entity.getDirection();
         let currPosition = entity.getWorldPos();
         
-        let rectsPositions = [];
+        let damageRects = [];
 
         // DAMAGE
         if (this.damage != 0){
@@ -43,22 +54,22 @@ export default class Card
                 for (let i = - this.range; i <= this.range; i++){
                     for (let j = - this.range; j <= this.range; j++){
                         if (i != 0 || j != 0) {
-                            rectsPositions.push({x: currPosition.x + i, y: currPosition.y + j})
-                            // console.log({x: currPosition.x + i, y: currPosition.y + j});
+                            damageRects.push({x: currPosition.x + i, y: currPosition.y + j})
                         }
                     }
                 }
-                // console.log("Spawned damage RectsPositions", rectsPositions);
             }
             // Spawned rects at adjacent position on facing direction and within range
             else {
                 for (let k = 1; k <= this.range; k++){
-                    rectsPositions.push({x: currPosition.x + k * direction.x, y: currPosition.y + k * direction.y});
+                    damageRects.push({x: currPosition.x + k * direction.x, y: currPosition.y + k * direction.y});
                 }                
-                //console.log("Spawned damage rect:", rectsPositions);
             }
 
-            this.changeRects(rectsPositions, visualize, 0xff0000);
+            this.changeRects(damageRects, visualize, 0xff0000);
+            if(!visualize) {
+                this.scene.cardPlayed(entity, damageRects, this.damage);
+            }
 
         }
 
@@ -66,7 +77,30 @@ export default class Card
         if(this.move != 0){
             //console.log("Current position:", currPosition);
             let newPos = [];
-            newPos.push({x: currPosition.x + this.move * direction.x, y: currPosition.y + this.move * direction.y});
+
+            
+            // console.log(this.scene.obstacles[9][14])
+
+            let i = this.move;
+            let valid = false;
+            while(i >= 0 && !valid){
+                let newPosX = currPosition.x + i * direction.x;
+                let newPosY = currPosition.y + i * direction.y;
+
+                if (newPosX <= right_bound && newPosX >= left_bound
+                    &&
+                    newPosY >= upper_bound && newPosY <= lower_bound)
+                    {
+                        if (!this.scene.obstacles[newPosY][newPosX]){
+                            newPos[0] = {
+                                x: Phaser.Math.Clamp(newPosX, left_bound, right_bound),
+                                y: Phaser.Math.Clamp(newPosY, upper_bound, lower_bound)};
+                            valid = true;
+                        }
+                    }
+                i--;
+            }
+            // newPos.push({x: currPosition.x + i * direction.x, y: currPosition.y + i * direction.y});
             // console.log("dirx", currPosition.x + this.move * direction.x);
             // console.log("diry", direction.y);
 
@@ -78,7 +112,6 @@ export default class Card
 	}
 
     visualizePlay(entity) {
-        //console.log("Visualizing play");
         this.playedBy(entity, true);
 	}
 
@@ -86,19 +119,18 @@ export default class Card
         this.resetRects();
     }
 
-    changeRects(rects, visualize, color) {
-
-        let rectsArray = this.scene.damageRectsGroup.children.entries;
-        let rectSize = this.scene.damageRectsGroup.children.entries[0].width;
-        let maxX = rectsArray[rectsArray.length -1].x / rectSize;
-        let maxY = rectsArray[rectsArray.length -1].y / rectSize;
+    changeRects(rects, visualize = false, color = 0x000000) {
+        let maxX = GI.tileMapConst.width - 1;
+        let maxY = GI.tileMapConst.height - 1;
 
         rects.forEach((rect) => {
             let j = rect.x;
             let i = rect.y;
 
             if (i >= 0 && j >=0 && i <= maxY && j <= maxX) {
-                let rectObj = this.scene.damageRectsGroup.children.entries[i * 10 + j];
+                let rectObj = this.scene.damageRectsGroup.children.entries[
+                    i * GI.tileMapConst.width + 
+                    j];
                 
                 rectObj.deactivate();
                 
@@ -112,7 +144,6 @@ export default class Card
                 }
             }
         });
-        
     }
 
     /** @summary Recieves the entity that was hit. Applies damage and stun if exists. Use as callback function for collision between entity and damage rects*/

@@ -6,11 +6,6 @@
 
 Contiene los metodos necesarios para empezar y acabar el turno, ademas de la lista de las entidades.
 
----
-
-### Board
-
-La clase que contiene el tablero, con la matriz de __entidades__ y la de __obstaculos atravesables__
 
 ## CARTAS
 
@@ -55,28 +50,42 @@ Una forma, representada en una matriz de bool.
 
 `AnchorPoint`: En que parte de la matriz de se encuentra el origen. Esto se usa para "instanciar" la forma en el tablero.
 
-## OBJETOS
-Todos los `Object` cuentan con una posicion _x_ e _y_.
 
-### Entity extends Object
-Entidad viva en el tablero de juego. Tienen su propia Health (`num`), DamageMultiplier (`num`) y 
-EffectList (`Effect[]`).
 
-Cuenta con metodos para dañar y curar a la entidad.
+## ENTIDADES
+Todas las `Entities` cuentan con una posicion _x_ e _y_.
 
-Extienden de Entity los `PJ` y los `Enemy`.
+### Entity extends Phaser.GameObjects.Sprite
+Entidad viva en el tablero de juego.
+
+__Atributos__
+- `worldPos`: posición {x, y} en tiles
+- `prevWorldPos`: posición previa (turno anterior)
+- `direction`: dirección del movimiento
+- `health`, `maxHealth`: salud actual y máxima, respectivamente
+
+__Métodos__
+- `getWorldPos`/`setWorldPos`
+- `getDirection`/`setDirection`
+- `moveInDirection`: avanza una casilla en la dirección de movimiento, si es posible
+- `hurt`
+- `heal`
+- `die`
+
+Extienden de Entity las clases `Ally`, `Enemy` y `Jail`. 
 
 ---
 
-### Obstacle extends Object
-Falta
+### Ally extends Entity
+__Métodos__
+- `moveTowardsPosition`: método que emplean para calcular la ruta hacia una posición destino (puede ser Toni u otro aliado)
 
----
-
-### PJ extends Entity
-Falta
+`Toni` es una subclase de `Ally`.
 
 ---
 
 ### Enemy extents Entity
-Falta
+__Métodos__
+- `MoveToPlayer`: método que emplean para calcular la ruta hacia Toni
+- `straightAttack`: ataque a Toni cuando se encuentra en una posición adyacente
+

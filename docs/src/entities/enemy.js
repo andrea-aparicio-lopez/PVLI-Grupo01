@@ -1,37 +1,72 @@
+// import Obstacle from "../objects/obstacle.js";
 import Entity from "./entity.js";
 
 export default class Enemy extends Entity {
-    constructor(scene, x, y, texture, frame, maxHealth, AIdata) {
-        super(scene, x, y, texture, frame, maxHealth);
-
-        // Por definir
-        this.AI = AIdata;
+    constructor(scene, id, x, y, texture, frame, maxHealth) {
+        super(scene, id, x, y, texture, frame, maxHealth);
+        // this.health = 1;
     }
 
-    preupdate(t, dt) {
+    preUpdate(t, dt) {
         super.preUpdate(t, dt);
     }
 
     /** @summary Llama a la IA para jugar su turno */
     playTurn() {
         this.moveToPlayer();
+        
     }
 
     moveToPlayer() {
-        // Si estuviese en la misma casilla que el player no se movería (no debería ocurrir)
-        if (this.worldPos.x > this.scene.player.mainPlayer.worldPos.x)
-            this.setDirection(-1,0);
-        else if (this.worldPos.x < this.scene.player.mainPlayer.worldPos.x) 
-            this.setDirection(1,0);
-        else if (this.worldPos.y > this.scene.player.mainPlayer.worldPos.y) 
-            this.setDirection(0,-1);
-        else if (this.worldPos.y < this.scene.player.mainPlayer.worldPos.y) 
-            this.setDirection(0,1);
+        this.pathFinding.setGrid(this.scene.obstacles);
+        this.pathFinding.setAcceptableTiles([false]);
 
-        this.moveInDirection();
+        this.findPath(this.scene.player.toni.worldPos);
+
+        this.pathFinding.calculate();
+    }
+
+    atAdjacentPos(path) {
+        this.straightAttack(path);
+    }
+
+    checkHit(damageInfo) {
+        if(damageInfo.target == 'enemy') {
+            super.checkHit(damageInfo);
+        }
+    }
+
+    straightAttack(path) {
+        
+        let damageRects = [];
+        for(let i = 1; i < path.length; i++)
+            damageRects.push({x: path[i].x, y: path[i].y})
+
+        this.scene.cardPlayed(this, damageRects, 1);
+    }
+
+    hurt(points) {
+        if (this.active) {
+            this.play('pirate-hurt');
+            super.hurt(points);
+        }
+        
     }
 
     die() {
-        super.die();
+        if (this.active) {
+            this.scene.events.emit('enemy-killed', this)
+            let index = this.scene.enemyArray.indexOf(this);
+            this.scene.enemyArray.splice(index, 1);
+            this.setTexture('pirate_dead');
+
+            this.scene.addObstacle(this.worldPos)
+            this.scene.sound.play('cheer', { rate: 1.5, detune: 100, volume: 0.25 })
+
+            super.die();
+        }
+        
     }
+
+
 }
