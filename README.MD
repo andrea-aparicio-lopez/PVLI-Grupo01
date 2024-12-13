@@ -23,8 +23,13 @@ Bullfight no es un juego de turnos convencional: la sensación de juego es más 
 ### Redes
 Tenemos una cuenta de [Instagram](https://www.instagram.com/undefined_pvli/), donde podrás seguir nuestro progreso a medida que vamos desarrollando.
 
+### Arquitectura
+
 
 ### Assets
+Sistema de Pathfinding: propiedad de easyStar.
+Botón de inicio del Main Menu: propiedad de Toni.
+
 Todos los assets empleados han sido creados por y son propiedad de `undefined`.
 * Sprites y UI por: Hugo de Brito, Andrea Aparicio, Guillermo Sánchez
 * Música por: Guillermo Sánchez
