@@ -11,7 +11,10 @@ Bullfight no es un juego de turnos convencional: la sensación de juego es más 
 
 
 ### Capturas del juego
-![image](capturas/captura1.png)
+
+![image](capturas/menu.png)
+![image](capturas/captura.png)
+![image](capturas/dead.png)
 
 ### Hora de jugar
 [Esta es la web](https://andrea-aparicio-lopez.github.io/PVLI-Grupo01/) donde podrás jugar a BULLFIGHT. El juego se encuentra aún en desarrollo.
