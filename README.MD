@@ -26,3 +26,8 @@ Tenemos una cuenta de [Instagram](https://www.instagram.com/undefined_pvli/), do
 
 ### Assets
 Todos los assets empleados han sido creados por y son propiedad de `undefined`.
+* Sprites y UI por: Hugo de Brito, Andrea Aparicio, Guillermo Sánchez
+* Música por: Guillermo Sánchez
+
+### Créditos
+Juego creado por Hugo de Brito, Andrea Aparicio y Guillermo Sánchez
