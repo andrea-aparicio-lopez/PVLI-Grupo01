@@ -24,7 +24,7 @@ Bullfight no es un juego de turnos convencional: la sensación de juego es más 
 Tenemos una cuenta de [Instagram](https://www.instagram.com/undefined_pvli/), donde podrás seguir nuestro progreso a medida que vamos desarrollando.
 
 ### Arquitectura
-
+Enlace a la [arquitectura](https://www.figma.com/board/7GMuZDRarw7no5p5UoJq9A/Bullfight-remasterizado?node-id=0-1&t=4C0x3SrfVCsVVHtS-1)
 
 ### Assets
 Sistema de Pathfinding: propiedad de easyStar.
