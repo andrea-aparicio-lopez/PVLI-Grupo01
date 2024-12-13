@@ -54,19 +54,20 @@ export default class Tutorial {
         this.text12 = "You can check your LIFE at the right panel behind me.";
         this.text13 = "MOVE around using WASD. Once you've moved or used a card the enemy will make their move. To PAUSE the game press the ESCAPE key.";
         this.text14 = "This adventure goes on for 3 levels. Progressing means more challenge! Remember: toreros malos, toros amigos! Vale?";
-        this.text15 = "Arrrr.";
-        this.text16 = "I'll be lying down at the bottom left of the screen. I need some rest, teaching is so exhausting. Hasta luegooooooo"; 
+        this.text15 = "I'll be lying down at the bottom left of the screen. I need some rest, teaching is so exhausting. Hasta luegooooooo"; 
+        this.text16 = "Arrrr.";
+        this.text17 = "";
 
         
         this.texts.push(
             this.text0, this.text1, this.text2, this.text3, this.text4, this.text5, 
             this.text6, this.text7, this.text8, this.text9, this.text10, this.text11, 
-            this.text12, this.text13, this.text14, this.text15, this.text16
+            this.text12, this.text13, this.text14, this.text15, this.text16, this.text17
         );
         this.textIndex = 0;
         this.textCount = this.texts.length;
 
-        this.typingSpeed = 95;
+        this.typingSpeed = 75;
 
         this.textStyle = { fontSize: '32px', color: '#ffffff', wordWrap: {width: 700}};
         this.displayedText = new Phaser.GameObjects.Text(scene, 160, 300, "", this.textStyle);
