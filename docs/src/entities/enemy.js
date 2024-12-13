@@ -46,20 +46,26 @@ export default class Enemy extends Entity {
     }
 
     hurt(points) {
-        this.play('pirate-hurt');
-        super.hurt(points);
+        if (this.active) {
+            this.play('pirate-hurt');
+            super.hurt(points);
+        }
+        
     }
 
     die() {
-        this.scene.events.emit('enemy-killed', this)
-        let index = this.scene.enemyArray.indexOf(this);
-        this.scene.enemyArray.splice(index,1);
-        this.setTexture('pirate_dead');
+        if (this.active) {
+            this.scene.events.emit('enemy-killed', this)
+            let index = this.scene.enemyArray.indexOf(this);
+            this.scene.enemyArray.splice(index, 1);
+            this.setTexture('pirate_dead');
+
+            this.scene.addObstacle(this.worldPos)
+            this.scene.sound.play('cheer', { rate: 1.5, detune: 100, volume: 0.25 })
+
+            super.die();
+        }
         
-        this.scene.addObstacle(this.worldPos)
-        this.scene.sound.play('cheer', { rate: 1.5, detune: 100, volume: 0.25})
-        
-        super.die();
     }
 
 
