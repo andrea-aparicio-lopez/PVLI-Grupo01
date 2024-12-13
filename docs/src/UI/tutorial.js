@@ -47,15 +47,15 @@ export default class Tutorial {
         this.text5 = "Arrrr sorry, I took too much of that drink. . .";
         this.text6 = "Yo-ho-ho!";
         this.text7 = "You need to defeat the evil BULLFIGHTERS and RESCUE you friends. They are trapped in CAGES!";
-        this.text8 = "To free them you need to smash them just like you do to your enemies.";
-        this.text9 = "For this, click the cards on your left to use them. Some cards only deal DAMAGE, others will also change your POSITION to the green square."
-        this.text10 = "You can hover the cards to see their DESCRIPTION and VISUALIZE their action before using."
+        this.text8 = "To free them you need to smash them just like you'd do to your enemies.";
+        this.text9 = "For this, click on the cards on your left to use them. Some cards only deal DAMAGE, others will also change your POSITION to the green square."
+        this.text10 = "You can hover your pointer over the cards to see their DESCRIPTION and VISUALIZE their action before using them."
         this.text11 = "Everytime you free a friend you gain a card slot.";
-        this.text12 = "You can check you LIFE at the right panel behind me.";
-        this.text13 = "MOVE around using WASD. When you do that or use a card the enemy will make their move. To PAUSE the game press the ESCAPE key.";
-        this.text14 = "This adventure goes through 3 levels. Progressing means more challenge! Remember: toreros malos, toros amigos! Vale?";
+        this.text12 = "You can check your LIFE at the right panel behind me.";
+        this.text13 = "MOVE around using WASD. Once you've moved or used a card the enemy will make their move. To PAUSE the game press the ESCAPE key.";
+        this.text14 = "This adventure goes on for 3 levels. Progressing means more challenge! Remember: toreros malos, toros amigos! Vale?";
         this.text15 = "Arrrr.";
-        this.text16 = "I'll be laid down at the bottom left of the screen. I need some rest after all of this tutorial. Hasta luegooooooo"; 
+        this.text16 = "I'll be lying down at the bottom left of the screen. I need some rest, teaching is so exhausting. Hasta luegooooooo"; 
 
         
         this.texts.push(
