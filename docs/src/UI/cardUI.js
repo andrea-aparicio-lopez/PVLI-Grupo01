@@ -27,7 +27,7 @@ export default class CardUI extends Button {
         this.name = this.scene.make.text({
             x: x,
             y: y,
-            text: "none",
+            text: "",
             style: {
                 fontFamily: GI.cardSpecs.fontFamily,
                 fontSize: GI.cardSpecs.fontSize,

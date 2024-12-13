@@ -19,6 +19,8 @@ const layerWidth_px = tileMapConst.width * tileMapConst.scaledSize;
 // x position absolute of central panel
 const centralPanel_x = (gameConst.gameWindowWidth - layerWidth_px) / 2;
 
+console.log(centralPanel_x)
+
 const card_width = centralPanel_x / 2;
 const cards_x = centralPanel_x / 6;
 const cards_y = gameConst.gameWindowHeight / 8;

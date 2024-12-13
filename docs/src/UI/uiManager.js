@@ -27,11 +27,11 @@ export default class UIManager {
         this.menu = new MenuPausa(scene);
         this.menu.menuOff();
 
-        this.menu_button = new Button(scene, 960, 10, 30, 30, 0xff0fff, 1);
-        this.menu_button.onClick = () => {this.menu.toggle()};
-        this.menu_button.highlight = () => {this.menu_button.setFillStyle(0xaaaaaa, 1)};
-        this.menu_button.onHover = () => {this.menu_button.highlight()}
-        this.menu_button.onOut = () => {this.menu_button.unhighlight()};
+        // this.menu_button = new Button(scene, 960, 10, 30, 30, 0xff0fff, 1);
+        // this.menu_button.onClick = () => {this.menu.toggle()};
+        // this.menu_button.highlight = () => {this.menu_button.setFillStyle(0xaaaaaa, 1)};
+        // this.menu_button.onHover = () => {this.menu_button.highlight()}
+        // this.menu_button.onOut = () => {this.menu_button.unhighlight()};
     }
 
     update() {
