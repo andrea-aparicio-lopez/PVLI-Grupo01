@@ -66,33 +66,21 @@ export default class Tutorial {
         this.textIndex = 0;
         this.textCount = this.texts.length;
 
-        this.typingSpeed = 40;
+        this.typingSpeed = 95;
 
-        // Create a text object (initially empty)
         this.textStyle = { fontSize: '32px', color: '#ffffff', wordWrap: {width: 700}};
         this.displayedText = new Phaser.GameObjects.Text(scene, 160, 300, "", this.textStyle);
         this.container.add(this.displayedText);
-        // this.scene.add.existing(this.displayedText);
-        // this.scene.displayedText = this.scene.add.text(200, 300, '', this.textStyle);
 
         // LORO
         this.parrot = new Phaser.GameObjects.Sprite(scene, 2000, -1000, 'loro').setOrigin(0);
         this.parrot.setScale(7).setRotation(Phaser.Math.PI2/2)
-        // scene.add.existing(this.parrot);
         this.container.add(this.parrot);
 
 
 
         this.animIndex = 0;
         this.animateMask();
-        // Start the typing effect
-        // this.typeText(textContent, typingSpeed, () => {
-        //     // Once typing is done, animate the rectangle
-        //     console.log("hole")
-        //     this.animateRectangle(0);
-        //     this.animateLoro();
-
-        // });
     }
 
     typeText(content, speed) {
